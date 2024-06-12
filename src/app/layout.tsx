@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 const workSans = Work_Sans({ subsets: ["latin"] });
 
@@ -16,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${workSans.className} min-h-screen`}>{children}</body>
+      <body className={`${workSans.className} min-h-screen`}>
+        {children} <Analytics />
+      </body>
     </html>
   );
 }
