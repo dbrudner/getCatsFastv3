@@ -8,7 +8,6 @@ export async function createCat(formData: FormData) {
 
   if (catImage instanceof File && typeof catName === "string") {
     try {
-      console.log("Hey?");
       const blob = await put(catName, catImage, { access: "public" });
 
       const insertedCat = await db

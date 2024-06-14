@@ -81,7 +81,7 @@ function GetCatsLinkCard() {
       title="Get Cats"
       description="Get cats from the internet."
       imageSrc="/receive-cats.webp"
-      href="/cats/get"
+      href="/cats"
     />
   );
 }
@@ -89,10 +89,10 @@ function GetCatsLinkCard() {
 function SendCatsLinkCard() {
   return (
     <LinkCard
-      title="Send Cats"
-      description="Send cats to the internet."
+      title="New Cat"
+      description="Send cat to the internet."
       imageSrc="/send-cats.webp"
-      href="/cats/send"
+      href="/cat/new"
     />
   );
 }

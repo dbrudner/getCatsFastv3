@@ -1,14 +1,15 @@
 import { db, CatsTable, Cat } from "@/lib/drizzle";
 import Image from "next/image";
-import { seed } from "@/lib/seed";
-import React from "react";
+import Link from "next/link";
 
 function CatCard({ cat }: { cat: Cat }) {
   return (
-    <div className="flex flex-col gap-y-2">
-      <h2 className="text-2xl">{cat.title}</h2>
-      <Image src={cat.image} alt={cat.title} width={400} height={300} />
-    </div>
+    <Link href={`/cat/${cat.id}`}>
+      <div className="flex flex-col gap-y-2">
+        <h2 className="text-2xl">{cat.title}</h2>
+        <Image src={cat.image} alt={cat.title} width={400} height={300} />
+      </div>
+    </Link>
   );
 }
 
@@ -34,6 +35,7 @@ export default async function Table() {
     if (e.message === `relation "cats" does not exist`) {
       startTime = Date.now();
       cats = await db.select().from(CatsTable);
+      console.log({ cats });
     } else {
       throw e;
     }
