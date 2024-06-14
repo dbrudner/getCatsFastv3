@@ -4,7 +4,7 @@ import { createCat } from "@/actions/cat/create";
 import { useFormStatus } from "react-dom";
 
 const Label = (props: any) => {
-  return <label className="text-white" {...props} />;
+  return <label className="text-white mb-1" {...props} />;
 };
 
 const Button = (props: any) => {
@@ -19,7 +19,7 @@ const Button = (props: any) => {
 const Input = (props: any) => {
   return (
     <input
-      className="text-white bg-black border border border-sky-500 p-2 w-80"
+      className="text-white bg-black border border border-sky-500 p-2 w-80 text-left"
       {...props}
     />
   );
@@ -37,7 +37,10 @@ const DragAndDropFileInput = (props: any) => {
 
 const JustifyBetweenFlexContainer = (props: any) => {
   return (
-    <div className="flex flex-col justify-between  w-full gap-x-2" {...props} />
+    <div
+      className="flex flex-col justify-between w-full gap-x-2 items-start"
+      {...props}
+    />
   );
 };
 
