@@ -121,6 +121,18 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
     setIsDragging(false);
   };
 
+  const onClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const onChange = (event: any) => {
+    const catImageFile = event.target.files[0];
+
+    if (catImageFile) {
+      setHasDroppedFile(true);
+    }
+  };
+
   return (
     <Box
       component="div"
@@ -128,6 +140,7 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
       onDragEnter={onDragEnter}
       onDragLeave={onDragLeave}
       onDrop={onDrop}
+      onClick={onClick}
     >
       <div className="mb-4">
         <h1 className="text-4xl font-bold tracking-widest">
@@ -144,6 +157,7 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
           type="file"
           name="catImage"
           className="hidden"
+          onChange={onChange}
         />
         <div>
           <DashedBorderDragAndDropFileInputArea

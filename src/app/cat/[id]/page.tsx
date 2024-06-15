@@ -8,6 +8,8 @@ export default async function Table() {
   let startTime = Date.now();
   cats = await db.select().from(CatsTable);
 
+  console.log({ cats });
+
   const duration = Date.now() - startTime;
 
   return (
