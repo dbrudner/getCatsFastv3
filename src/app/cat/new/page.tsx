@@ -42,9 +42,11 @@ function SupportFromCatFansLikeYou() {
 function DashedBorderDragAndDropFileInputArea({
   isDragging,
   hasDroppedFile,
+  droppedFile,
 }: {
   isDragging: boolean;
   hasDroppedFile: boolean;
+  droppedFile?: File;
 }) {
   const containerClassName = classNames(
     "border-dashed border-4 rounded-lg p-4 h-fit text-center flex flex-col justify-center items-center relative",
@@ -54,31 +56,31 @@ function DashedBorderDragAndDropFileInputArea({
     }
   );
 
-  const catDropZoneContent = hasDroppedFile ? (
-    <div className="flex flex-col justify-center items-center">
-      OKAY TO
-      <br />
-      SEND
-      <CheckCircleIcon className="w-14 h-14" />
-    </div>
-  ) : (
-    "DROP CAT HERE"
-  );
+  const catDropZoneContent = hasDroppedFile ? "" : "DROP CAT HERE";
 
   const catDropZoneClassName = classNames(
-    "text-fuchsia-400 text-6xl absolute font-extrabold p-4 m-2 opacity-80",
+    "text-fuchsia-400 text-6xl absolute font-extrabold p-4 m-2",
     {
       "text-fuchsia-500": !hasDroppedFile,
       "text-lime-400": hasDroppedFile,
+      "opacity-80": !hasDroppedFile,
+      "opacity-100": hasDroppedFile,
     }
   );
 
-  console.log({ hasDroppedFile });
+  const catDropZoneImgSrc = droppedFile
+    ? URL.createObjectURL(droppedFile)
+    : "/cat-drop-zone.jpeg";
+
+  const imageContainerClassName = classNames({
+    "opacity-40": !hasDroppedFile,
+    "opacity-100": hasDroppedFile,
+  });
 
   return (
     <div className={containerClassName}>
-      <div className="opacity-40">
-        <Image src="/cat-drop-zone.jpeg" width={350} height={250} alt="Cat" />
+      <div className={imageContainerClassName}>
+        <Image src={catDropZoneImgSrc} width={350} height={250} alt="Cat" />
         <input type="file" name="catImage" className="hidden" />
       </div>
       <p className={catDropZoneClassName}>{catDropZoneContent}</p>
@@ -122,7 +124,9 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
   };
 
   const onClick = () => {
-    fileInputRef.current?.click();
+    if (fileInputRef.current && !hasDroppedFile) {
+      fileInputRef.current?.click();
+    }
   };
 
   const onChange = (event: any) => {
@@ -140,7 +144,6 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
       onDragEnter={onDragEnter}
       onDragLeave={onDragLeave}
       onDrop={onDrop}
-      onClick={onClick}
     >
       <div className="mb-4">
         <h1 className="text-4xl font-bold tracking-widest">
@@ -159,16 +162,17 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
           className="hidden"
           onChange={onChange}
         />
-        <div>
+        <button onClick={onClick}>
           <DashedBorderDragAndDropFileInputArea
             hasDroppedFile={hasDroppedFile}
             isDragging={isDragging}
+            droppedFile={fileInputRef.current?.files?.[0]}
           />
           <FormHelperText>
             Gently drop a cat image into the area above or click to select a
             file
           </FormHelperText>
-        </div>
+        </button>
         <TextField
           label=""
           name="catName"
