@@ -3,6 +3,9 @@ import { Work_Sans } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { ClerkProvider } from "@clerk/nextjs";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import { ThemeProvider } from "@mui/material";
+import GetCatsFastThemeProvider from "./theme";
 
 const workSans = Work_Sans({ subsets: ["latin"] });
 
@@ -18,11 +21,15 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={`${workSans.className} min-h-screen`}>
-          {children} <Analytics />
-        </body>
-      </html>
+      <AppRouterCacheProvider>
+        <GetCatsFastThemeProvider>
+          <html lang="en">
+            <body className={`${workSans.className} min-h-screen`}>
+              {children} <Analytics />
+            </body>
+          </html>
+        </GetCatsFastThemeProvider>
+      </AppRouterCacheProvider>
     </ClerkProvider>
   );
 }
