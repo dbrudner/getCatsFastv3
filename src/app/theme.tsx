@@ -2,6 +2,10 @@
 import { Work_Sans } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
+import resolveConfig from "tailwindcss/resolveConfig";
+import tailwindConfig from "../../tailwind.config";
+
+const resolvedTailwingConfig = resolveConfig(tailwindConfig);
 
 const workSans = Work_Sans({
   weight: ["300", "400", "500", "700"],
@@ -17,6 +21,15 @@ const theme = createTheme({
     fontFamily: workSans.style.fontFamily,
   },
   components: {
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          marginLeft: 0,
+          color: resolvedTailwingConfig.theme.colors.slate[500],
+          fontSize: resolvedTailwingConfig.theme.fontSize.xs[0],
+        },
+      },
+    },
     MuiInputBase: {
       styleOverrides: {
         root: {

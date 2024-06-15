@@ -2,21 +2,13 @@
 
 import { createCat } from "@/actions/cat/create";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import {
-  Box,
-  Button,
-  debounce,
-  Step,
-  StepLabel,
-  Stepper,
-  TextField,
-} from "@mui/material";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import { Box, Button, FormHelperText, TextField } from "@mui/material";
+import classNames from "classnames";
 import Image from "next/image";
-import { DragEventHandler, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { create } from "zustand";
-import classNames from "classnames";
 
 type DragAndDropState = {
   isDragging: boolean;
@@ -30,12 +22,10 @@ const useDragAndDropStore = create<DragAndDropState>((set) => ({
 
 function CatSpecialistAlert() {
   return (
-    <div>
-      <p className="text-slate-500 text-xs mt-1 cursor-pointer opacity-80">
-        Having trouble sending cats? Click here to chat with a{" "}
-        <span className="text-fuchsia-400 font-bold">cat specialist</span>.
-      </p>
-    </div>
+    <FormHelperText className="text-right">
+      Having trouble sending cats? Click here to chat with a{" "}
+      <span className="text-fuchsia-400 font-bold">cat specialist</span>.
+    </FormHelperText>
   );
 }
 
@@ -51,11 +41,11 @@ function SupportFromCatFansLikeYou() {
 
 function DashedBorderDragAndDropFileInputArea({
   isDragging,
+  hasDroppedFile,
 }: {
   isDragging: boolean;
+  hasDroppedFile: boolean;
 }) {
-  console.log({ isDragging });
-
   const containerClassName = classNames(
     "border-dashed border-4 rounded-lg p-4 h-fit text-center flex flex-col justify-center items-center relative",
     {
@@ -64,15 +54,34 @@ function DashedBorderDragAndDropFileInputArea({
     }
   );
 
+  const catDropZoneContent = hasDroppedFile ? (
+    <div className="flex flex-col justify-center items-center">
+      OKAY TO
+      <br />
+      SEND
+      <CheckCircleIcon className="w-14 h-14" />
+    </div>
+  ) : (
+    "DROP CAT HERE"
+  );
+
+  const catDropZoneClassName = classNames(
+    "text-fuchsia-400 text-6xl absolute font-extrabold p-4 m-2 opacity-80",
+    {
+      "text-fuchsia-500": !hasDroppedFile,
+      "text-lime-400": hasDroppedFile,
+    }
+  );
+
+  console.log({ hasDroppedFile });
+
   return (
     <div className={containerClassName}>
       <div className="opacity-40">
         <Image src="/cat-drop-zone.jpeg" width={350} height={250} alt="Cat" />
         <input type="file" name="catImage" className="hidden" />
       </div>
-      <p className="text-fuchsia-400 text-6xl absolute font-extrabold p-4 m-2 opacity-80">
-        CAT DROP ZONE
-      </p>
+      <p className={catDropZoneClassName}>{catDropZoneContent}</p>
     </div>
   );
 }
@@ -137,11 +146,14 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
           className="hidden"
         />
         <div>
-          <DashedBorderDragAndDropFileInputArea isDragging={isDragging} />
-          <p className="text-slate-600 text-sm mt-1 font-semibold">
+          <DashedBorderDragAndDropFileInputArea
+            hasDroppedFile={hasDroppedFile}
+            isDragging={isDragging}
+          />
+          <FormHelperText>
             Gently drop a cat image into the area above or click to select a
             file
-          </p>
+          </FormHelperText>
         </div>
         <TextField
           label=""
@@ -149,6 +161,7 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
           multiline
           rows={2}
           placeholder="Cute cat being cute"
+          helperText="Enter anything you'd like to share about this cat picture"
         />
         {/* <TextField label="Cat Image" name="catImage" type="file" /> */}
         <Button type="submit" variant="contained" disabled={!hasDroppedFile}>
