@@ -24,7 +24,7 @@ export default function RootLayout({
       <AppRouterCacheProvider>
         <GetCatsFastThemeProvider>
           <html lang="en">
-            <body className={`${workSans.className} min-h-screen`}>
+            <body className={`${workSans.className} min-h-screen bg-black`}>
               {children} <Analytics />
             </body>
           </html>
