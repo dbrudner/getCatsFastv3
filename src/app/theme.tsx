@@ -49,6 +49,10 @@ const theme = createTheme({
   },
 });
 
-export default function GetCatsFastThemeProvider({ children }) {
+export default function GetCatsFastThemeProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }

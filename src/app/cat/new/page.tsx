@@ -74,12 +74,12 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
 
   const { isDragging, setIsDragging } = useDragAndDropStore((state) => state);
 
-  const onDragEnter = (e) => {
+  const onDragEnter = (e: any) => {
     e.preventDefault();
     setIsDragging(true);
   };
 
-  const onDragOver = (e) => {
+  const onDragOver = (e: any) => {
     e.preventDefault();
     setIsDragging(true);
   };
