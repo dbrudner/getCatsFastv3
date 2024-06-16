@@ -19,8 +19,8 @@ function CatCards({ cats }: { cats: Cat[] }) {
   return (
     <div className="flex flex-col gap-y-10">
       {cats.map((cat) => (
-        <Link href={`/cat/${cat.id}`}>
-          <CatCard key={cat.id} cat={cat} />
+        <Link key={cat.id} href={`/cat/${cat.id}`}>
+          <CatCard cat={cat} />
         </Link>
       ))}
     </div>
