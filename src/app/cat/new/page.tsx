@@ -6,9 +6,11 @@ import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { Box, Button, FormHelperText, TextField } from "@mui/material";
 import classNames from "classnames";
 import Image from "next/image";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { create } from "zustand";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 type DragAndDropState = {
   isDragging: boolean;
@@ -39,24 +41,42 @@ function SupportFromCatFansLikeYou() {
   );
 }
 
+function SendCatButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <LoadingButton
+      type="submit"
+      variant="contained"
+      className="bg-fuchsia-500 text-white"
+      loading={pending}
+      loadingPosition="end"
+    >
+      Send Cat
+    </LoadingButton>
+  );
+}
+
 function DashedBorderDragAndDropFileInputArea({
   isDragging,
   hasDroppedFile,
   droppedFile,
+  onClick,
 }: {
   isDragging: boolean;
   hasDroppedFile: boolean;
   droppedFile?: File;
+  onClick: () => void;
 }) {
   const containerClassName = classNames(
-    "border-dashed border-4 rounded-lg p-4 h-fit text-center flex flex-col justify-center items-center relative",
+    "border-dashed border-4 rounded-lg p-4 h-fit text-center flex flex-col justify-center items-center relative w-full",
     {
       "border-slate-500": !isDragging,
       "border-fuchsia-500": isDragging,
     }
   );
 
-  const catDropZoneContent = hasDroppedFile ? "" : "DROP CAT HERE";
+  const catDropZoneContent = hasDroppedFile ? "" : "CAT DROP ZONE";
 
   const catDropZoneClassName = classNames(
     "text-fuchsia-400 text-6xl absolute font-extrabold p-4 m-2",
@@ -78,13 +98,18 @@ function DashedBorderDragAndDropFileInputArea({
   });
 
   return (
-    <div className={containerClassName}>
+    <Box
+      component="button"
+      type="button"
+      onClick={onClick}
+      className={containerClassName}
+    >
       <div className={imageContainerClassName}>
         <Image src={catDropZoneImgSrc} width={350} height={250} alt="Cat" />
         <input type="file" name="catImage" className="hidden" />
       </div>
       <p className={catDropZoneClassName}>{catDropZoneContent}</p>
-    </div>
+    </Box>
   );
 }
 
@@ -149,6 +174,19 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
     }
   };
 
+  const dragAndDropHelperText = hasDroppedFile ? (
+    <>
+      To replace this image, click again or drag another image. Only one cat can
+      be uploaded at a time. To upload more than one, you must{" "}
+      <span className="cursor-pointer text-white">
+        <Link href="/cats/new">multicat</Link>
+      </span>
+      .
+    </>
+  ) : (
+    "Gently drop a cat image into the area above or click to select a file"
+  );
+
   return (
     <Box
       component="div"
@@ -176,29 +214,27 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
           accept="image/*"
           multiple={false}
         />
-        <button onClick={onClick} type="button">
+        <Box>
           <DashedBorderDragAndDropFileInputArea
             hasDroppedFile={hasDroppedFile}
             isDragging={isDragging}
             droppedFile={fileInputRef.current?.files?.[0]}
+            onClick={onClick}
           />
-          <FormHelperText>
-            Gently drop a cat image into the area above or click to select a
-            file
-          </FormHelperText>
-        </button>
+          <FormHelperText>{dragAndDropHelperText}</FormHelperText>
+        </Box>
         <TextField
           label=""
           name="catName"
           multiline
           rows={2}
+          maxRows={2}
           placeholder="Cute cat being cute #boyboy"
-          helperText="Enter anything you'd like to share about this cat picture"
+          helperText="Enter anything you'd like to share about this cat picture."
+          inputProps={{ maxLength: 100 }}
         />
-        {/* <TextField label="Cat Image" name="catImage" type="file" /> */}
-        <Button type="submit" variant="contained" disabled={!hasDroppedFile}>
-          Send Cat
-        </Button>
+        <SendCatButton />
+
         <CatSpecialistAlert />
       </form>
     </Box>
@@ -277,7 +313,7 @@ export default function SendCats() {
     <main className="min-h-screen flex flex-col justify-center max-w-screen-sm m-auto px-4">
       <SignedIn>
         <div className="max-w-screen-sm m-auto">
-          <SendCatsForm createCat={createCat} />
+          <SendCatsForm createCat={(formData) => createCat(formData)} />
         </div>
       </SignedIn>
       <SignedOut>
