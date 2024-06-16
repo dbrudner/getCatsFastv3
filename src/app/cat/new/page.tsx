@@ -277,7 +277,10 @@ function SignIn() {
           <h2 className="text-xl font-bold tracking-widest text-white">
             Sign in by clicking the button below.
           </h2>
-          <p className="text-slate-600 mb-4">With Google or an email address</p>
+          <p className="text-slate-600 mb-4">
+            With <span className="text-slate-400">Google</span> or an email
+            address
+          </p>
           <Button component="div" variant="contained" fullWidth>
             <SignInButton />
           </Button>
@@ -337,21 +340,21 @@ export default function SendCats() {
 
   return (
     <main className="min-h-screen flex flex-col justify-center max-w-screen-sm m-auto px-4">
-      {/* <ClerkLoaded>
+      <ClerkLoaded>
         <SignedIn>
           <div className="max-w-screen-sm m-auto">
             <SendCatsForm createCat={(formData) => createCat(formData)} />
           </div>
         </SignedIn>
-        <SignedOut> */}
-      <SignIn />
-      {/* </SignedOut>
+        <SignedOut>
+          <SignIn />
+        </SignedOut>
       </ClerkLoaded>
       <ClerkLoading>
         <div className="flex flex-col items-center justify-center">
           <Loading />
         </div>
-      </ClerkLoading> */}
+      </ClerkLoading>
     </main>
   );
 }

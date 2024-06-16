@@ -41,9 +41,5 @@ export default async function CatComponent({ id }: { id: string }) {
     return <div>Failed to get cat</div>;
   }
 
-  return (
-    <div className="flex flex-col gap-y-24 items-center p-4">
-      <CatCard cat={cat} />
-    </div>
-  );
+  return <CatCard cat={cat} />;
 }

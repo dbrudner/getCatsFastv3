@@ -21,6 +21,15 @@ const theme = createTheme({
     fontFamily: workSans.style.fontFamily,
   },
   components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontWeight: resolvedTailwingConfig.theme.fontWeight.semibold,
+          fontSize: resolvedTailwingConfig.theme.fontSize.xl[0],
+          textTransform: "none",
+        },
+      },
+    },
     MuiFormHelperText: {
       styleOverrides: {
         root: {
