@@ -90,6 +90,7 @@ function DashedBorderDragAndDropFileInputArea({
 
 function SendCatsForm({ createCat = (formData: FormData) => {} }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputEl = fileInputRef.current;
 
   const { isDragging, setIsDragging } = useDragAndDropStore((state) => state);
 
@@ -124,7 +125,9 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
   };
 
   const onClick = () => {
-    if (fileInputRef.current && !hasDroppedFile) {
+    removeFiles();
+
+    if (fileInputRef.current) {
       fileInputRef.current?.click();
     }
   };
@@ -134,6 +137,15 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
 
     if (catImageFile) {
       setHasDroppedFile(true);
+    }
+  };
+
+  const removeFiles = () => {
+    const fileInputEl = fileInputRef.current;
+
+    if (fileInputEl) {
+      fileInputEl.value = "";
+      setHasDroppedFile(false);
     }
   };
 
@@ -161,8 +173,10 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
           name="catImage"
           className="hidden"
           onChange={onChange}
+          accept="image/*"
+          multiple={false}
         />
-        <button onClick={onClick}>
+        <button onClick={onClick} type="button">
           <DashedBorderDragAndDropFileInputArea
             hasDroppedFile={hasDroppedFile}
             isDragging={isDragging}
@@ -178,7 +192,7 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
           name="catName"
           multiline
           rows={2}
-          placeholder="Cute cat being cute"
+          placeholder="Cute cat being cute #boyboy"
           helperText="Enter anything you'd like to share about this cat picture"
         />
         {/* <TextField label="Cat Image" name="catImage" type="file" /> */}
