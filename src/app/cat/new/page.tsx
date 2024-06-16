@@ -52,7 +52,7 @@ function SendCatButton() {
       loading={pending}
       loadingPosition="end"
     >
-      Send Cat
+      Share Cat
     </LoadingButton>
   );
 }
@@ -196,8 +196,8 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
       onDrop={onDrop}
     >
       <div className="mb-4">
-        <h1 className="text-4xl font-bold tracking-widest">
-          Cat Distribution Center
+        <h1 className="text-4xl font-bold tracking-wide">
+          <span className="text-sky-300">GetCatsFast</span> Distribution Center
         </h1>
         <p className="text-slate-600">
           We appreciate your ongoing support and interest in sending cats. This
