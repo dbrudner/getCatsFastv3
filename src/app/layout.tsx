@@ -40,10 +40,10 @@ export default function RootLayout({
         <GetCatsFastThemeProvider>
           <html lang="en">
             <body
-              className={`${workSans.className} min-h-screen bg-black text-white relative mb-32 lg:mb-0`}
+              className={`${workSans.className} min-h-screen bg-black text-white relative`}
             >
               {children} <Analytics />
-              <Nav />
+              {/* <Nav /> */}
             </body>
           </html>
         </GetCatsFastThemeProvider>
