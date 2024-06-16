@@ -279,7 +279,7 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
 function SignIn() {
   return (
     <div className="flex flex-col">
-      <h1 className="text-4xl text-white font-bold mb-4">
+      <h1 className="text-4xl text-white font-bold mb-4 max-w-screen-sm">
         You&apos;re just moments away from becoming a{" "}
         <span className="text-sky-300">GetCatsFast</span> Contributor!
       </h1>
@@ -365,7 +365,7 @@ export default function SendCats() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col justify-center max-w-screen-sm m-auto px-4">
+    <main className="min-h-screen flex flex-col justify-center max-w-screen-md m-auto p-4 md:p-0">
       <ClerkLoaded>
         <SignedIn>
           <div className="max-w-screen-sm m-auto">
