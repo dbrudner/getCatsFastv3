@@ -48,8 +48,13 @@ export default async function Table() {
   const duration = Date.now() - startTime;
 
   return (
-    <div className="flex flex-col gap-y-24 items-center p-4">
-      <CatCards cats={cats} />
+    <div className="max-w-screen-md m-auto">
+      <h1 className="text-4xl font-bold text-white">
+        The <span className="text-sky-300 text-6xl">Cats</span>
+      </h1>
+      <div className="flex flex-col gap-y-24 items-center p-4">
+        <CatCards cats={cats} />
+      </div>
     </div>
   );
 }

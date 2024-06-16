@@ -31,7 +31,7 @@ function ActionsContainer({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex flex-between w-full justify-center gap-x-10">
+    <div className="flex flex-col sm:flex-row flex-between w-full justify-center md:justify-between gap-10">
       {children}
     </div>
   );
@@ -43,7 +43,7 @@ function Card({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="p-4 bg-white shadow-md rounded-lg text-slate-500">
+    <div className="p-4 bg-white shadow-md rounded-lg text-slate-500 flex flex-col items-center md:items-start">
       {children}
     </div>
   );
@@ -61,17 +61,19 @@ function LinkCard({
   href: string;
 }>) {
   return (
-    <OpacityOnHover>
-      <GrowOnHover>
-        <Link href={href}>
-          <Card>
-            <h2 className="text-5xl font-bold">{title}</h2>
-            <p>{description}</p>
-            <Image src={imageSrc} alt={title} width="400" height="400" />
-          </Card>
-        </Link>
-      </GrowOnHover>
-    </OpacityOnHover>
+    <div className="">
+      <OpacityOnHover>
+        <GrowOnHover>
+          <Link href={href}>
+            <Card>
+              <h2 className="text-5xl font-bold">{title}</h2>
+              <p>{description}</p>
+              <Image src={imageSrc} alt={title} width="400" height="400" />
+            </Card>
+          </Link>
+        </GrowOnHover>
+      </OpacityOnHover>
+    </div>
   );
 }
 
@@ -118,12 +120,12 @@ function FooterLinks() {
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-3">
-      <div>
-        <h1 className="text-6xl font-bold text-white">
-          Welcome to <span className="text-sky-300 text-8xl">GetCatsFast</span>
+    <main className="flex min-h-screen max-w-screen-md m-auto flex-col items-center justify-center p-4">
+      <div className="w-full mb-10">
+        <h1 className="text-4xl font-bold text-white">
+          Welcome to <span className="text-sky-300 text-6xl">GetCatsFast</span>
         </h1>
-        <p className="text-2xl text-right text-slate-700">
+        <p className="text-2xl text-slate-600">
           The fastest way to get cats there is.
         </p>
       </div>
@@ -131,14 +133,6 @@ export default function Home() {
         <GetCatsLinkCard />
         <SendCatsLinkCard />
       </ActionsContainer>
-      <div className="flex flex-col justify-between items-end gap-x-4 w-full">
-        <p className="text-slate-600">
-          By using this site you agree to our <TermsAndConditions />.
-        </p>
-        <div>
-          <FooterLinks />
-        </div>
-      </div>
     </main>
   );
 }
