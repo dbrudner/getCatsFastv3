@@ -122,8 +122,14 @@ export default function Home() {
   return (
     <main className="flex min-h-screen max-w-screen-md m-auto flex-col items-center justify-center p-4">
       <div className="w-full mb-10">
-        <h1 className="text-4xl font-bold text-white">
-          Welcome to <span className="text-sky-300 text-6xl">GetCatsFast</span>
+        <h1 className="text-6xl font-bold text-white">
+          Welcome to{" "}
+          <span className="text-sky-300 text-8xl hidden md:inline">
+            GetCatsFast
+          </span>
+          <span className="text-sky-300 text-6xl md:text-8xl inline md:hidden">
+            Get Cats Fast
+          </span>
         </h1>
         <p className="text-2xl text-slate-600">
           The fastest way to get cats there is.

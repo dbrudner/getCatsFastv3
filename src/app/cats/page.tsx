@@ -1,6 +1,8 @@
 import CatCard from "@/components/catcard";
 import { db, CatsTable, Cat } from "@/lib/drizzle";
 import { seed } from "@/lib/seed";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -49,9 +51,20 @@ export default async function Table() {
 
   return (
     <div className="max-w-screen-md m-auto">
-      <h1 className="text-4xl font-bold text-white">
-        The <span className="text-sky-300 text-6xl">Cats</span>
-      </h1>
+      <div className="flex justify-between items-center mt-12 mb-4">
+        <h1 className="text-4xl font-bold text-white">
+          The <span className="text-sky-300 text-6xl">Cats</span>
+        </h1>
+        <Link href="/cat/new">
+          <Button
+            variant="outlined"
+            size="large"
+            startIcon={<PlusIcon className="w-8 h-8" />}
+          >
+            Add Cat
+          </Button>
+        </Link>
+      </div>
       <div className="flex flex-col gap-y-24 items-center p-4">
         <CatCards cats={cats} />
       </div>

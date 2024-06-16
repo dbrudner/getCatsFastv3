@@ -62,7 +62,7 @@ function SupportFromCatFansLikeYou() {
 function SendCatButton() {
   const { pending } = useFormStatus();
 
-  const loadingButtonText = pending ? "Life is butter dream" : "Send Cat";
+  const loadingButtonText = pending ? "Life is butter dream" : "Coming soon";
 
   return (
     <LoadingButton
@@ -71,65 +71,10 @@ function SendCatButton() {
       className="bg-fuchsia-500 text-white"
       loading={pending}
       loadingPosition="end"
+      disabled
     >
       {loadingButtonText}
     </LoadingButton>
-  );
-}
-
-function CatDropZone({
-  isDragging,
-  hasDroppedFile,
-  droppedFile,
-  onClick,
-}: {
-  isDragging: boolean;
-  hasDroppedFile: boolean;
-  droppedFile?: File;
-  onClick: () => void;
-}) {
-  const containerClassName = classNames(
-    "border-dashed border-4 rounded-lg p-4 h-fit text-center flex flex-col justify-center items-center relative w-full",
-    {
-      "border-slate-500": !isDragging,
-      "border-fuchsia-500": isDragging,
-    }
-  );
-
-  const catDropZoneContent = hasDroppedFile ? "" : "CAT DROP ZONE";
-
-  const catDropZoneClassName = classNames(
-    "text-fuchsia-400 text-6xl absolute font-extrabold p-4 m-2",
-    {
-      "text-fuchsia-500": !hasDroppedFile,
-      "text-lime-400": hasDroppedFile,
-      "opacity-80": !hasDroppedFile,
-      "opacity-100": hasDroppedFile,
-    }
-  );
-
-  const catDropZoneImgSrc = droppedFile
-    ? URL.createObjectURL(droppedFile)
-    : "/cat-drop-zone.jpeg";
-
-  const imageContainerClassName = classNames({
-    "opacity-40": !hasDroppedFile,
-    "opacity-100": hasDroppedFile,
-  });
-
-  return (
-    <Box
-      component="button"
-      type="button"
-      onClick={onClick}
-      className={containerClassName}
-    >
-      <div className={imageContainerClassName}>
-        <Image src={catDropZoneImgSrc} width={350} height={250} alt="Cat" />
-        <input type="file" name="catImage" className="hidden" />
-      </div>
-      <p className={catDropZoneClassName}>{catDropZoneContent}</p>
-    </Box>
   );
 }
 
@@ -194,19 +139,6 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
     }
   };
 
-  const dragAndDropHelperText = hasDroppedFile ? (
-    <>
-      To replace this image, click again or drag another image. Only one cat can
-      be uploaded at a time. To upload more than one, you must{" "}
-      <span className="cursor-pointer text-white">
-        <Link href="/cats/new">multicat</Link>
-      </span>
-      .
-    </>
-  ) : (
-    "Gently drop a cat image into the area above or click to select a file"
-  );
-
   return (
     <Box
       component="div"
@@ -250,22 +182,18 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
           multiple={false}
         />
         <Box>
-          <CatDropZone
-            hasDroppedFile={hasDroppedFile}
-            isDragging={isDragging}
-            droppedFile={fileInputRef.current?.files?.[0]}
-            onClick={onClick}
-          />
-          <FormHelperText>{dragAndDropHelperText}</FormHelperText>
+          <Box>Coming soon</Box>
+          <FormHelperText>This feature will be launched soon</FormHelperText>
         </Box>
         <TextField
+          disabled
           label=""
           name="catName"
           multiline
           rows={2}
           maxRows={2}
-          placeholder="Cute cat being cute #boyboy"
-          helperText="Enter anything you'd like to share about this cat picture."
+          placeholder="Cute cats being cute #boyboys"
+          helperText="Enter anything you'd like to share about these cat pictures."
           inputProps={{ maxLength: 100 }}
         />
         <SendCatButton />
