@@ -1,7 +1,13 @@
 "use client";
 
 import { createCat } from "@/actions/cat/create";
-import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import {
+  ClerkLoaded,
+  ClerkLoading,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+} from "@clerk/nextjs";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { Box, Button, FormHelperText, TextField } from "@mui/material";
 import classNames from "classnames";
@@ -11,6 +17,7 @@ import { useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { create } from "zustand";
 import LoadingButton from "@mui/lab/LoadingButton";
+import Loading from "@/components/loading/loading";
 
 type DragAndDropState = {
   isDragging: boolean;
@@ -44,6 +51,8 @@ function SupportFromCatFansLikeYou() {
 function SendCatButton() {
   const { pending } = useFormStatus();
 
+  const loadingButtonText = pending ? "Life is butter dream" : "Send Cat";
+
   return (
     <LoadingButton
       type="submit"
@@ -52,7 +61,7 @@ function SendCatButton() {
       loading={pending}
       loadingPosition="end"
     >
-      Share Cat
+      {loadingButtonText}
     </LoadingButton>
   );
 }
@@ -311,14 +320,21 @@ export default function SendCats() {
 
   return (
     <main className="min-h-screen flex flex-col justify-center max-w-screen-sm m-auto px-4">
-      <SignedIn>
-        <div className="max-w-screen-sm m-auto">
-          <SendCatsForm createCat={(formData) => createCat(formData)} />
+      <ClerkLoaded>
+        <SignedIn>
+          <div className="max-w-screen-sm m-auto">
+            <SendCatsForm createCat={(formData) => createCat(formData)} />
+          </div>
+        </SignedIn>
+        <SignedOut>
+          <SignIn />
+        </SignedOut>
+      </ClerkLoaded>
+      <ClerkLoading>
+        <div className="flex flex-col items-center justify-center">
+          <Loading />
         </div>
-      </SignedIn>
-      <SignedOut>
-        <SignIn />
-      </SignedOut>
+      </ClerkLoading>
     </main>
   );
 }

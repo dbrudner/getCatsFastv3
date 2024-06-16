@@ -16,7 +16,7 @@ function CatCard({ cat }: { cat: Cat }) {
 
 function CatCards({ cats }: { cats: Cat[] }) {
   return (
-    <div className="grid grid-cols-1 gap-y-6">
+    <div className="flex flex-col gap-y-40">
       {cats.map((cat) => (
         <CatCard key={cat.id} cat={cat} />
       ))}
