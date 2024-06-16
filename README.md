@@ -7,8 +7,9 @@ Future features:
    - Add likes, an array of distinct user ids
 1. Delete
 2. Like
-3. Cat-verification
-4. Top-cat
-5. Multi-cat
-6. Add width and height of image to Cat object, use it to inform next/image of size before image loads.
-7. Save cat card
+3. Report (flag)
+4. Cat-verification
+5. Top-cat
+6. Multi-cat
+7. Add width and height of image to Cat object, use it to inform next/image of size before image loads.
+8. Save cat card

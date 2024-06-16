@@ -24,6 +24,7 @@ import { useFormStatus } from "react-dom";
 import { create } from "zustand";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Loading from "@/components/loading/loading";
+import { redirect } from "next/navigation";
 
 type DragAndDropState = {
   isDragging: boolean;
@@ -226,12 +227,12 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
       <div className="my-4">
         <ButtonGroup>
           <Link href="/cat/new">
-            <Button variant="contained" color="primary">
+            <Button variant="outlined" color="primary">
               Single Cat
             </Button>
           </Link>
           <Link href="/cats/new">
-            <Button variant="outlined" color="primary">
+            <Button variant="contained" color="primary">
               MultiCat™
             </Button>
           </Link>
