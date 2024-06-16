@@ -40,7 +40,7 @@ export default function RootLayout({
         <GetCatsFastThemeProvider>
           <html lang="en">
             <body
-              className={`${workSans.className} min-h-screen bg-black text-white relative`}
+              className={`${workSans.className} min-h-screen bg-black text-white relative mb-32 lg:mb-0`}
             >
               {children} <Analytics />
               <Nav />

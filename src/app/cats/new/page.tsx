@@ -308,7 +308,7 @@ function SignIn() {
             With <span className="text-slate-400">Google</span> or an email
             address
           </p>
-          <Button component="div" variant="contained" fullWidth>
+          <Button variant="contained" fullWidth type="button">
             <SignInButton />
           </Button>
         </div>
@@ -341,14 +341,6 @@ function SignIn() {
           </p>
         </div>
       </div>
-
-      {/* <div>
-        <p className=" text-white text-sm mt-2">
-          <InformationCircleIcon className="size-6 text-white inline" />{" "}
-          GetCatsFast will never ask for any sensitive personal information,
-          only your cats.
-        </p>
-      </div> */}
     </div>
   );
 }

@@ -285,7 +285,7 @@ function SignIn() {
       </h1>
       <div className="flex items-center">
         <span className="flex items-center justify-center w-10 h-10 border-4 border-lime-600 rounded-full shrink-0">
-          <CheckIcon className="w-6 h-6 text-lime-600" />
+          <CheckIcon className="w-6 h-6 text-lime-600 text-white" />
         </span>
         <div className="ml-6">
           <h2 className="text-xl font-bold tracking-widest text-slate-600">
@@ -307,7 +307,7 @@ function SignIn() {
             With <span className="text-slate-400">Google</span> or an email
             address
           </p>
-          <Button component="div" variant="contained" fullWidth>
+          <Button variant="contained" fullWidth type="button">
             <SignInButton />
           </Button>
         </div>
