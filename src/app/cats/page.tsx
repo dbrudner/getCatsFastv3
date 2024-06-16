@@ -1,24 +1,27 @@
+import CatCard from "@/components/catcard";
 import { db, CatsTable, Cat } from "@/lib/drizzle";
 import { seed } from "@/lib/seed";
 import Image from "next/image";
 import Link from "next/link";
 
-function CatCard({ cat }: { cat: Cat }) {
-  return (
-    <Link href={`/cat/${cat.id}`}>
-      <div className="flex flex-col gap-y-2">
-        <h2 className="text-2xl">{cat.title}</h2>
-        <Image src={cat.image} alt={cat.title} width={400} height={300} />
-      </div>
-    </Link>
-  );
-}
+// function CatCard({ cat }: { cat: Cat }) {
+//   return (
+//     <Link href={`/cat/${cat.id}`}>
+//       <div className="flex flex-col gap-y-2">
+//         <h2 className="text-2xl">{cat.title}</h2>
+//         <Image src={cat.image} alt={cat.title} width={400} height={300} />
+//       </div>
+//     </Link>
+//   );
+// }
 
 function CatCards({ cats }: { cats: Cat[] }) {
   return (
-    <div className="flex flex-col gap-y-40">
+    <div className="flex flex-col gap-y-10">
       {cats.map((cat) => (
-        <CatCard key={cat.id} cat={cat} />
+        <Link href={`/cat/${cat.id}`}>
+          <CatCard key={cat.id} cat={cat} />
+        </Link>
       ))}
     </div>
   );

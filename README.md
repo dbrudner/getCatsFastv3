@@ -2,6 +2,7 @@ Side projects should be about code therapy not grinding.
 
 Future features:
 
+0. Add owner field
 1. Cat-verification
 2. Top-cat
 3. Multi-cat
