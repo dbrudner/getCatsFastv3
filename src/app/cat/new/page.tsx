@@ -8,7 +8,7 @@ import {
   SignedOut,
   SignInButton,
 } from "@clerk/nextjs";
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import { CheckCircleIcon, CheckIcon } from "@heroicons/react/24/outline";
 import { Box, Button, FormHelperText, TextField } from "@mui/material";
 import classNames from "classnames";
 import Image from "next/image";
@@ -253,18 +253,31 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
 function SignIn() {
   return (
     <div className="flex flex-col">
-      <h1 className="text-6xl text-slate-600 font-bold mb-4">
-        You&apos;re moments away from creating a cat!
+      <h1 className="text-4xl text-white font-bold mb-4">
+        You&apos;re just moments away from becoming a{" "}
+        <span className="text-sky-300">GetCatsFast</span> Contributor!
       </h1>
       <div className="flex items-center">
-        <span className="flex items-center justify-center w-10 h-10 border border-blue-600 rounded-full shrink-0 dark:border-blue-500">
-          1
+        <span className="flex items-center justify-center w-10 h-10 border-4 border-lime-600 rounded-full shrink-0">
+          <CheckIcon className="w-6 h-6 text-lime-600" />
         </span>
         <div className="ml-6">
-          <h2 className="text-xl font-bold tracking-widest text-slate-600 mb-4">
-            Sign in first by clicking the sign in button below with either your
-            Google account or email
+          <h2 className="text-xl font-bold tracking-widest text-slate-600">
+            Find GetCatsFast.com
           </h2>
+          <p className="text-slate-600">The fastest way to get cats</p>
+        </div>
+      </div>
+
+      <div className="flex items-center mt-6">
+        <span className="flex items-center justify-center w-10 h-10 border-4 border-blue-600 rounded-full shrink-0">
+          2
+        </span>
+        <div className="ml-6">
+          <h2 className="text-xl font-bold tracking-widest text-white">
+            Sign in by clicking the button below.
+          </h2>
+          <p className="text-slate-600 mb-4">With Google or an email address</p>
           <Button component="div" variant="contained" fullWidth>
             <SignInButton />
           </Button>
@@ -272,8 +285,8 @@ function SignIn() {
       </div>
 
       <div className="flex items-center mt-6">
-        <span className="flex items-center justify-center w-10 h-10 border border-slate-600 rounded-full shrink-0 ">
-          2
+        <span className="flex items-center justify-center w-10 h-10 border-4 border-slate-600 rounded-full shrink-0 ">
+          3
         </span>
         <div className="ml-6">
           <h2 className="text-xl font-bold tracking-widest text-slate-600">
@@ -285,13 +298,17 @@ function SignIn() {
         </div>
       </div>
       <div className="flex items-center mt-6">
-        <span className="flex items-center justify-center w-10 h-10 border border-slate-600 rounded-full shrink-0 ">
-          3
+        <span className="flex items-center justify-center w-10 h-10 border-4 border-slate-600 rounded-full shrink-0 ">
+          4
         </span>
         <div className="ml-6">
           <h2 className="text-xl font-bold tracking-widest text-slate-600">
             Enjoy Cats
           </h2>
+          <p className="text-slate-600">
+            Your cat will delight cat lovers around the world, and you can enjoy
+            other cats in the meantime
+          </p>
         </div>
       </div>
 
@@ -320,21 +337,21 @@ export default function SendCats() {
 
   return (
     <main className="min-h-screen flex flex-col justify-center max-w-screen-sm m-auto px-4">
-      <ClerkLoaded>
+      {/* <ClerkLoaded>
         <SignedIn>
           <div className="max-w-screen-sm m-auto">
             <SendCatsForm createCat={(formData) => createCat(formData)} />
           </div>
         </SignedIn>
-        <SignedOut>
-          <SignIn />
-        </SignedOut>
+        <SignedOut> */}
+      <SignIn />
+      {/* </SignedOut>
       </ClerkLoaded>
       <ClerkLoading>
         <div className="flex flex-col items-center justify-center">
           <Loading />
         </div>
-      </ClerkLoading>
+      </ClerkLoading> */}
     </main>
   );
 }
