@@ -1,7 +1,6 @@
 "use server";
 import { getCatById } from "@/actions/cat/getCatById";
-import { Cat, CatsTable, db } from "@/lib/drizzle";
-import { eq } from "drizzle-orm";
+import { Cat } from "@/lib/drizzle";
 import Image from "next/image";
 
 function CatCard({ cat }: { cat: Cat }) {
@@ -14,7 +13,7 @@ function CatCard({ cat }: { cat: Cat }) {
   );
 }
 
-export default async function Cat({ id }: { id: string }) {
+export default async function CatComponent({ id }: { id: string }) {
   const cat = await getCatById(id);
 
   if (!cat) {

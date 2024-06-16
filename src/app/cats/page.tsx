@@ -1,4 +1,5 @@
 import { db, CatsTable, Cat } from "@/lib/drizzle";
+import { seed } from "@/lib/seed";
 import Image from "next/image";
 import Link from "next/link";
 

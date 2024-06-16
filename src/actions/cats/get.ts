@@ -1,8 +1,9 @@
 import { CatsTable, db } from "@/lib/drizzle";
+import { seed } from "@/lib/seed";
 
 async function getCats() {
   // await db.delete(CatsTable);
-  // await seed();
+  await seed();
 
   let cats;
   let startTime = Date.now();

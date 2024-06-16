@@ -1,16 +1,20 @@
 "use server";
 import { db, CatsTable, Cat } from "@/lib/drizzle";
 import { put } from "@vercel/blob";
+import { randomUUID } from "crypto";
 import { redirect } from "next/navigation";
 
 export async function createCat(formData: FormData) {
-  const catName = formData.get("catName") ?? "";
+  const catName = formData.get("catName") ?? `untitled-cat-${randomUUID()}`;
   const catImage = formData.get("catImage");
+
+  console.log({ catName });
+
   let redirectPath = "/cats";
 
   if (catImage instanceof File && typeof catName === "string") {
     try {
-      const blob = await put("/cats", catImage, { access: "public" });
+      const blob = await put("cats", catImage, { access: "public" });
 
       const insertedCat = await db
         .insert(CatsTable)
