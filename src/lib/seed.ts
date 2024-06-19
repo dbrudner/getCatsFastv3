@@ -6,14 +6,17 @@ const newCats: NewCat[] = [
   {
     title: "Cat boy",
     image: "/cat.webp",
+    userId: "1",
   },
   {
     title: "Cat girl",
     image: "/cat.webp",
+    userId: "1",
   },
   {
     title: "Cat them",
     image: "/cat.webp",
+    userId: "1",
   },
 ];
 
@@ -24,6 +27,7 @@ export async function seed() {
         title VARCHAR(255) NOT NULL,
         image VARCHAR(255),
         "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+        "userId" UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
       );
   `);
 
