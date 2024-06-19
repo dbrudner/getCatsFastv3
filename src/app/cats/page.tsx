@@ -19,8 +19,8 @@ function CatCards({ cats }: { cats: Cat[] }) {
 }
 
 export default async function Table() {
-  // await db.delete(CatsTable);
-  // await seed();
+  await db.delete(CatsTable);
+  await seed();
 
   let cats;
   let startTime = Date.now();
@@ -35,6 +35,8 @@ export default async function Table() {
       throw e;
     }
   }
+
+  console.log({ cats });
 
   const duration = Date.now() - startTime;
 

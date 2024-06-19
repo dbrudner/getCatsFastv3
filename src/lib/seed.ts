@@ -22,9 +22,12 @@ const newCats: NewCat[] = [
 
 export async function seed() {
   const createTable = await sql.query(`
-      CREATE TABLE IF NOT EXISTS cats (
+      DROP TABLE IF EXISTS cats;
+
+      CREATE TABLE cats (
         id SERIAL PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
+        whatever VARCHAR(255),
         image VARCHAR(255),
         "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
         "userId" UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
