@@ -1,6 +1,6 @@
 "use server";
 import { getCatById } from "@/actions/cat/getCatById";
-import CatCard from "@/components/catcard";
+import { CatCard } from "@/app/cats/page";
 
 // function CatCard({ cat }: { cat: Cat }) {
 //   const [openPreview, setOpenPreview] = useState(false);

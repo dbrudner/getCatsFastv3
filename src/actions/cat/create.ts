@@ -1,9 +1,9 @@
 "use server";
 import { db, CatsTable, Cat } from "@/lib/drizzle";
+import { currentUser } from "@clerk/nextjs/server";
 import { put } from "@vercel/blob";
 import { randomUUID } from "crypto";
 import { redirect } from "next/navigation";
-import { currentUser } from "@clerk/nextjs/server";
 
 export async function createCat(formData: FormData) {
   const catName = formData.get("catName") ?? `untitled-cat-${randomUUID()}`;
@@ -13,10 +13,14 @@ export async function createCat(formData: FormData) {
 
   if (catImage instanceof File && typeof catName === "string") {
     try {
-      const blob = await put("cats", catImage, { access: "public" });
-      const resolvedCurrentUser = await currentUser();
-      if (!resolvedCurrentUser?.id) {
-        throw new Error("No current user or userId");
+      const blobPromise = await put("cats", catImage, { access: "public" });
+      const currentUserPromise = currentUser();
+      const [blob, resolvedCurrentUser] = await Promise.all([
+        blobPromise,
+        currentUserPromise,
+      ]);
+      if (!resolvedCurrentUser) {
+        throw new Error("No current user");
       }
       const insertedCat = await db
         .insert(CatsTable)
@@ -24,7 +28,7 @@ export async function createCat(formData: FormData) {
           {
             title: catName,
             image: blob.url,
-            userId: resolvedCurrentUser?.id,
+            userId: resolvedCurrentUser.id,
           },
         ])
         .returning();

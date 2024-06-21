@@ -1,6 +1,7 @@
 "use client";
 
 import { createCat } from "@/actions/cat/create";
+import Loading from "@/components/loading/loading";
 import {
   ClerkLoaded,
   ClerkLoading,
@@ -8,7 +9,8 @@ import {
   SignedOut,
   SignInButton,
 } from "@clerk/nextjs";
-import { CheckCircleIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { CheckIcon } from "@heroicons/react/24/outline";
+import LoadingButton from "@mui/lab/LoadingButton";
 import {
   Box,
   Button,
@@ -22,8 +24,6 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { create } from "zustand";
-import LoadingButton from "@mui/lab/LoadingButton";
-import Loading from "@/components/loading/loading";
 
 type DragAndDropState = {
   isDragging: boolean;
@@ -51,7 +51,7 @@ function CatSpecialistAlert() {
 function SupportFromCatFansLikeYou() {
   return (
     <div>
-      <p className="text-slate-600 text-xs text-slate-600">
+      <p className="text-slate-600 text-xs">
         Your support helps us provide cats to those who need them most
       </p>
     </div>
@@ -92,7 +92,7 @@ function CatDropZone({
     {
       "border-slate-500": !isDragging,
       "border-fuchsia-500": isDragging,
-    }
+    },
   );
 
   const catDropZoneContent = hasDroppedFile ? "" : "CAT DROP ZONE";
@@ -104,7 +104,7 @@ function CatDropZone({
       "text-lime-400": hasDroppedFile,
       "opacity-80": !hasDroppedFile,
       "opacity-100": hasDroppedFile,
-    }
+    },
   );
 
   const catDropZoneImgSrc = droppedFile
@@ -155,7 +155,6 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
   };
 
   const onDrop = (event: any) => {
-    console.log(event);
     event.preventDefault();
     const catImageFile = event.dataTransfer.files[0];
     const fileInputEl = fileInputRef.current;
@@ -340,14 +339,6 @@ function SignIn() {
           </p>
         </div>
       </div>
-
-      {/* <div>
-        <p className=" text-white text-sm mt-2">
-          <InformationCircleIcon className="size-6 text-white inline" />{" "}
-          GetCatsFast will never ask for any sensitive personal information,
-          only your cats.
-        </p>
-      </div> */}
     </div>
   );
 }

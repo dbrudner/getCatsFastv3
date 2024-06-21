@@ -27,7 +27,7 @@ export async function seed() {
       CREATE TABLE cats (
         id SERIAL PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
-        whatever VARCHAR(255),
+        "userId" VARCHAR(255) NOT NULL,
         image VARCHAR(255),
         "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
         "userId" UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
