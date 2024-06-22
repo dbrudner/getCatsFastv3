@@ -17,7 +17,6 @@ export const CatsTable = pgTable(
     image: text("image").notNull(),
     userId: text("userId").notNull(),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
-    userId: text("userId").notNull(),
   },
   (cats) => {
     return {
