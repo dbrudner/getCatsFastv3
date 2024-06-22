@@ -1,15 +1,18 @@
 "use client";
 import { deleteCat } from "@/actions/cat/delete";
-import { CatsTable, db } from "@/lib/drizzle";
-import { eq } from "drizzle-orm";
+import { useRouter } from "next/navigation";
 
 export default function DeleteCatButton({ catId }: { catId: number }) {
+  const router = useRouter();
+
   return (
     <button
       type="button"
-      onClick={(e) => {
+      onClick={async (e) => {
         e.preventDefault();
-        deleteCat(catId);
+        console.log("Hey");
+        await deleteCat(catId);
+        router.refresh();
       }}
       className="bg-red-500 text-white rounded p-2 absolute top-2 right-2"
     >

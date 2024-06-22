@@ -1,4 +1,5 @@
 "use server";
+import DeleteCatButton from "@/components/deleteCatButton";
 import { Cat, CatsTable, db } from "@/lib/drizzle";
 import { currentUser } from "@clerk/nextjs/server";
 import { PlusIcon } from "@heroicons/react/24/outline";
@@ -6,74 +7,10 @@ import { Button } from "@mui/material";
 import { eq } from "drizzle-orm";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
-async function deleteCat(formData: FormData) {
-  const catId = formData.get("catId");
-  if (typeof catId !== "number") {
-    throw new Error("Invalid catId", { catId });
-  }
-  await db.delete(CatsTable).where(eq(CatsTable.id, catId));
-}
-
-export async function DeleteCatButton({ catId }: { catId: number }) {
-  const router = useRouter();
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    await deleteCat(formData);
-    router.refresh();
-  };
-
-  return (
-    <form action={(e) => handleSubmit(e)}>
-      <input type="hidden" name="catId" value={catId} />
-      <button
-        type="submit"
-        className="bg-red-500 text-white rounded p-2 absolute top-2 right-2"
-      >
-        Delete Cat
-      </button>
-    </form>
-  );
-}
-
-export async function CatCard({
-  cat,
-  isCatOwner,
-}: {
-  cat: Cat;
-  isCatOwner: boolean;
-}) {
-  return (
-    <div className="flex flex-col gap-y-2">
-      <div className="border-2 border-sky-300 rounded p-4 cursor-pointer relative">
-        <Image src={cat.image} width={1200} height={1200} alt={cat.title} />
-      </div>
-      <h1 className="text-3xl font-bold">{cat.title}</h1>
-      {isCatOwner && <DeleteCatButton catId={cat.id} />}
-    </div>
-  );
-}
-
-async function deleteCat(formData: FormData) {
-  "use server";
-  try {
-    const catId = formData.get("catId");
-    console.log({ catId });
-    if (!catId) return;
-    const result = await db.delete(CatsTable).where(eq(CatsTable.id, catId));
-    console.log({ result });
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-export default async function Table() {
+export default async function Cats() {
   //  await db.delete(CatsTable);
   //  await seed();
-
   let cats;
   let startTime = Date.now();
   try {
@@ -87,8 +24,6 @@ export default async function Table() {
       throw e;
     }
   }
-
-  console.log({ cats });
 
   const duration = Date.now() - startTime;
 
@@ -128,15 +63,7 @@ export default async function Table() {
                 </Link>
 
                 {cat.userId === resolvedCurrentUser?.id && (
-                  <form action={deleteCat}>
-                    <input type="hidden" name="catId" value={cat.id} />
-                    <button
-                      type="submit"
-                      className="bg-red-500 text-white rounded p-2 absolute top-2 right-2"
-                    >
-                      Delete Cat
-                    </button>
-                  </form>
+                  <DeleteCatButton catId={cat.id} />
                 )}
               </div>
             </div>
