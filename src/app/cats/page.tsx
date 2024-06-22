@@ -45,7 +45,7 @@ export default async function Cats() {
           </Button>
         </Link>
       </div>
-      <div className="flex flex-col gap-y-24 items-center">
+      <div className="flex flex-col gap-y-24 items-center mb-48">
         <div className="flex flex-col max-w-full gap-y-10">
           {cats.map((cat) => (
             <div key={cat.id}>
