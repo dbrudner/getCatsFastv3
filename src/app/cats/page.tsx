@@ -49,18 +49,19 @@ export default async function Cats() {
         <div className="flex flex-col max-w-full gap-y-10">
           {cats.map((cat) => (
             <div key={cat.id}>
-              <div className="flex flex-col gap-y-2">
-                <Link href={`/cat/${cat.id}`}>
-                  <div className="border-2 border-sky-300 rounded p-4 cursor-pointer relative">
+              <div className="flex flex-col gap-y-2 relative">
+                <div className="border-2 border-sky-300 rounded p-4 cursor-pointer">
+                  <Link href={`/cat/${cat.id}`}>
                     <Image
                       src={cat.image}
                       width={1200}
                       height={1200}
                       alt={cat.title}
                     />
-                  </div>
-                  <h1 className="text-3xl font-bold">{cat.title}</h1>
-                </Link>
+                  </Link>
+                </div>
+
+                <h1 className="text-3xl font-bold">{cat.title}</h1>
 
                 {cat.userId === resolvedCurrentUser?.id && (
                   <DeleteCatButton catId={cat.id} />

@@ -1,12 +1,14 @@
 "use client";
 import { deleteCat } from "@/actions/cat/delete";
+import { TrashIcon } from "@heroicons/react/24/outline";
+import { IconButton } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 export default function DeleteCatButton({ catId }: { catId: number }) {
   const router = useRouter();
 
   return (
-    <button
+    <IconButton
       type="button"
       onClick={async (e) => {
         e.preventDefault();
@@ -14,9 +16,12 @@ export default function DeleteCatButton({ catId }: { catId: number }) {
         await deleteCat(catId);
         router.refresh();
       }}
-      className="bg-red-500 text-white rounded p-2 absolute top-2 right-2"
+      sx={{
+        position: "absolute",
+      }}
+      className="text-white rounded p-2 absolute top-6 right-6 border-2"
     >
-      Delete Cat
-    </button>
+      <TrashIcon className="h-12 w-12" />
+    </IconButton>
   );
 }

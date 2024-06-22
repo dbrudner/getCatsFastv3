@@ -9,6 +9,14 @@ export async function createCat(formData: FormData) {
   const catName = formData.get("catName") ?? `untitled-cat-${randomUUID()}`;
   const catImage = formData.get("catImage");
 
+  if (!(catImage instanceof File)) {
+    throw new Error("Invalid cat image");
+  }
+
+  if (typeof catName !== "string") {
+    throw new Error("Invalid cat name");
+  }
+
   let redirectPath = "/cats";
 
   if (catImage instanceof File && typeof catName === "string") {
