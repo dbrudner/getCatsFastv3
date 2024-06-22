@@ -11,7 +11,7 @@ import Link from "next/link";
 
 export default async function Cats() {
   //  await db.delete(CatsTable);
-  // await seed();
+  //  await seed();
   let cats;
   let startTime = Date.now();
   try {
@@ -25,8 +25,6 @@ export default async function Cats() {
       throw e;
     }
   }
-
-  const duration = Date.now() - startTime;
 
   const resolvedCurrentUser = await currentUser();
 

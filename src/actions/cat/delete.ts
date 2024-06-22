@@ -7,7 +7,6 @@ import { and, eq } from "drizzle-orm";
 export async function deleteCat(catId: number): Promise<void> {
   console.log("Deleting cat with id", catId);
 
-
   try {
     const resolvedCurrentUser = await currentUser();
 
