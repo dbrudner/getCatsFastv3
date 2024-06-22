@@ -1,27 +1,17 @@
-import CatCard from "@/components/catcard";
-import { db, CatsTable, Cat } from "@/lib/drizzle";
+"use server";
+import DeleteCatButton from "@/components/deleteCatButton";
+import { Cat, CatsTable, db } from "@/lib/drizzle";
 import { seed } from "@/lib/seed";
+import { currentUser } from "@clerk/nextjs/server";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { Button } from "@mui/material";
+import { eq } from "drizzle-orm";
 import Image from "next/image";
 import Link from "next/link";
 
-function CatCards({ cats }: { cats: Cat[] }) {
-  return (
-    <div className="flex flex-col gap-y-10">
-      {cats.map((cat) => (
-        <Link key={cat.id} href={`/cat/${cat.id}`}>
-          <CatCard cat={cat} />
-        </Link>
-      ))}
-    </div>
-  );
-}
-
-export default async function Table() {
-  // await db.delete(CatsTable);
+export default async function Cats() {
+  //  await db.delete(CatsTable);
   // await seed();
-
   let cats;
   let startTime = Date.now();
   try {
@@ -37,6 +27,8 @@ export default async function Table() {
   }
 
   const duration = Date.now() - startTime;
+
+  const resolvedCurrentUser = await currentUser();
 
   return (
     <div className="max-w-screen-md m-auto">
@@ -54,8 +46,31 @@ export default async function Table() {
           </Button>
         </Link>
       </div>
-      <div className="flex flex-col gap-y-24 items-center">
-        <CatCards cats={cats} />
+      <div className="flex flex-col gap-y-24 items-center mb-48">
+        <div className="flex flex-col max-w-full gap-y-10">
+          {cats.map((cat) => (
+            <div key={cat.id}>
+              <div className="flex flex-col gap-y-2 relative">
+                <div className="border-2 border-sky-300 rounded p-4 cursor-pointer">
+                  <Link href={`/cat/${cat.id}`}>
+                    <Image
+                      src={cat.image}
+                      width={1200}
+                      height={1200}
+                      alt={cat.title}
+                    />
+                  </Link>
+                </div>
+
+                <h1 className="text-3xl font-bold">{cat.title}</h1>
+
+                {cat.userId === resolvedCurrentUser?.id && (
+                  <DeleteCatButton catId={cat.id} />
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
