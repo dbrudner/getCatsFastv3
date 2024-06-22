@@ -1,6 +1,7 @@
 "use server";
 import DeleteCatButton from "@/components/deleteCatButton";
 import { Cat, CatsTable, db } from "@/lib/drizzle";
+import { seed } from "@/lib/seed";
 import { currentUser } from "@clerk/nextjs/server";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { Button } from "@mui/material";
@@ -10,7 +11,7 @@ import Link from "next/link";
 
 export default async function Cats() {
   //  await db.delete(CatsTable);
-  //  await seed();
+  // await seed();
   let cats;
   let startTime = Date.now();
   try {

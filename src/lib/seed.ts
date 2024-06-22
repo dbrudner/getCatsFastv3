@@ -30,7 +30,6 @@ export async function seed() {
         "userId" VARCHAR(255) NOT NULL,
         image VARCHAR(255),
         "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-        "userId" UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
       );
   `);
 
