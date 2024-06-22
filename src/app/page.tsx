@@ -120,7 +120,7 @@ function FooterLinks() {
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen max-w-screen-md m-auto flex-col items-center justify-center p-4 md:p-0">
+    <main className="flex min-h-screen m-auto flex-col items-center justify-center p-4 md:p-0">
       <div className="w-full mb-10">
         <h1 className="text-6xl font-bold text-white">
           Welcome to{" "}

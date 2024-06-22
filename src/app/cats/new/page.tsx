@@ -78,7 +78,7 @@ function SendCatButton() {
   );
 }
 
-function SendCatsForm({ createCat = (formData: FormData) => {} }) {
+function SendCatsForm({ createCat = (formData: FormData) => { } }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const fileInputEl = fileInputRef.current;
 
@@ -286,10 +286,10 @@ export default function SendCats() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col justify-center max-w-screen-sm m-auto px-4">
+    <main className="min-h-screen flex flex-col justify-center m-auto px-4">
       <ClerkLoaded>
         <SignedIn>
-          <div className="max-w-screen-sm m-auto">
+          <div className="m-auto">
             <SendCatsForm createCat={(formData) => createCat(formData)} />
           </div>
         </SignedIn>

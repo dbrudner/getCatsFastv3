@@ -16,12 +16,14 @@ export async function deleteCat(catId: number): Promise<void> {
       throw new Error("No current user");
     }
 
-    const deletedCats = await db
+    const result = await db
       .delete(CatsTable)
       .where(and(
         eq(CatsTable.id, catId),
         eq(CatsTable.userId, resolvedCurrentUser.id)
       ));
+
+    console.log("Deleted cat", result);
   } catch (e) {
     console.error("Error deleting cat", e);
     throw e;

@@ -1,20 +1,11 @@
+import { ClerkProvider } from "@clerk/nextjs";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
-import "./globals.css";
-import { Analytics } from "@vercel/analytics/react";
-import { ClerkProvider, SignOutButton, SignedIn } from "@clerk/nextjs";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
-import { IconButton, ThemeProvider } from "@mui/material";
-import GetCatsFastThemeProvider from "./theme";
-import Link from "next/link";
-import {
-  ArrowRightEndOnRectangleIcon,
-  HomeIcon,
-  PlusIcon,
-} from "@heroicons/react/24/outline";
 import Head from "next/head";
-import classNames from "classnames";
-import Nav from "@/components/nav/nav";
+import "./globals.css";
+import GetCatsFastThemeProvider from "./theme";
 
 const workSans = Work_Sans({ subsets: ["latin"] });
 
@@ -40,7 +31,7 @@ export default function RootLayout({
         <GetCatsFastThemeProvider>
           <html lang="en">
             <body
-              className={`${workSans.className} min-h-screen bg-black text-white relative`}
+              className={`${workSans.className} min-h-screen bg-black text-white relative max-w-screen-sm m-auto`}
             >
               {children} <Analytics />
               {/* <Nav /> */}

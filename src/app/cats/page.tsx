@@ -29,7 +29,7 @@ export default async function Cats() {
   const resolvedCurrentUser = await currentUser();
 
   return (
-    <div className="max-w-screen-md m-auto">
+    <div className="m-auto">
       <div className="flex justify-between items-center mt-12 mb-4">
         <h1 className="text-4xl font-bold text-white">
           The <span className="text-sky-300 text-6xl">Cats</span>

@@ -132,7 +132,7 @@ function CatDropZone({
   );
 }
 
-function SendCatsForm({ createCat = (formData: FormData) => {} }) {
+function SendCatsForm({ createCat = (formData: FormData) => { } }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const fileInputEl = fileInputRef.current;
 
@@ -278,13 +278,13 @@ function SendCatsForm({ createCat = (formData: FormData) => {} }) {
 function SignIn() {
   return (
     <div className="flex flex-col">
-      <h1 className="text-4xl text-white font-bold mb-4 max-w-screen-sm">
+      <h1 className="text-4xl text-white font-bold mb-4">
         You&apos;re just moments away from becoming a{" "}
         <span className="text-sky-300">GetCatsFast</span> Contributor!
       </h1>
       <div className="flex items-center">
         <span className="flex items-center justify-center w-10 h-10 border-4 border-lime-600 rounded-full shrink-0">
-          <CheckIcon className="w-6 h-6 text-lime-600 text-white" />
+          <CheckIcon className="w-6 h-6 text-white" />
         </span>
         <div className="ml-6">
           <h2 className="text-xl font-bold tracking-widest text-slate-600">
@@ -359,7 +359,7 @@ export default function SendCats() {
     <main className="min-h-screen flex flex-col justify-center max-w-screen-md m-auto p-4 md:p-0">
       <ClerkLoaded>
         <SignedIn>
-          <div className="max-w-screen-sm m-auto">
+          <div className="m-auto">
             <SendCatsForm createCat={(formData) => createCat(formData)} />
           </div>
         </SignedIn>
