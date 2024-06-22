@@ -9,8 +9,8 @@ export async function deleteCat(catId: number): Promise<void> {
     const deletedCats = await db
       .delete(CatsTable)
       .where(eq(CatsTable.id, catId));
-    const deletedCat = deletedCats[0];
-    console.log("Deleted cat", deletedCat);
+    // const deletedCat = deletedCats[0];
+    // console.log("Deleted cat", deletedCat);
   } catch (e) {
     console.error("Error deleting cat", e);
     throw e;
