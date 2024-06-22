@@ -236,9 +236,11 @@ function SignIn() {
             With <span className="text-slate-400">Google</span> or an email
             address
           </p>
-          <Button variant="contained" fullWidth type="button">
-            <SignInButton />
-          </Button>
+          <SignInButton>
+            <Button variant="contained" fullWidth type="button">
+              Sign In
+            </Button>
+          </SignInButton>
         </div>
       </div>
 
