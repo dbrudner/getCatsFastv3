@@ -6,16 +6,28 @@ import { Button } from "@mui/material";
 import { eq } from "drizzle-orm";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-async function handleSubmit(formData: FormData) {
+async function deleteCat(formData: FormData) {
   const catId = formData.get("catId");
-  if (!catId) return;
+  if (typeof catId !== "number") {
+    throw new Error("Invalid catId", { catId });
+  }
   await db.delete(CatsTable).where(eq(CatsTable.id, catId));
 }
 
 export async function DeleteCatButton({ catId }: { catId: number }) {
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    await deleteCat(formData);
+    router.refresh();
+  };
+
   return (
-    <form action={handleSubmit}>
+    <form action={(e) => handleSubmit(e)}>
       <input type="hidden" name="catId" value={catId} />
       <button
         type="submit"
