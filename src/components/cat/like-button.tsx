@@ -4,7 +4,7 @@ import { deleteLike, getLikes, postLike } from "@/actions/likes";
 import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { IconButton } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useMemo } from "react";
 import classNames from "classnames";
 
 type LikeButtonProps = {
@@ -44,15 +44,13 @@ const useDeleteLikeMutation = (catId: number, userId: string, onSuccess: () => v
 }
 
 export function LikeButton({ catId, userId }: LikeButtonProps) {
-  const { data: likes, refetch, isLoading } = useGetLikesQuery(catId);
+  const { data: likes, refetch, isLoading, isFetching } = useGetLikesQuery(catId);
 
   const postLikeMutation = usePostLikeMutation(catId, userId, () => {
-    console.log("Refetching")
     refetch();
   });
 
   const deleteLikeMutation = useDeleteLikeMutation(catId, userId, () => {
-    console.log("Refetching")
     refetch();
   });
 
@@ -64,22 +62,36 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
     }
   }
 
-  const iconClassName = classNames("w-5 h-5",
-    likes?.liked ? "text-sky-300" : "text-slate-600"
-  );
+  const iconClassName = useMemo(() => {
+    const shouldShowSkyColor = (likes?.liked && !isFetching) || postLikeMutation.isPending || (isFetching && !likes?.liked)
+    return classNames("w-5 h-5 transition-colors duration-300",
+      shouldShowSkyColor ? "text-sky-300" : "text-slate-600",
+      {
+        invisible: isLoading
+      }
+    )
+  }, [likes?.liked, postLikeMutation.isPending, isFetching])
 
+  const likesClassName = classNames("text-sm font-semibold")
+  const likesCountClassName = classNames(
+    " transition-opacity duration-300", {
+    invisible: isLoading,
+  },
+    isFetching || postLikeMutation.isPending ? "opacity-0" : "opacity-100"
+  )
 
   return (
     <div className="flex flex-col justify-end gap-y-2 items-end">
       <div>
-        <IconButton disabled={postLikeMutation.isPending || isLoading} onClick={() => onClick()}>
+        <IconButton disabled={postLikeMutation.isPending || isFetching} onMouseDown={() => onClick()} disableRipple>
           <HandThumbUpIcon className={iconClassName} />
         </IconButton>
       </div>
-      <p className="text-sm font-semibold">
-        {likes?.count} Likes
+      <p className={likesClassName}>
+        <span className={likesCountClassName}>{likes?.count}</span> Likes
       </p>
     </div>
   );
 }
+
 
