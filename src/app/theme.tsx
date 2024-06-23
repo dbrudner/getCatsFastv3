@@ -39,13 +39,6 @@ const theme = createTheme({
         },
       },
     },
-    MuiIconButton: {
-      styleOverrides: {
-        root: {
-          border: `1px solid ${resolvedTailwingConfig.theme.colors.sky[300]}`,
-        },
-      },
-    },
     MuiInputBase: {
       styleOverrides: {
         root: {

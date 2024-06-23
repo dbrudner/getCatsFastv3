@@ -76,20 +76,21 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
   const likesCountClassName = classNames(
     " transition-opacity duration-300", {
     invisible: isLoading,
+    "text-lime-400": likes?.liked,
   },
     isFetching || postLikeMutation.isPending ? "opacity-0" : "opacity-100"
   )
 
   return (
-    <div className="flex flex-col justify-end gap-y-2 items-end">
+    <div className="flex justify-end gap-y-2 items-center">
+      <p className={likesClassName}>
+        <span className={likesCountClassName}>{likes?.count}</span> Likes
+      </p>
       <div>
         <IconButton disabled={postLikeMutation.isPending || isFetching} onClick={() => onClick()} disableRipple>
           <HandThumbUpIcon className={iconClassName} />
         </IconButton>
       </div>
-      <p className={likesClassName}>
-        <span className={likesCountClassName}>{likes?.count}</span> Likes
-      </p>
     </div>
   );
 }
