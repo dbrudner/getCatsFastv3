@@ -1,6 +1,7 @@
 "use server";
 import { getCats } from "@/actions/cat";
 import { getLikes } from "@/actions/likes";
+import { LikeButton } from "@/components/cat/like-button";
 import DeleteCatButton from "@/components/delete-cat-button";
 import { Cat, CatsTable, } from "@/lib/core";
 import { createLikesTable } from "@/lib/seed";
@@ -10,8 +11,9 @@ import { Button, IconButton } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 
-export const CatCard = async ({ cat, isCatOwner }: { cat: Cat, isCatOwner: boolean; }) => {
+const CatCard = async ({ cat, userId }: { cat: Cat, userId: string }) => {
   const likes = await getLikes(cat.id);
+  const isCatOwner = cat.userId === userId;
 
   return <div key={cat.id}>
     <div className="flex flex-col gap-y-2 relative">
@@ -25,13 +27,10 @@ export const CatCard = async ({ cat, isCatOwner }: { cat: Cat, isCatOwner: boole
           />
         </Link>
       </div>
-      <div className="flex justify-between items-start">
+      <div className="flex justify-between items-start mt-1">
         <div><h1 className="text-3xl font-bold">{cat.title}</h1></div>
-        <div className="flex flex-col items-end">
-          <IconButton>
-            <HandThumbUpIcon className="w-6 h-6" />
-          </IconButton>
-          <p className="text-sm font-semibold">{likes?.count} Likes</p>
+        <div className="flex flex-col items-end gap-y-2">
+          <LikeButton catId={cat.id} userId={userId} />
         </div>
 
       </div>
@@ -44,7 +43,6 @@ export const CatCard = async ({ cat, isCatOwner }: { cat: Cat, isCatOwner: boole
 }
 
 export default async function Cats() {
-  await createLikesTable();
   const cats = await getCats();
   const resolvedCurrentUser = await currentUser();
 
@@ -67,7 +65,7 @@ export default async function Cats() {
       <div className="flex flex-col gap-y-24 items-center mb-48">
         <div className="flex flex-col max-w-full gap-y-10">
           {cats.map((cat) => (
-            <CatCard key={cat.id} cat={cat} isCatOwner={cat.userId === resolvedCurrentUser?.id} />
+            <CatCard key={cat.id} cat={cat} userId={resolvedCurrentUser?.id} />
           ))}
         </div>
       </div>

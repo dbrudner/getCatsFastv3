@@ -24,3 +24,19 @@ export async function getLikes(catId: number) {
   }
 };
 
+export async function postLike(catId: number, userId: string) {
+  try {
+
+    await getCatsFastDb
+      .insert(likesTable)
+      .values([
+        {
+          catId,
+          userId,
+        },
+      ])
+      .returning();
+  } catch (err) {
+    console.error(err);
+  }
+}

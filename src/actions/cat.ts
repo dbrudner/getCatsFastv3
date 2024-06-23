@@ -54,9 +54,11 @@ export async function createCat(formData: FormData) {
         blobPromise,
         currentUserPromise,
       ]);
+
       if (!resolvedCurrentUser) {
         throw new Error("No current user");
       }
+
       const insertedCat = await getCatsFastDb
         .insert(CatsTable)
         .values([
