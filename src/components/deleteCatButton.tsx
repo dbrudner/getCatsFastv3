@@ -1,5 +1,5 @@
 "use client";
-import { deleteCat } from "@/actions/cat/delete";
+import { deleteCat } from "@/actions/cat";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { IconButton } from "@mui/material";
 import { useRouter } from "next/navigation";

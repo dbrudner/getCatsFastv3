@@ -20,10 +20,9 @@ const newCats: NewCat[] = [
   },
 ];
 
-export async function seed() {
-  const createTable = await sql.query(`
+export async function createCatsTable() {
+  return await sql.query(`
       DROP TABLE IF EXISTS cats;
-
       CREATE TABLE cats (
         id SERIAL PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
@@ -32,14 +31,15 @@ export async function seed() {
         "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
   `);
+}
 
+export async function seedCatsTable() {
   const insertedCats: Cat[] = await db
     .insert(CatsTable)
     .values(newCats)
     .returning();
 
   return {
-    createTable,
     insertedCats,
   };
 }
