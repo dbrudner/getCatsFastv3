@@ -1,6 +1,7 @@
 "use client";
 
-import { createCat } from "@/actions/cat/create";
+import { createCat } from "@/actions/cat";
+import Loading from "@/components/loading/loading";
 import {
   ClerkLoaded,
   ClerkLoading,
@@ -8,7 +9,8 @@ import {
   SignedOut,
   SignInButton,
 } from "@clerk/nextjs";
-import { CheckCircleIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { CheckIcon } from "@heroicons/react/24/outline";
+import LoadingButton from "@mui/lab/LoadingButton";
 import {
   Box,
   Button,
@@ -16,15 +18,10 @@ import {
   FormHelperText,
   TextField,
 } from "@mui/material";
-import classNames from "classnames";
-import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { create } from "zustand";
-import LoadingButton from "@mui/lab/LoadingButton";
-import Loading from "@/components/loading/loading";
-import { redirect } from "next/navigation";
 
 type DragAndDropState = {
   isDragging: boolean;
@@ -52,7 +49,7 @@ function CatSpecialistAlert() {
 function SupportFromCatFansLikeYou() {
   return (
     <div>
-      <p className="text-slate-600 text-xs text-slate-600">
+      <p className="text-slate-600 text-xs">
         Your support helps us provide cats to those who need them most
       </p>
     </div>

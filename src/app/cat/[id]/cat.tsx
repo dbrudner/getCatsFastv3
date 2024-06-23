@@ -1,8 +1,7 @@
 "use server";
-import { getCatById } from "@/actions/cat/getCatById";
+import { getCatById } from "@/actions/cat";
 import { Cat } from "@/lib/drizzle";
 import Image from "next/image";
-import { useState } from "react";
 
 function CatCard({ cat }: { cat: Cat }) {
   return (
@@ -15,7 +14,7 @@ function CatCard({ cat }: { cat: Cat }) {
   );
 }
 
-export default async function CatComponent({ id }: { id: string }) {
+export default async function CatComponent({ id }: { id: Cat["id"] }) {
   const cat = await getCatById(id);
 
   if (!cat) {

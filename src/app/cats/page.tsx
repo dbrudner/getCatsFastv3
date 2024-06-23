@@ -1,6 +1,6 @@
 "use server";
 import { getCats } from "@/actions/cat";
-import DeleteCatButton from "@/components/deleteCatButton";
+import DeleteCatButton from "@/components/delete-cat-button";
 import { Cat, CatsTable, db } from "@/lib/drizzle";
 import { currentUser } from "@clerk/nextjs/server";
 import { PlusIcon } from "@heroicons/react/24/outline";
@@ -54,7 +54,7 @@ export default async function Cats() {
       <div className="flex flex-col gap-y-24 items-center mb-48">
         <div className="flex flex-col max-w-full gap-y-10">
           {cats.map((cat) => (
-            <CatCard cat={cat} isCatOwner={cat.userId === resolvedCurrentUser?.id} />
+            <CatCard key={cat.id} cat={cat} isCatOwner={cat.userId === resolvedCurrentUser?.id} />
           ))}
         </div>
       </div>

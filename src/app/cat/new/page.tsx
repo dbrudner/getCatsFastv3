@@ -1,6 +1,6 @@
 "use client";
 
-import { createCat } from "@/actions/cat/create";
+import { createCat } from "@/actions/cat";
 import Loading from "@/components/loading/loading";
 import {
   ClerkLoaded,

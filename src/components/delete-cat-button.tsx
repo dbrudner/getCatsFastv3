@@ -12,7 +12,6 @@ export default function DeleteCatButton({ catId }: { catId: number }) {
       type="button"
       onClick={async (e) => {
         e.preventDefault();
-        console.log("Hey");
         await deleteCat(catId);
         router.refresh();
       }}
