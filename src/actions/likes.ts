@@ -2,7 +2,7 @@
 
 import { currentUser } from "@clerk/nextjs/server"
 import { Cat, getCatsFastDb, likesTable } from "@/lib/core";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 export async function getLikes(catId: number) {
   try {
@@ -38,5 +38,21 @@ export async function postLike(catId: number, userId: string) {
       .returning();
   } catch (err) {
     console.error(err);
+  }
+}
+
+export async function deleteLike(catId: number, userId: string): Promise<void> {
+  try {
+    const result = await getCatsFastDb
+      .delete(likesTable)
+      .where(and(
+        eq(likesTable.catId, catId),
+        eq(likesTable.userId, userId)
+      ));
+
+    console.log("Deleted like", result);
+  } catch (e) {
+    console.error("Error deleting like", e);
+    throw e;
   }
 }

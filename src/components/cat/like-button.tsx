@@ -1,6 +1,6 @@
 "use client";
 
-import { getLikes, postLike } from "@/actions/likes";
+import { deleteLike, getLikes, postLike } from "@/actions/likes";
 import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { IconButton } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -35,6 +35,15 @@ const usePostLikeMutation = (catId: number, userId: string, onSuccess: () => voi
   })
 }
 
+const useDeleteLikeMutation = (catId: number, userId: string, onSuccess: () => void) => {
+  return useMutation({
+    mutationFn: async () => {
+      return await deleteLike(catId, userId)
+    },
+    onSuccess
+  })
+}
+
 export function LikeButton({ catId, userId }: LikeButtonProps) {
   const { data: likes, refetch, isLoading } = useGetLikesQuery(catId);
 
@@ -42,6 +51,19 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
     console.log("Refetching")
     refetch();
   });
+
+  const deleteLikeMutation = useDeleteLikeMutation(catId, userId, () => {
+    console.log("Refetching")
+    refetch();
+  });
+
+  const onClick = () => {
+    if (likes?.liked) {
+      deleteLikeMutation.mutate();
+    } else {
+      postLikeMutation.mutate();
+    }
+  }
 
   const iconClassName = classNames("w-5 h-5",
     likes?.liked ? "text-sky-300" : "text-slate-600"
@@ -51,9 +73,8 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
   return (
     <div className="flex flex-col justify-end gap-y-2 items-end">
       <div>
-        <IconButton disabled={postLikeMutation.isPending || isLoading} onClick={() => postLikeMutation.mutate()}>
+        <IconButton disabled={postLikeMutation.isPending || isLoading} onClick={() => onClick()}>
           <HandThumbUpIcon className={iconClassName} />
-
         </IconButton>
       </div>
       <p className="text-sm font-semibold">
