@@ -36,28 +36,28 @@ const usePostLikeMutation = (catId: number, userId: string, onSuccess: () => voi
 }
 
 export function LikeButton({ catId, userId }: LikeButtonProps) {
-  const { data: likes, refetch } = useGetLikesQuery(catId);
+  const { data: likes, refetch, isLoading } = useGetLikesQuery(catId);
 
   const postLikeMutation = usePostLikeMutation(catId, userId, () => {
     console.log("Refetching")
     refetch();
   });
 
-  const iconClassName = classNames("w-5 h-5", {
-    "text-sky-300": likes?.liked,
-  });
+  const iconClassName = classNames("w-5 h-5",
+    likes?.liked ? "text-sky-300" : "text-slate-600"
+  );
 
 
   return (
     <div className="flex flex-col justify-end gap-y-2 items-end">
       <div>
-        <IconButton onClick={() => postLikeMutation.mutate()}>
+        <IconButton disabled={postLikeMutation.isPending || isLoading} onClick={() => postLikeMutation.mutate()}>
           <HandThumbUpIcon className={iconClassName} />
+
         </IconButton>
       </div>
       <p className="text-sm font-semibold">
         {likes?.count} Likes
-
       </p>
     </div>
   );
