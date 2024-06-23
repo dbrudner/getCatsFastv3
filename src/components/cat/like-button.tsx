@@ -83,7 +83,7 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
   return (
     <div className="flex flex-col justify-end gap-y-2 items-end">
       <div>
-        <IconButton disabled={postLikeMutation.isPending || isFetching} onMouseDown={() => onClick()} disableRipple>
+        <IconButton disabled={postLikeMutation.isPending || isFetching} onClick={() => onClick()} disableRipple>
           <HandThumbUpIcon className={iconClassName} />
         </IconButton>
       </div>
@@ -93,5 +93,4 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
     </div>
   );
 }
-
 

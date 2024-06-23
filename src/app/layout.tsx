@@ -32,7 +32,7 @@ export default function RootLayout({
       <GetCatsFastThemeProvider>
         <html lang="en">
           <body
-            className={`${workSans.className} min-h-screen bg-black text-white relative max-w-screen-sm m-auto`}
+            className={`${workSans.className} min-h-screen bg-black text-white relative max-w-screen-sm m-auto px-3 lg:p-0`}
           >
             <AppProvider>
               {children} <Analytics />
