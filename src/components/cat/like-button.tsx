@@ -64,7 +64,7 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
 
   const iconClassName = useMemo(() => {
     const shouldShowSkyColor = (likes?.liked && !isFetching) || postLikeMutation.isPending || (isFetching && !likes?.liked)
-    return classNames("w-5 h-5 transition-colors duration-300",
+    return classNames("w-4 h-4 transition-colors duration-300",
       shouldShowSkyColor ? "text-sky-300" : "text-slate-600",
       {
         invisible: isLoading
@@ -72,22 +72,22 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
     )
   }, [likes?.liked, postLikeMutation.isPending, isFetching, isLoading])
 
-  const likesClassName = classNames("text-sm font-semibold")
+  const likesClassName = classNames("text-sm font-semibold transition duration-300", likes?.liked ? "text-white" : "text-slate-200")
   const likesCountClassName = classNames(
     " transition-opacity duration-300", {
     invisible: isLoading,
     "text-lime-400": likes?.liked,
   },
-    isFetching || postLikeMutation.isPending ? "opacity-0" : "opacity-100"
+    isFetching || postLikeMutation.isPending ? "opacity-0" : "opacity-100",
   )
 
   return (
-    <div className="flex justify-end gap-y-2 items-center">
+    <div className="flex justify-end items-center">
       <p className={likesClassName}>
         <span className={likesCountClassName}>{likes?.count}</span> Likes
       </p>
-      <div>
-        <IconButton disabled={postLikeMutation.isPending || isFetching} onClick={() => onClick()} disableRipple>
+      <div className="ml-2">
+        <IconButton sx={{ p: 0, mb: "3px" }} disabled={postLikeMutation.isPending || isFetching} onClick={() => onClick()} disableRipple>
           <HandThumbUpIcon className={iconClassName} />
         </IconButton>
       </div>

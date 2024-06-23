@@ -11,12 +11,47 @@ import { Button, IconButton } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 
+function timeAgo(date: Date) {
+  const now = new Date();
+  //@ts-ignore
+  const seconds = Math.floor((now - date) / 1000);
+
+  if (seconds < 60) {
+    return seconds <= 1 ? 'a few seconds ago' : `${seconds} seconds ago`;
+  }
+
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) {
+    return minutes === 1 ? 'a minute ago' : `${minutes} minutes ago`;
+  }
+
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) {
+    return hours === 1 ? 'an hour ago' : `${hours} hours ago`;
+  }
+
+  const days = Math.floor(hours / 24);
+  if (days < 30) {
+    return days === 1 ? 'one day ago' : `${days} days ago`;
+  }
+
+  const months = Math.floor(days / 30);
+  if (months < 12) {
+    return months === 1 ? 'one month ago' : `${months} months ago`;
+  }
+
+  const years = Math.floor(days / 365);
+  return years === 1 ? 'a year ago' : `${years} years ago`;
+}
+
 const CatCard = async ({ cat, userId }: { cat: Cat, userId: string }) => {
   const likes = await getLikes(cat.id);
   const isCatOwner = cat.userId === userId;
 
   return <div key={cat.id}>
-    <div className="flex flex-col gap-y-2 relative">
+    <div className="flex flex-col relative">
+
+      <p className="text-sm tracking-tighter leading-4 text-slate-400 font-extralight mb-1 text-right">{timeAgo(cat.createdAt)}</p>
       <div className="border-2 border-sky-300 rounded p-4 cursor-pointer">
         <Link href={`/cat/${cat.id}`}>
           <Image
@@ -29,7 +64,7 @@ const CatCard = async ({ cat, userId }: { cat: Cat, userId: string }) => {
       </div>
       <div className="flex justify-between items-start mt-1">
         <div><h1 className="text-3xl font-bold">{cat.title}</h1></div>
-        <div className="flex flex-col items-end gap-y-2">
+        <div className="flex flex-col items-end">
           <LikeButton catId={cat.id} userId={userId} />
         </div>
 
