@@ -1,6 +1,6 @@
 "use server";
 import { getCatById } from "@/actions/cat";
-import { Cat } from "@/lib/drizzle";
+import { Cat } from "@/lib/core";
 import Image from "next/image";
 
 function CatCard({ cat }: { cat: Cat }) {

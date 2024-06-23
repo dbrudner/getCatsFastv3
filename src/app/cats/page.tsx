@@ -65,7 +65,7 @@ export default async function Cats() {
       <div className="flex flex-col gap-y-24 items-center mb-48">
         <div className="flex flex-col max-w-full gap-y-10">
           {cats.map((cat) => (
-            <CatCard key={cat.id} cat={cat} userId={resolvedCurrentUser?.id} />
+            <CatCard key={cat.id} cat={cat} userId={resolvedCurrentUser?.id ?? ""} />
           ))}
         </div>
       </div>

@@ -16,11 +16,10 @@ const useGetLikesQuery = (catId: number) => {
   return useQuery({
     queryKey: ["likes", { catId }],
     queryFn: async () => {
-      console.log(catId);
       const likes = await getLikes(
         catId
       );
-      console.log(likes)
+
       return likes;
     },
   });
