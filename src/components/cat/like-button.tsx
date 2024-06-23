@@ -70,7 +70,7 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
         invisible: isLoading
       }
     )
-  }, [likes?.liked, postLikeMutation.isPending, isFetching])
+  }, [likes?.liked, postLikeMutation.isPending, isFetching, isLoading])
 
   const likesClassName = classNames("text-sm font-semibold")
   const likesCountClassName = classNames(
