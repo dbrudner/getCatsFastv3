@@ -1,15 +1,15 @@
 "use server";
 
-import { db, CatsTable, Cat } from "@/lib/drizzle";
+import { Cat, CatsTable, getCatsFastDb } from "@/lib/core";
 import { currentUser } from "@clerk/nextjs/server";
 import { put } from "@vercel/blob";
 import { randomUUID } from "crypto";
-import { eq, sql, and } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
 export async function getCatById(catId: Cat["id"]) {
   try {
-    const cat = await db
+    const cat = await getCatsFastDb
       .select()
       .from(CatsTable)
       .where(eq(CatsTable.id, catId));
@@ -21,13 +21,9 @@ export async function getCatById(catId: Cat["id"]) {
   }
 }
 
-export async function getTopCat() {
-  return await db.execute(sql`SELECT top 1 * FROM ${CatsTable}`);
-}
-
 export async function getCats() {
   try {
-    const cats = await db.select().from(CatsTable);
+    const cats = await getCatsFastDb.select().from(CatsTable);
     return cats;
   }
   catch (e) {
@@ -61,7 +57,7 @@ export async function createCat(formData: FormData) {
       if (!resolvedCurrentUser) {
         throw new Error("No current user");
       }
-      const insertedCat = await db
+      const insertedCat = await getCatsFastDb
         .insert(CatsTable)
         .values([
           {
@@ -97,7 +93,7 @@ export async function deleteCat(catId: number): Promise<void> {
       throw new Error("No current user");
     }
 
-    const result = await db
+    const result = await getCatsFastDb
       .delete(CatsTable)
       .where(and(
         eq(CatsTable.id, catId),

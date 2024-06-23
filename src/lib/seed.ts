@@ -1,6 +1,5 @@
 import { sql } from "@vercel/postgres";
-import { db } from "@/lib/drizzle";
-import { CatsTable, Cat, NewCat } from "./drizzle";
+import { CatsTable, Cat, NewCat, getCatsFastDb } from "./core";
 
 const newCats: NewCat[] = [
   {
@@ -34,12 +33,24 @@ export async function createCatsTable() {
 }
 
 export async function seedCatsTable() {
-  const insertedCats: Cat[] = await db
-    .insert(CatsTable)
-    .values(newCats)
-    .returning();
+  const insertedCats: Cat[] = await
+    getCatsFastDb.insert(CatsTable)
+      .values(newCats)
+      .returning();
 
   return {
     insertedCats,
   };
 }
+
+export async function createLikesTable() {
+  return await sql.query(`
+      DROP TABLE IF EXISTS likes;
+      CREATE TABLE likes (
+        id SERIAL PRIMARY KEY,
+        "userId" VARCHAR(255) NOT NULL,
+        "catId" VARCHAR(255) NOT NULL
+      );
+  `);
+}
+

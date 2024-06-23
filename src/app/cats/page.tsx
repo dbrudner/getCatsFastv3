@@ -1,14 +1,18 @@
 "use server";
 import { getCats } from "@/actions/cat";
+import { getLikes } from "@/actions/likes";
 import DeleteCatButton from "@/components/delete-cat-button";
-import { Cat, CatsTable, db } from "@/lib/drizzle";
+import { Cat, CatsTable, } from "@/lib/core";
+import { createLikesTable } from "@/lib/seed";
 import { currentUser } from "@clerk/nextjs/server";
-import { PlusIcon } from "@heroicons/react/24/outline";
-import { Button } from "@mui/material";
+import { HandThumbUpIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { Button, IconButton } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 
-const CatCard = ({ cat, isCatOwner }: { cat: Cat, isCatOwner: boolean; }) => {
+export const CatCard = async ({ cat, isCatOwner }: { cat: Cat, isCatOwner: boolean; }) => {
+  const likes = await getLikes(cat.id);
+
   return <div key={cat.id}>
     <div className="flex flex-col gap-y-2 relative">
       <div className="border-2 border-sky-300 rounded p-4 cursor-pointer">
@@ -21,8 +25,16 @@ const CatCard = ({ cat, isCatOwner }: { cat: Cat, isCatOwner: boolean; }) => {
           />
         </Link>
       </div>
+      <div className="flex justify-between items-start">
+        <div><h1 className="text-3xl font-bold">{cat.title}</h1></div>
+        <div className="flex flex-col items-end">
+          <IconButton>
+            <HandThumbUpIcon className="w-6 h-6" />
+          </IconButton>
+          <p className="text-sm font-semibold">{likes?.count} Likes</p>
+        </div>
 
-      <h1 className="text-3xl font-bold">{cat.title}</h1>
+      </div>
 
       {isCatOwner && (
         <DeleteCatButton catId={cat.id} />
@@ -30,9 +42,10 @@ const CatCard = ({ cat, isCatOwner }: { cat: Cat, isCatOwner: boolean; }) => {
     </div>
   </div>
 }
-export default async function Cats() {
-  const cats = await getCats();
 
+export default async function Cats() {
+  await createLikesTable();
+  const cats = await getCats();
   const resolvedCurrentUser = await currentUser();
 
   return (
