@@ -6,3 +6,5 @@
 2. Add /cat page
 3. Create page component for layout
    - Refactor existing pages to use layout
+
+Make neovim plugin to allow for % to find closing jsx tag

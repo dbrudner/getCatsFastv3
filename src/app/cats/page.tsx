@@ -63,7 +63,7 @@ const CatCard = async ({ cat, userId }: { cat: Cat, userId: string }) => {
         </Link>
       </div>
       <div className="flex justify-between items-start mt-1">
-        <div><h1 className="text-3xl font-bold">{cat.title}</h1></div>
+        <div><h2 className="text-md font-bold">{cat.title}</h2></div>
         <div className="flex flex-col items-end">
           <LikeButton catId={cat.id} userId={userId} />
         </div>
