@@ -7,6 +7,7 @@ import Head from "next/head";
 import "./globals.css";
 import GetCatsFastThemeProvider from "./theme";
 import AppProvider from "@/components/app-provider";
+import Nav from "@/components/nav/nav";
 
 const workSans = Work_Sans({ subsets: ["latin"] });
 
@@ -21,6 +22,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const containerClassName = `min-h-screen bg-black text-white relative px-3 lg:p-0 absolute ${workSans.className}`
+
   return (
     <ClerkProvider>
       <Head>
@@ -32,12 +35,18 @@ export default function RootLayout({
       <GetCatsFastThemeProvider>
         <html lang="en">
           <body
-            className={`${workSans.className} min-h-screen bg-black text-white relative max-w-screen-sm m-auto px-3 lg:p-0`}
+            className={containerClassName}
           >
             <AppProvider>
-              {children} <Analytics />
-              {/* <Nav /> */}
+
+              <div className="m-auto max-w-screen-sm">
+                {children}
+
+              </div>
+              <Analytics />
+              <Nav />
             </AppProvider>
+
           </body>
         </html>
       </GetCatsFastThemeProvider>
