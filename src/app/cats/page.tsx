@@ -52,7 +52,7 @@ const CatCard = async ({ cat, userId }: { cat: Cat, userId: string }) => {
     <div className="flex flex-col relative">
 
       <p className="text-sm tracking-tighter leading-4 text-slate-400 font-extralight mb-1 text-right">{timeAgo(cat.createdAt)}</p>
-      <div className="border-2 border-sky-300 rounded p-4 cursor-pointer">
+      <div>
         <Link href={`/cat/${cat.id}`}>
           <Image
             src={cat.image}
@@ -64,7 +64,7 @@ const CatCard = async ({ cat, userId }: { cat: Cat, userId: string }) => {
       </div>
       <div className="flex justify-between items-start mt-1">
         <div><h2 className="text-md font-bold">{cat.title}</h2></div>
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col items-end min-w-24">
           <LikeButton catId={cat.id} userId={userId} />
         </div>
 
