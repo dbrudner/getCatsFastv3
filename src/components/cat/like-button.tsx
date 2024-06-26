@@ -6,6 +6,7 @@ import { IconButton } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import React, { useMemo } from "react";
 import classNames from "classnames";
+import { SignedIn } from "@clerk/nextjs";
 
 type LikeButtonProps = {
   catId: number;
@@ -82,16 +83,18 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
   )
 
   return (
-    <div className="flex justify-end items-center">
-      <p className={likesClassName}>
-        <span className={likesCountClassName}>{likes?.count}</span> Likes
-      </p>
-      <div className="ml-2">
-        <IconButton sx={{ p: 0, mb: "3px" }} disabled={postLikeMutation.isPending || isFetching} onClick={() => onClick()} disableRipple>
-          <HandThumbUpIcon className={iconClassName} />
-        </IconButton>
+    <>
+      <div className="flex justify-end items-center">
+        <p className={likesClassName}>
+          <span className={likesCountClassName}>{likes?.count}</span> Likes
+        </p>
+        <SignedIn>
+          <IconButton sx={{ p: 0, mb: "3px" }} disabled={postLikeMutation.isPending || isFetching} onClick={() => onClick()} disableRipple>
+            <HandThumbUpIcon className={iconClassName} />
+          </IconButton>
+        </SignedIn>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -26,6 +26,13 @@ export async function getLikes(catId: number) {
 
 export async function postLike(catId: number, userId: string) {
   try {
+    if (!userId) {
+      throw new Error("No user ID provided");
+    }
+
+    if (!catId) {
+      throw new Error("No cat ID provided");
+    }
 
     await getCatsFastDb
       .insert(likesTable)
