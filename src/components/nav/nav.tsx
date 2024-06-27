@@ -45,7 +45,7 @@ export default function Nav() {
   return (
     <div className={navClassNames}>
       <NavItem path="/cats">
-        <Button variant="text" size="small">Cats</Button>
+        <Button className={highlightNavItemIfActive("/cats")} variant="text" size="small">Cats</Button>
       </NavItem>
       <NavItem path="/">
         <IconButton>
