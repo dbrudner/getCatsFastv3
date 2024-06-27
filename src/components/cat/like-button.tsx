@@ -89,7 +89,7 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
           <span className={likesCountClassName}>{likes?.count}</span> Likes
         </p>
         <SignedIn>
-          <IconButton sx={{ p: 0, mb: "3px" }} disabled={postLikeMutation.isPending || isFetching} onClick={() => onClick()} disableRipple>
+          <IconButton sx={{ p: 0, mb: "3px", ml: .5 }} disabled={postLikeMutation.isPending || isFetching} onClick={() => onClick()} disableRipple>
             <HandThumbUpIcon className={iconClassName} />
           </IconButton>
         </SignedIn>
