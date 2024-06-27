@@ -22,7 +22,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const containerClassName = `min-h-screen bg-black text-white relative px-3 lg:p-0 absolute ${workSans.className}`
+  const containerClassName = `min-h-screen bg-black text-white relative mb-40 md:mb-0 px-3 lg:p-0 absolute ${workSans.className}`
 
   return (
     <ClerkProvider>
