@@ -1,12 +1,36 @@
-import { SignOutButton } from "@clerk/nextjs";
+"use client"
 import {
   HomeIcon,
-  PlusIcon,
-  ArrowRightEndOnRectangleIcon,
+  PlusIcon
 } from "@heroicons/react/24/outline";
 import { IconButton } from "@mui/material";
 import classNames from "classnames";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const baseNavItemClassnames = "w-8 h-8 text-slate-600";
+
+type NavItemProps = {
+  path: string;
+  Icon: any;
+}
+
+function NavItem({ path, Icon }: NavItemProps) {
+  const pathname = usePathname();
+
+  function highlightIconIfActive(
+    path: string) {
+    return classNames(baseNavItemClassnames, { "text-white": pathname === path })
+  }
+
+  return (
+    <Link href={path}>
+      <IconButton>
+        <Icon className={highlightIconIfActive(path)} />
+      </IconButton>
+    </Link>
+  )
+}
 
 export default function Nav() {
   const bottomMobileNavClassNames =
@@ -20,18 +44,12 @@ export default function Nav() {
     bottomMobileNavClassNames
   );
 
+
   return (
     <div className={navClassNames}>
-      <Link href="/cats">
-        <IconButton>
-          <HomeIcon className="w-10 h-10" />
-        </IconButton>
-      </Link>
-      <Link href="/cat/new">
-        <IconButton>
-          <PlusIcon className="w-10 h-10" />
-        </IconButton>
-      </Link>
+      <NavItem path="/" Icon={HomeIcon} />
+      <NavItem path="/cat/new" Icon={PlusIcon} />
     </div>
   );
 }
+
