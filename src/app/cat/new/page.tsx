@@ -67,7 +67,7 @@ function SendCatButton() {
     <LoadingButton
       type="submit"
       variant="contained"
-      className="bg-fuchsia-500 text-white"
+      className="bg-fuchsia-500 hover:bg-fuchsia-500 text-white"
       loading={pending}
       loadingPosition="end"
     >

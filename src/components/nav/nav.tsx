@@ -10,7 +10,7 @@ function NavItem({ path, children }: NavItemProps) {
 }
 
 const baseNavItemClassnames = "text-slate-600";
-const baseNavIconButtonClassnames = "w-10 h-10";
+const baseNavIconButtonClassnames = "w-8 h-8";
 const bottomMobileNavClassNames =
   "fixed bottom-0 left-0 w-screen flex flex-row items-center justify-around p-4 bg-black border-indigo-500 border-t-2";
 const sideNavClassNames =
