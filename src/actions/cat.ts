@@ -4,7 +4,7 @@ import { Cat, CatsTable, getCatsFastDb } from "@/lib/core";
 import { currentUser } from "@clerk/nextjs/server";
 import { put } from "@vercel/blob";
 import { randomUUID } from "crypto";
-import { and, eq } from "drizzle-orm";
+import { and, eq, like } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
 export async function getCatById(catId: Cat["id"]) {
@@ -20,6 +20,20 @@ export async function getCatById(catId: Cat["id"]) {
     console.error(e);
   }
 }
+
+export async function searchCatByTitle(tag: string) {
+  try {
+    const cats = await getCatsFastDb
+      .select()
+      .from(CatsTable)
+      .where(like(CatsTable.title, tag));
+    return cats;
+  } catch (e) {
+    console.error("Failed to get cat");
+    console.error(e);
+  }
+}
+
 
 export async function getCats() {
   try {

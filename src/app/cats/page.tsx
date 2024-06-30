@@ -44,13 +44,28 @@ function timeAgo(date: Date) {
   return years === 1 ? 'a year ago' : `${years} years ago`;
 }
 
+const mapCatTitle = (string: string) => {
+  if (string[0] === "#" && string.length > 1) {
+    // I'm not sure using the string here as the key will actually work and may cause a bug
+    return <Link key={string} href={`/cats/tag/${string.slice(1)}`}><span className="text-sky-300 font-bold">{string}{" "}</span></Link>
+  }
+  return <span className="">{string + " "}</span>
+}
+
+const CatDescriptionWithHashTags = ({ cat }: { cat: Cat }) => {
+  return <div className="flex flex-col gap-y-2">
+    <div className="flex flex-wrap gap-x-2">
+      {cat.title.split(" ").map(mapCatTitle)}
+    </div>
+  </div>
+};
+
 const CatCard = async ({ cat, userId }: { cat: Cat, userId: string }) => {
   const likes = await getLikes(cat.id);
   const isCatOwner = cat.userId === userId;
 
   return <div key={cat.id}>
     <div className="flex flex-col relative">
-
       <p className="text-sm tracking-tighter leading-4 text-slate-400 font-extralight mb-1 text-right">{timeAgo(cat.createdAt)}</p>
       <div>
         <Link href={`/cat/${cat.id}`}>
@@ -63,7 +78,7 @@ const CatCard = async ({ cat, userId }: { cat: Cat, userId: string }) => {
         </Link>
       </div>
       <div className="flex justify-between items-start mt-1">
-        <div><h2 className="text-md font-bold">{cat.title}</h2></div>
+        <CatDescriptionWithHashTags cat={cat} />
         <div className="flex flex-col items-end min-w-24">
           <LikeButton catId={cat.id} userId={userId} />
         </div>
