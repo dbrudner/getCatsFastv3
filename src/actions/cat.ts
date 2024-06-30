@@ -21,12 +21,13 @@ export async function getCatById(catId: Cat["id"]) {
   }
 }
 
-export async function searchCatByTitle(tag: string) {
+export async function searchCatsByTitle(tag: string) {
   try {
+    console.log(tag)
     const cats = await getCatsFastDb
       .select()
       .from(CatsTable)
-      .where(like(CatsTable.title, tag));
+      .where(like(CatsTable.title, `%${tag}%`));
     return cats;
   } catch (e) {
     console.error("Failed to get cat");
