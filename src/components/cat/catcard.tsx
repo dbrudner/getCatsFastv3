@@ -47,8 +47,7 @@ type CatCardProps = {
 
 const mapCatTitle = (activeHashtag: string) => (string: string) => {
   if (string[0] === "#" && string.length > 1) {
-    const className = classnames("text-sky-300 font-bold", { ["text-orange-400"]: "#" + activeHashtag === string });
-    console.log(string)
+    const className = classnames("font-bold", "#" + activeHashtag === string ? "text-orange-400" : "text-sky-300");
     return <Link key={string} href={`/cats/tag/${string.slice(1)}`}><span className={className}>{string}{" "}</span></Link>
   }
   return <span className="">{string + " "}</span>
