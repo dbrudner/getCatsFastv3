@@ -1,6 +1,6 @@
 "use client";
 
-import { createCat } from "@/actions/cat";
+import { createCatWithFormData } from "@/actions/cat";
 import Loading from "@/components/loading/loading";
 import {
   ClerkLoaded,
@@ -75,7 +75,7 @@ function SendCatButton() {
   );
 }
 
-function SendCatsForm({ createCat = (formData: FormData) => { } }) {
+function SendCatsForm({ createCatWithFormData = (formData: FormData) => { } }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const fileInputEl = fileInputRef.current;
 
@@ -168,7 +168,7 @@ function SendCatsForm({ createCat = (formData: FormData) => { } }) {
         </ButtonGroup>
       </div>
 
-      <form action={createCat} className="flex flex-col m-auto gap-y-4">
+      <form action={createCatWithFormData} className="flex flex-col m-auto gap-y-4">
         <input
           ref={fileInputRef}
           type="file"
@@ -289,7 +289,7 @@ export default function SendCats() {
       <ClerkLoaded>
         <SignedIn>
           <div className="m-auto">
-            <SendCatsForm createCat={(formData) => createCat(formData)} />
+            <SendCatsForm createCatWithFormData={(formData) => createCatWithFormData(formData)} />
           </div>
         </SignedIn>
         <SignedOut>

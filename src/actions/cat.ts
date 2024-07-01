@@ -46,11 +46,7 @@ export async function getCats() {
     throw e;
   }
 }
-
-export async function createCat(formData: FormData) {
-  const catName = formData.get("catName") ?? `untitled-cat-${randomUUID()}`;
-  const catImage = formData.get("catImage");
-
+export async function createCat(catImage: File, catName: string) {
   if (!(catImage instanceof File)) {
     throw new Error("Invalid cat image");
   }
@@ -58,8 +54,6 @@ export async function createCat(formData: FormData) {
   if (typeof catName !== "string") {
     throw new Error("Invalid cat name");
   }
-
-  let redirectPath = "/cats";
 
   if (catImage instanceof File && typeof catName === "string") {
     try {
@@ -85,16 +79,25 @@ export async function createCat(formData: FormData) {
         ])
         .returning();
 
-      redirectPath = `/cat/${insertedCat[0].id}`;
     } catch (e) {
       console.error("Failed to insert cat");
       console.error(e);
-    } finally {
-      redirect(redirectPath);
     }
   }
+}
+export async function createCatWithFormData(formData: FormData) {
+  const catName = formData.get("catName") ?? `untitled-cat-${randomUUID()}`;
+  const catImage = formData.get("catImage");
 
-  return null;
+  if (!(catImage instanceof File)) {
+    throw new Error("Invalid cat image")
+  }
+
+  if (!catName || typeof catName !== "string") {
+    throw new Error("Invalid cat name");
+  }
+
+  return createCat(catImage, catName)
 }
 
 
