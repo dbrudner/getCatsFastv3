@@ -46,7 +46,6 @@ function timeAgo(date: Date) {
 
 const mapCatTitle = (string: string) => {
   if (string[0] === "#" && string.length > 1) {
-    // I'm not sure using the string here as the key will actually work and may cause a bug
     return <Link key={string} href={`/cats/tag/${string.slice(1)}`}><span className="text-sky-300 font-bold">{string}{" "}</span></Link>
   }
   return <span className="">{string + " "}</span>
