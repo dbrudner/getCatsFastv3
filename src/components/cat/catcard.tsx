@@ -1,10 +1,7 @@
-import { getLikes } from "@/actions/likes";
 import { Cat } from "@/lib/core";
-import Link from "next/link";
-import DeleteCatButton from "../delete-cat-button";
-import { LikeButton } from "./like-button";
-import Image from "next/image";
 import classnames from "classnames";
+import Image from "next/image";
+import Link from "next/link";
 
 function timeAgo(date: Date) {
   const now = new Date();
@@ -50,17 +47,16 @@ const mapCatTitle = (activeHashtag: string) => (string: string) => {
     const className = classnames("font-bold", "#" + activeHashtag === string ? "text-orange-400" : "text-sky-300");
     return <Link key={string} href={`/cats/tag/${string.slice(1)}`}><span className={className}>{string}{" "}</span></Link>
   }
+
   return <span className="">{string + " "}</span>
 }
 
 function CatDescriptionWithHashTags({ cat, activeHashTag = "" }: { cat: Cat, activeHashTag: string; }) {
-  {
-    return <div className="flex flex-col gap-y-2">
-      <div className="flex flex-wrap gap-x-2">
-        {cat.title.split(" ").map(mapCatTitle(activeHashTag))}
-      </div>
+  return <div className="flex flex-col gap-y-2">
+    <div className="flex flex-wrap gap-x-2">
+      {cat.title.split(" ").map(mapCatTitle(activeHashTag))}
     </div>
-  }
+  </div>
 }
 
 export default function CatCard({ cat, activeHashTag }: CatCardProps) {
@@ -80,9 +76,7 @@ export default function CatCard({ cat, activeHashTag }: CatCardProps) {
       <div className="flex justify-between items-start mt-1">
         <CatDescriptionWithHashTags cat={cat} activeHashTag={activeHashTag} />
       </div>
-
     </div>
-
   </div >
 }
 

@@ -21,7 +21,6 @@ const newCats: NewCat[] = [
 
 export async function createCatsTable() {
   return await sql.query(`
-      DROP TABLE IF EXISTS cats;
       CREATE TABLE cats (
         id SERIAL PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
@@ -54,3 +53,27 @@ export async function createLikesTable() {
   `);
 }
 
+export async function createCatTagsTable() {
+  return await sql.query(`
+      DROP TABLE IF EXISTS cat_tags;
+      CREATE TABLE cat_tags (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        "userId" VARCHAR(255) NOT NULL,
+        "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+  `);
+}
+
+export async function createCatTagVoteTable() {
+  return await sql.query(`
+      DROP TABLE IF EXISTS cat_tag_votes;
+      CREATE TABLE cat_tag_votes (
+        id SERIAL PRIMARY KEY,
+        "userId" VARCHAR(255) NOT NULL,
+        "catTagId" VARCHAR(255) NOT NULL,
+        "catId" VARCHAR(255) NOT NULL,
+        "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+  `);
+} 

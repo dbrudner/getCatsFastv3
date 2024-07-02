@@ -79,6 +79,7 @@ export async function createCat(catImage: File, catName: string) {
         ])
         .returning();
 
+      return insertedCat[0]
     } catch (e) {
       console.error("Failed to insert cat");
       console.error(e);

@@ -1,16 +1,45 @@
 "use client";
-import { HomeIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { EllipsisHorizontalIcon, HomeIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Button, IconButton } from "@mui/material";
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+
+function useHighlightNavItemIfPathMatches() {
+  const pathname = usePathname();
+
+  return (path: string) => classNames(
+    pathname === path ? "text-white" : "text-slate-600",
+  );
+}
+
+function useHighlightNavIconButtonIfActive() {
+  const highlightNavIconButtonIfPathMatches = useHighlightNavItemIfPathMatches();
+
+  return (path: string) => classNames(
+    highlightNavIconButtonIfPathMatches(path),
+    baseNavIconButtonClassnames,
+  );
+}
+
 function NavItem({ path, children }: NavItemProps) {
   return <Link href={path}>{children}</Link>;
 }
 
-const baseNavItemClassnames = "text-slate-600";
-const baseNavIconButtonClassnames = "w-8 h-8";
+type NavIconButtonProps = {
+  path: string;
+  Icon: (className: string) => JSX.Element;
+};
+
+function NavIconButton({ path, Icon }: NavIconButtonProps) {
+  const highlightNavIconButtonIfActive = useHighlightNavIconButtonIfActive();
+
+  return (
+    <NavItem path={path}><IconButton className={highlightNavIconButtonIfActive(path)}>{Icon(highlightNavIconButtonIfActive(path))}</IconButton></NavItem>)
+}
+
+const baseNavIconButtonClassnames = "w-10 h-10";
 const bottomMobileNavClassNames =
   "fixed bottom-0 left-0 w-screen flex flex-row items-center justify-around p-4 bg-black border-indigo-500 border-t-2";
 const sideNavClassNames =
@@ -21,22 +50,15 @@ type NavItemProps = {
   children: React.ReactNode;
 };
 
+function mapClassNameToNavIconButton(Icon: any) {
+  return function (className: string) {
+    return <Icon className={className} />
+  }
+}
+
+
 export default function Nav() {
-  const pathname = usePathname();
-
-  function highlightNavItemIfActive(path: string) {
-    return classNames(baseNavItemClassnames, {
-      "text-white": pathname === path,
-    });
-  }
-
-  function highlightNavIconButtonIfActive(path: string) {
-    return classNames(
-      highlightNavItemIfActive(path),
-      baseNavIconButtonClassnames,
-    );
-  }
-
+  const highlightNavItemIfActive = useHighlightNavItemIfPathMatches();
   const navClassNames = classNames(
     sideNavClassNames,
     bottomMobileNavClassNames,
@@ -45,18 +67,13 @@ export default function Nav() {
   return (
     <div className={navClassNames}>
       <NavItem path="/cats">
-        <Button className={highlightNavItemIfActive("/cats")} variant="text" size="small">Cats</Button>
+        <Button variant="text" size="small"><span className={highlightNavItemIfActive("/cats")}>Cats</span></Button>
       </NavItem>
-      <NavItem path="/">
-        <IconButton>
-          <HomeIcon className={highlightNavIconButtonIfActive("/")} />
-        </IconButton>
-      </NavItem>
-      <NavItem path="/cat/new">
-        <IconButton>
-          <PlusIcon className={highlightNavIconButtonIfActive("/cat/new")} />
-        </IconButton>
-      </NavItem>
+      <NavIconButton Icon={mapClassNameToNavIconButton(HomeIcon)} path="/" />
+      <NavIconButton Icon={mapClassNameToNavIconButton(PlusIcon)} path="/cat/new" />
+      <NavIconButton
+        Icon={mapClassNameToNavIconButton(EllipsisHorizontalIcon)}
+        path="/user/settings" />
     </div>
   );
 }

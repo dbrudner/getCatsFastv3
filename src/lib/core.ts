@@ -63,4 +63,39 @@ export const likesTable = pgTable(
 export type Like = InferSelectModel<typeof likesTable>;
 export type NewLike = InferInsertModel<typeof likesTable>;
 
+export const catTagTable = pgTable(
+  "cat_tags",
+  {
+    id: serial("id").primaryKey(),
+    title: text("title").notNull(),
+    userId: text("userId"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (catTags) => {
+    return {
+      uniqueIdx: uniqueIndex("unique_idx").on(catTags.id),
+    };
+  },
+);
+
+export type CatTag = InferSelectModel<typeof catTagTable>;
+
+export const catTagVoteTable = pgTable(
+  "cat_tags",
+  {
+    id: serial("id").primaryKey(),
+    title: text("title").notNull(),
+    catId: integer("catId").notNull().references(() => CatsTable.id),
+    userId: text("userId").notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (catTags) => {
+    return {
+      uniqueIdx: uniqueIndex("unique_idx").on(catTags.id),
+    };
+  },
+);
+
+export type CatTagVote = InferSelectModel<typeof catTagVoteTable>;
+
 export const getCatsFastDb = drizzle(sql);
