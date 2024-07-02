@@ -23,11 +23,11 @@ export default async function handler(
 
     const cat = await createCat(catImage, catTitle);
 
-    if (!cat?.[0]) {
+    if (!cat) {
       return res.status(400).json({ message: 'Failed to create cat' });
     }
 
-    res.status(200).json(cat?.[0]);
+    res.status(200).json(cat);
   }
   catch (e) { throw e }
 }
