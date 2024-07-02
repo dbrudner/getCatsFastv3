@@ -40,6 +40,7 @@ const theme = createTheme({
       },
     },
     MuiInputBase: {
+      defaultProps: { className: "border  valid:text-white invalid:border-fuchsia-400" },
       styleOverrides: {
         root: {
           ".MuiOutlinedInput-notchedOutline": {

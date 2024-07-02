@@ -134,7 +134,6 @@ function CatDropZone({
 
 function SendCatsForm({ createCatWithFormData = (formData: FormData) => { } }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const fileInputEl = fileInputRef.current;
 
   const { isDragging, setIsDragging } = useDragAndDropStore((state) => state);
 
@@ -259,12 +258,10 @@ function SendCatsForm({ createCatWithFormData = (formData: FormData) => { } }) {
         <TextField
           label=""
           name="catName"
-          multiline
-          rows={2}
-          maxRows={2}
           placeholder="Cute cat being cute #boyboy"
           helperText="Enter anything you'd like to share about this cat picture."
-          inputProps={{ maxLength: 100 }}
+          inputProps={{ maxLength: 100, className: "valid:text-white invalid:text-fuchsia-400 border-4 border-sky-500" }}
+          required
         />
         <SendCatButton />
       </form>
