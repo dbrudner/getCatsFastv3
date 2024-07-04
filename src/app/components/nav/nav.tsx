@@ -5,7 +5,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import UserNotificationsNavButton from "./user-notifications-nav-button";
-
+import UserMessagesNavButton from "./user-messages-nav-button";
 
 function useHighlightNavItemIfPathMatches() {
   const pathname = usePathname();
@@ -15,7 +15,7 @@ function useHighlightNavItemIfPathMatches() {
   );
 }
 
-function useHighlightNavIconButtonIfActive() {
+export function useHighlightNavIconButtonIfActive() {
   const highlightNavIconButtonIfPathMatches = useHighlightNavItemIfPathMatches();
 
   return (path: string) => classNames(
@@ -73,6 +73,7 @@ export default function Nav() {
       <NavIconButton Icon={mapClassNameToNavIconButton(HomeIcon)} path="/" />
       <NavIconButton Icon={mapClassNameToNavIconButton(PlusIcon)} path="/cat/new" />
       <UserNotificationsNavButton />
+      <UserMessagesNavButton />
       <NavIconButton
         Icon={mapClassNameToNavIconButton(EllipsisHorizontalIcon)}
         path="/user/settings" />

@@ -5,7 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import { BellAlertIcon, BellIcon } from "@heroicons/react/24/outline";
 import { Divider, IconButton, Popover } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { baseNavIconButtonClassnames } from "./nav";
+import { baseNavIconButtonClassnames, useHighlightNavIconButtonIfActive, useHighlightNavItemIfPathMatches } from "./nav";
 import { useRef, useState } from "react";
 import timeAgo from "@/app/utils/time-ago";
 import Link from "next/link";
@@ -58,13 +58,15 @@ export default function UserNotificationsNavButton() {
     onSuccess: () => { unreadUserNotificationsQuery.refetch() },
   });
 
+  const highlightNavItemIfPathMatches = useHighlightNavIconButtonIfActive();
+
   return (
     <div className="relative" ref={ref}>
       {hasUnreadNotifications && <div className="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white text-xs rounded-full px-1 w-4 h-4 justify-center items-center">
         {unreadUserNotificationsCountQuery.data}
       </div>}
       <IconButton onClick={() => setOpen(!open)}>
-        {hasUnreadNotifications ? <BellAlertIcon className="h-6 w-6 text-white" /> : <BellIcon className="h-6 w-6 text-slate-600" />}
+        {hasUnreadNotifications ? <BellAlertIcon className="h-6 w-6 text-white" /> : <Link href="/notifications"><BellIcon className={highlightNavItemIfPathMatches("/notifications") + " w-8 h-8"} /></Link>}
       </IconButton>
 
       <Popover
