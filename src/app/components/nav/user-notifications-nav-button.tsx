@@ -62,7 +62,7 @@ export default function UserNotificationsNavButton() {
 
   return (
     <div className="relative" ref={ref}>
-      {hasUnreadNotifications && <div className="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white text-xs rounded-full px-1 w-4 h-4 justify-center items-center">
+      {hasUnreadNotifications && <div className="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex justify-center items-center">
         {unreadUserNotificationsCountQuery.data}
       </div>}
       <IconButton onClick={() => setOpen(!open)}>
