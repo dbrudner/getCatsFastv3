@@ -1,8 +1,8 @@
 "use server";
 import { getCats } from "@/actions/cat";
 import { getLikes } from "@/actions/likes";
-import { LikeButton } from "@/components/cat/like-button";
-import DeleteCatButton from "@/components/delete-cat-button";
+import { LikeButton } from "@/app/components/cat/like-button";
+import DeleteCatButton from "@/app/components/delete-cat-button";
 import { Cat, CatsTable, } from "@/lib/core";
 import { createCatTagVoteTable, createCatTagsTable, createLikesTable, createUserNotificationsTable } from "@/lib/seed";
 import { currentUser } from "@clerk/nextjs/server";

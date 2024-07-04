@@ -1,7 +1,7 @@
 "use server";
 
 import { searchCatsByTitle } from "@/actions/cat";
-import CatCard from "@/components/cat/catcard";
+import CatCard from "@/app/components/cat/catcard";
 
 export default async function Page({ params }: { params: { tag: string } }) {
   const tag = params.tag;

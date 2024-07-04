@@ -1,7 +1,7 @@
 "use client";
 
 import { createCatWithFormData } from "@/actions/cat";
-import Loading from "@/components/loading/loading";
+import Loading from "@/app/components/loading/loading";
 import {
   ClerkLoaded,
   ClerkLoading,

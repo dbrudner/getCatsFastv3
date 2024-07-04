@@ -6,8 +6,8 @@ import { Work_Sans } from "next/font/google";
 import Head from "next/head";
 import "./globals.css";
 import GetCatsFastThemeProvider from "./theme";
-import AppProvider from "@/components/app-provider";
-import Nav from "@/components/nav/nav";
+import AppProvider from "@/app/components/app-provider";
+import Nav from "@/app/components/nav/nav";
 
 const workSans = Work_Sans({ subsets: ["latin"] });
 
