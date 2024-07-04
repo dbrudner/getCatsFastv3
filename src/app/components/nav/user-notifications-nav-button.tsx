@@ -46,7 +46,6 @@ export default function UserNotificationsNavButton() {
       }
     },
   });
-  console.log(unreadUserNotificationsCountQuery.data, "blah");
 
   const hasUnreadNotifications =
     Number(unreadUserNotificationsCountQuery.data) > 0;
@@ -111,12 +110,22 @@ export default function UserNotificationsNavButton() {
           </Link>
           <Divider />
           {notifications.map((notification) => (
-            <div key={notification.id} className="p-3">
-              <div className="text-sm text-slate-500">
-                {timeAgo(notification.createdAt)}
+            <Link
+              key={notification.id}
+              href={notification.redirectAction ?? ""}
+            >
+              <div className="p-3">
+                <div className="flex justify-between items-baseline">
+                  <div className="font-bold">{notification.title}</div>
+                  <div className="text-sm text-slate-500">
+                    {timeAgo(notification.createdAt)}
+                  </div>
+                </div>
+                <div className="mt-1 text-slate-300">
+                  {notification.message}
+                </div>
               </div>
-              <div>{notification.message}</div>
-            </div>
+            </Link>
           ))}
         </div>
       </Popover>

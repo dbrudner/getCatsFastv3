@@ -87,7 +87,9 @@ export async function createUserNotificationsTable() {
         "userId" VARCHAR(255) NOT NULL,
         "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         "message" VARCHAR(255) NOT NULL,
-        "hasBeenRead" BOOLEAN DEFAULT FALSE
+        "hasBeenRead" BOOLEAN DEFAULT FALSE,
+        "redirectAction" VARCHAR(255),
+        "title" VARCHAR(255) NOT NULL
       );
   `);
 }

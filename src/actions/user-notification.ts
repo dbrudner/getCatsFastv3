@@ -3,18 +3,34 @@ import { getCatsFastDb, userNotificationTable } from "@/lib/core";
 import { currentUser } from "@clerk/nextjs/server";
 import { and, count, eq } from "drizzle-orm";
 
-export async function createUserNotification(message: string, userId: string) {
-  const insertedNotification = await getCatsFastDb
-    .insert(userNotificationTable)
-    .values([
-      {
-        message,
-        userId,
-      },
-    ])
-    .returning();
+export async function createUserNotification(
+  message: string,
+  userId: string,
+  title: string,
+  redirectAction: string,
+) {
+  console.log("Creating user notification");
+  console.log({ message, userId, title, redirectAction });
 
-  return insertedNotification[0];
+  try {
+    const insertedNotification = await getCatsFastDb
+      .insert(userNotificationTable)
+      .values([
+        {
+          message,
+          userId,
+          title,
+          redirectAction,
+        },
+      ])
+      .returning();
+
+    console.log(insertedNotification[0]);
+    return insertedNotification[0];
+  } catch (e) {
+    console.log("Failed to create user notification");
+    console.error(e);
+  }
 }
 
 export async function getUnreadNotificationsByUserId(userId: string) {

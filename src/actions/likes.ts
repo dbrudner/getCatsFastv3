@@ -38,7 +38,7 @@ export async function postLike(catId: number, userId: string) {
       throw new Error("No cat ID provided");
     }
 
-    await getCatsFastDb
+    const insertedCats = await getCatsFastDb
       .insert(likesTable)
       .values([
         {
@@ -48,7 +48,16 @@ export async function postLike(catId: number, userId: string) {
       ])
       .returning();
 
-    createUserNotification("Someone liked your cat!", userId);
+    const insertedCat = insertedCats[0];
+
+    console.log("Inserted like", insertedCat);
+    console.log("Creating user notification from cat like");
+    await createUserNotification(
+      "Someone liked your cat!",
+      userId,
+      "Cat liked",
+      `/cat/${catId}`,
+    );
   } catch (err) {
     console.error(err);
   }

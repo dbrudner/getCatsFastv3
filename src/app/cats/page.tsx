@@ -10,6 +10,7 @@ import { Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import timeAgo from "../utils/time-ago";
+import { createUserNotificationsTable } from "@/lib/seed";
 
 const mapCatTitle = (string: string) => {
   if (string[0] === "#" && string.length > 1) {
@@ -37,7 +38,6 @@ const CatDescriptionWithHashTags = ({ cat }: { cat: Cat }) => {
 };
 
 const CatCard = async ({ cat, userId }: { cat: Cat; userId: string }) => {
-  const likes = await getLikes(cat.id);
   const isCatOwner = cat.userId === userId;
 
   return (
@@ -65,6 +65,7 @@ const CatCard = async ({ cat, userId }: { cat: Cat; userId: string }) => {
 };
 
 export default async function Cats() {
+  //  await createUserNotificationsTable();
   const cats = await getCats();
   const resolvedCurrentUser = await currentUser();
 
