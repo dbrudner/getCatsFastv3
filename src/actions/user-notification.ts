@@ -1,6 +1,7 @@
+"use server"
 import { getCatsFastDb, userNotificationTable } from "@/lib/core";
 import { currentUser } from "@clerk/nextjs/server";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 export async function createUserNotification(message: string, userId: string) {
 
@@ -17,27 +18,27 @@ export async function createUserNotification(message: string, userId: string) {
   return insertedNotification[0]
 }
 
-export async function getNotificationsByUserId(userId: string) {
+export async function getUnreadNotificationsByUserId(userId: string) {
   try {
     const notifications = await getCatsFastDb
       .select()
       .from(userNotificationTable)
-      .where(eq(userNotificationTable.userId, userId));
+      .where(and(eq(userNotificationTable.userId, userId), eq(userNotificationTable.hasBeenRead, false)))
 
     return notifications;
   } catch (e) {
-    console.error("Failed to get cat");
+    console.error("Failed to get notifications");
     console.error(e);
   }
 }
-export async function markUserNotificationAsRead(notificationId: number) {
+export async function markAllUserNotificationsAsRead(userId: string) {
   try {
-    const updatedNotification = await getCatsFastDb
+    const updatedNotifications = await getCatsFastDb
       .update(userNotificationTable)
       .set({ hasBeenRead: true })
-      .where(eq(userNotificationTable.id, notificationId))
+      .where(eq(userNotificationTable.userId, userId))
 
-    return updatedNotification
+    return "done";
   }
   catch (e) {
     throw (e)

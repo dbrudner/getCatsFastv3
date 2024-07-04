@@ -4,6 +4,7 @@ import { Button, IconButton } from "@mui/material";
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import UserNotificationsNavButton from "./user-notifications-nav-button";
 
 
 function useHighlightNavItemIfPathMatches() {
@@ -39,7 +40,7 @@ function NavIconButton({ path, Icon }: NavIconButtonProps) {
     <NavItem path={path}><IconButton className={highlightNavIconButtonIfActive(path)}>{Icon(highlightNavIconButtonIfActive(path))}</IconButton></NavItem>)
 }
 
-const baseNavIconButtonClassnames = "w-10 h-10";
+export const baseNavIconButtonClassnames = "w-10 h-10";
 const bottomMobileNavClassNames =
   "fixed bottom-0 left-0 w-screen flex flex-row items-center justify-around p-4 bg-black border-indigo-500 border-t-2";
 const sideNavClassNames =
@@ -71,6 +72,7 @@ export default function Nav() {
       </NavItem>
       <NavIconButton Icon={mapClassNameToNavIconButton(HomeIcon)} path="/" />
       <NavIconButton Icon={mapClassNameToNavIconButton(PlusIcon)} path="/cat/new" />
+      <UserNotificationsNavButton />
       <NavIconButton
         Icon={mapClassNameToNavIconButton(EllipsisHorizontalIcon)}
         path="/user/settings" />

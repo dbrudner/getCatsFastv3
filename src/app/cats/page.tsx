@@ -3,52 +3,19 @@ import { getCats } from "@/actions/cat";
 import { getLikes } from "@/actions/likes";
 import { LikeButton } from "@/app/components/cat/like-button";
 import DeleteCatButton from "@/app/components/delete-cat-button";
-import { Cat, CatsTable, } from "@/lib/core";
-import { createCatTagVoteTable, createCatTagsTable, createLikesTable, createUserNotificationsTable } from "@/lib/seed";
+import { Cat } from "@/lib/core";
 import { currentUser } from "@clerk/nextjs/server";
-import { HandThumbUpIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { Button, IconButton } from "@mui/material";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-
-function timeAgo(date: Date) {
-  const now = new Date();
-  //@ts-ignore
-  const seconds = Math.floor((now - date) / 1000);
-
-  if (seconds < 60) {
-    return seconds <= 1 ? 'a few seconds ago' : `${seconds} seconds ago`;
-  }
-
-  const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) {
-    return minutes === 1 ? 'a minute ago' : `${minutes} minutes ago`;
-  }
-
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) {
-    return hours === 1 ? 'an hour ago' : `${hours} hours ago`;
-  }
-
-  const days = Math.floor(hours / 24);
-  if (days < 30) {
-    return days === 1 ? 'one day ago' : `${days} days ago`;
-  }
-
-  const months = Math.floor(days / 30);
-  if (months < 12) {
-    return months === 1 ? 'one month ago' : `${months} months ago`;
-  }
-
-  const years = Math.floor(days / 365);
-  return years === 1 ? 'a year ago' : `${years} years ago`;
-}
+import timeAgo from "../utils/time-ago";
 
 const mapCatTitle = (string: string) => {
   if (string[0] === "#" && string.length > 1) {
     return <Link key={string} href={`/cats/tag/${string.slice(1)}`}><span className="text-sky-300 font-bold">{string}{" "}</span></Link>
   }
-  return <span className="">{string + " "}</span>
+  return <span key={string} className="">{string + " "}</span>
 }
 
 const CatDescriptionWithHashTags = ({ cat }: { cat: Cat }) => {
@@ -63,7 +30,7 @@ const CatCard = async ({ cat, userId }: { cat: Cat, userId: string }) => {
   const likes = await getLikes(cat.id);
   const isCatOwner = cat.userId === userId;
 
-  return <div key={cat.id}>
+  return <div>
     <div className="flex flex-col relative">
       <p className="text-sm tracking-tighter leading-4 text-slate-400 font-extralight mb-1 text-right">{timeAgo(cat.createdAt)}</p>
       <div>

@@ -1,7 +1,7 @@
 "use server";
 
-import { currentUser } from "@clerk/nextjs/server"
-import { Cat, getCatsFastDb, likesTable } from "@/lib/core";
+import { getCatsFastDb, likesTable } from "@/lib/core";
+import { currentUser } from "@clerk/nextjs/server";
 import { and, eq } from "drizzle-orm";
 
 export async function getLikes(catId: number) {
