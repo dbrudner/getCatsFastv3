@@ -67,9 +67,11 @@ export default function Nav() {
 
   return (
     <div className={navClassNames}>
-      <NavItem path="/cats">
-        <Button variant="text" size="small"><span className={highlightNavItemIfActive("/cats")}>Cats</span></Button>
-      </NavItem>
+      <div className="hidden md:block">
+        <NavItem path="/cats">
+          <Button variant="text" size="small"><span className={highlightNavItemIfActive("/cats")}>Cats</span></Button>
+        </NavItem>
+      </div>
       <NavIconButton Icon={mapClassNameToNavIconButton(HomeIcon)} path="/" />
       <NavIconButton Icon={mapClassNameToNavIconButton(PlusIcon)} path="/cat/new" />
       <UserNotificationsNavButton />
