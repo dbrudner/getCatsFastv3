@@ -63,7 +63,9 @@ function SendCatButton() {
 
   const loadingButtonText = pending ? "Life is butter dream" : "Send Cat";
 
-  const className = classNames(pending ? "" : "bg-fuchsia-500 hover:bg-fuchsia-500 text-white")
+  const className = classNames(
+    pending ? "" : "bg-fuchsia-500 hover:bg-fuchsia-500 text-white",
+  );
 
   return (
     <LoadingButton
@@ -134,7 +136,7 @@ function CatDropZone({
   );
 }
 
-function SendCatsForm({ createCatWithFormData = (formData: FormData) => { } }) {
+function SendCatsForm({ createCatWithFormData = (formData: FormData) => {} }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { isDragging, setIsDragging } = useDragAndDropStore((state) => state);
@@ -238,7 +240,10 @@ function SendCatsForm({ createCatWithFormData = (formData: FormData) => { } }) {
         </ButtonGroup>
       </div>
 
-      <form action={createCatWithFormData} className="flex flex-col m-auto gap-y-4">
+      <form
+        action={createCatWithFormData}
+        className="flex flex-col m-auto gap-y-4"
+      >
         <input
           ref={fileInputRef}
           type="file"
@@ -262,7 +267,11 @@ function SendCatsForm({ createCatWithFormData = (formData: FormData) => { } }) {
           name="catName"
           placeholder="Cute cat being cute #boyboy"
           helperText="Enter anything you'd like to share about this cat picture."
-          inputProps={{ maxLength: 100, className: "valid:text-white invalid:text-fuchsia-400 border-4 border-sky-500" }}
+          inputProps={{
+            maxLength: 100,
+            className:
+              "valid:text-white invalid:text-fuchsia-400 border-4 border-sky-500",
+          }}
           required
         />
         <SendCatButton />
@@ -310,7 +319,6 @@ function SignIn() {
               Sign In
             </Button>
           </SignInButton>
-
         </div>
       </div>
 
@@ -362,7 +370,11 @@ export default function SendCats() {
       <ClerkLoaded>
         <SignedIn>
           <div className="m-auto">
-            <SendCatsForm createCatWithFormData={(formData) => createCatWithFormData(formData)} />
+            <SendCatsForm
+              createCatWithFormData={(formData) =>
+                createCatWithFormData(formData)
+              }
+            />
           </div>
         </SignedIn>
         <SignedOut>

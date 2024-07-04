@@ -81,29 +81,25 @@ export const catTagTable = pgTable(
 
 export type CatTag = InferSelectModel<typeof catTagTable>;
 
-export const catTagVoteTable = pgTable(
-  "cat_tags",
-  {
-    id: serial("id").primaryKey(),
-    title: text("title").notNull(),
-    catId: integer("catId").notNull().references(() => CatsTable.id),
-    userId: text("userId").notNull(),
-    createdAt: timestamp("createdAt").defaultNow().notNull(),
-  },
-);
+export const catTagVoteTable = pgTable("cat_tags", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  catId: integer("catId")
+    .notNull()
+    .references(() => CatsTable.id),
+  userId: text("userId").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
 
 export type CatTagVote = InferSelectModel<typeof catTagVoteTable>;
 
-export const userNotificationTable = pgTable(
-  "user_notifications",
-  {
-    id: serial("id").primaryKey(),
-    userId: text("userId").notNull(),
-    createdAt: timestamp("createdAt").defaultNow().notNull(),
-    message: text("message").notNull(),
-    hasBeenRead: boolean("hasBeenRead").default(false).notNull(),
-  },
-);
+export const userNotificationTable = pgTable("user_notifications", {
+  id: serial("id").primaryKey(),
+  userId: text("userId").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  message: text("message").notNull(),
+  hasBeenRead: boolean("hasBeenRead").default(false).notNull(),
+});
 
 export type UserNotification = InferSelectModel<typeof userNotificationTable>;
 

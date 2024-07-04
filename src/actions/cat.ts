@@ -24,7 +24,7 @@ export async function getCatById(catId: Cat["id"]) {
 
 export async function searchCatsByTitle(tag: string) {
   try {
-    console.log(tag)
+    console.log(tag);
     const cats = await getCatsFastDb
       .select()
       .from(CatsTable)
@@ -36,14 +36,12 @@ export async function searchCatsByTitle(tag: string) {
   }
 }
 
-
 export async function getCats() {
   try {
     const cats = await getCatsFastDb.select().from(CatsTable);
     return cats;
-  }
-  catch (e) {
-    console.error(e)
+  } catch (e) {
+    console.error(e);
     throw e;
   }
 }
@@ -81,9 +79,9 @@ export async function createCat(catImage: File, catName: string) {
         ])
         .returning();
 
-      createUserNotification(`Created cat ${catName}`, resolvedCurrentUser.id)
+      createUserNotification(`Created cat ${catName}`, resolvedCurrentUser.id);
 
-      return insertedCat[0]
+      return insertedCat[0];
     } catch (e) {
       console.error("Failed to insert cat");
       console.error(e);
@@ -96,16 +94,16 @@ export async function createCatWithFormData(formData: FormData) {
   const catImage = formData.get("catImage");
 
   if (!(catImage instanceof File)) {
-    throw new Error("Invalid cat image")
+    throw new Error("Invalid cat image");
   }
 
   if (!catName || typeof catName !== "string") {
     throw new Error("Invalid cat name");
   }
 
-  const newCat = await createCat(catImage, catName)
+  const newCat = await createCat(catImage, catName);
 
-  redirect(`/cat/${newCat?.id}`)
+  redirect(`/cat/${newCat?.id}`);
 }
 
 export async function deleteCat(catId: number): Promise<void> {
@@ -122,10 +120,12 @@ export async function deleteCat(catId: number): Promise<void> {
 
     const result = await getCatsFastDb
       .delete(CatsTable)
-      .where(and(
-        eq(CatsTable.id, catId),
-        eq(CatsTable.userId, resolvedCurrentUser.id)
-      ));
+      .where(
+        and(
+          eq(CatsTable.id, catId),
+          eq(CatsTable.userId, resolvedCurrentUser.id),
+        ),
+      );
 
     console.log("Deleted cat", result);
   } catch (e) {

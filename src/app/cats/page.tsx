@@ -13,49 +13,56 @@ import timeAgo from "../utils/time-ago";
 
 const mapCatTitle = (string: string) => {
   if (string[0] === "#" && string.length > 1) {
-    return <Link key={string} href={`/cats/tag/${string.slice(1)}`}><span className="text-sky-300 font-bold">{string}{" "}</span></Link>
+    return (
+      <Link key={string} href={`/cats/tag/${string.slice(1)}`}>
+        <span className="text-sky-300 font-bold">{string} </span>
+      </Link>
+    );
   }
-  return <span key={string} className="">{string + " "}</span>
-}
-
-const CatDescriptionWithHashTags = ({ cat }: { cat: Cat }) => {
-  return <div className="flex flex-col gap-y-2">
-    <div className="flex flex-wrap gap-x-2">
-      {cat.title.split(" ").map(mapCatTitle)}
-    </div>
-  </div>
+  return (
+    <span key={string} className="">
+      {string + " "}
+    </span>
+  );
 };
 
-const CatCard = async ({ cat, userId }: { cat: Cat, userId: string }) => {
+const CatDescriptionWithHashTags = ({ cat }: { cat: Cat }) => {
+  return (
+    <div className="flex flex-col gap-y-2">
+      <div className="flex flex-wrap gap-x-2">
+        {cat.title.split(" ").map(mapCatTitle)}
+      </div>
+    </div>
+  );
+};
+
+const CatCard = async ({ cat, userId }: { cat: Cat; userId: string }) => {
   const likes = await getLikes(cat.id);
   const isCatOwner = cat.userId === userId;
 
-  return <div>
-    <div className="flex flex-col relative">
-      <p className="text-sm tracking-tighter leading-4 text-slate-400 font-extralight mb-1 text-right">{timeAgo(cat.createdAt)}</p>
-      <div>
-        <Link href={`/cat/${cat.id}`}>
-          <Image
-            src={cat.image}
-            width={1200}
-            height={1200}
-            alt={cat.title}
-          />
-        </Link>
-      </div>
-      <div className="flex justify-between items-start mt-1">
-        <CatDescriptionWithHashTags cat={cat} />
-        <div className="flex flex-col items-end min-w-24">
-          <LikeButton catId={cat.id} userId={userId} />
+  return (
+    <div>
+      <div className="flex flex-col relative">
+        <p className="text-sm tracking-tighter leading-4 text-slate-400 font-extralight mb-1 text-right">
+          {timeAgo(cat.createdAt)}
+        </p>
+        <div>
+          <Link href={`/cat/${cat.id}`}>
+            <Image src={cat.image} width={1200} height={1200} alt={cat.title} />
+          </Link>
         </div>
-      </div>
+        <div className="flex justify-between items-start mt-1">
+          <CatDescriptionWithHashTags cat={cat} />
+          <div className="flex flex-col items-end min-w-24">
+            <LikeButton catId={cat.id} userId={userId} />
+          </div>
+        </div>
 
-      {isCatOwner && (
-        <DeleteCatButton catId={cat.id} />
-      )}
+        {isCatOwner && <DeleteCatButton catId={cat.id} />}
+      </div>
     </div>
-  </div>
-}
+  );
+};
 
 export default async function Cats() {
   const cats = await getCats();
@@ -80,7 +87,11 @@ export default async function Cats() {
       <div className="flex flex-col gap-y-24 items-center mb-48">
         <div className="flex flex-col max-w-full gap-y-10">
           {cats.map((cat) => (
-            <CatCard key={cat.id} cat={cat} userId={resolvedCurrentUser?.id ?? ""} />
+            <CatCard
+              key={cat.id}
+              cat={cat}
+              userId={resolvedCurrentUser?.id ?? ""}
+            />
           ))}
         </div>
       </div>

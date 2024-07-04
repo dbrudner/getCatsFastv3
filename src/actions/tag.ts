@@ -6,4 +6,4 @@ const getTags = async () => {
     console.error(e);
     throw e;
   }
-}
+};

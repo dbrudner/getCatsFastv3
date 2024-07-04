@@ -17,35 +17,46 @@ const useGetLikesQuery = (catId: number) => {
   return useQuery({
     queryKey: ["likes", { catId }],
     queryFn: async () => {
-      const likes = await getLikes(
-        catId
-      );
+      const likes = await getLikes(catId);
 
       return likes;
     },
   });
-}
+};
 
-const usePostLikeMutation = (catId: number, userId: string, onSuccess: () => void) => {
+const usePostLikeMutation = (
+  catId: number,
+  userId: string,
+  onSuccess: () => void,
+) => {
   return useMutation({
     mutationFn: async () => {
-      return await postLike(catId, userId)
+      return await postLike(catId, userId);
     },
-    onSuccess
-  })
-}
+    onSuccess,
+  });
+};
 
-const useDeleteLikeMutation = (catId: number, userId: string, onSuccess: () => void) => {
+const useDeleteLikeMutation = (
+  catId: number,
+  userId: string,
+  onSuccess: () => void,
+) => {
   return useMutation({
     mutationFn: async () => {
-      return await deleteLike(catId, userId)
+      return await deleteLike(catId, userId);
     },
-    onSuccess
-  })
-}
+    onSuccess,
+  });
+};
 
 export function LikeButton({ catId, userId }: LikeButtonProps) {
-  const { data: likes, refetch, isLoading, isFetching } = useGetLikesQuery(catId);
+  const {
+    data: likes,
+    refetch,
+    isLoading,
+    isFetching,
+  } = useGetLikesQuery(catId);
 
   const postLikeMutation = usePostLikeMutation(catId, userId, () => {
     refetch();
@@ -61,26 +72,34 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
     } else {
       postLikeMutation.mutate();
     }
-  }
+  };
 
   const iconClassName = useMemo(() => {
-    const shouldShowSkyColor = (likes?.liked && !isFetching) || postLikeMutation.isPending || (isFetching && !likes?.liked)
-    return classNames("w-4 h-4 transition-colors duration-300",
+    const shouldShowSkyColor =
+      (likes?.liked && !isFetching) ||
+      postLikeMutation.isPending ||
+      (isFetching && !likes?.liked);
+    return classNames(
+      "w-4 h-4 transition-colors duration-300",
       shouldShowSkyColor ? "text-sky-300" : "text-slate-600",
       {
-        invisible: isLoading
-      }
-    )
-  }, [likes?.liked, postLikeMutation.isPending, isFetching, isLoading])
+        invisible: isLoading,
+      },
+    );
+  }, [likes?.liked, postLikeMutation.isPending, isFetching, isLoading]);
 
-  const likesClassName = classNames("text-sm font-semibold transition duration-300", likes?.liked ? "text-white" : "text-slate-200")
+  const likesClassName = classNames(
+    "text-sm font-semibold transition duration-300",
+    likes?.liked ? "text-white" : "text-slate-200",
+  );
   const likesCountClassName = classNames(
-    " transition-opacity duration-300", {
-    invisible: isLoading,
-    "text-lime-400": likes?.liked,
-  },
+    " transition-opacity duration-300",
+    {
+      invisible: isLoading,
+      "text-lime-400": likes?.liked,
+    },
     isFetching || postLikeMutation.isPending ? "opacity-0" : "opacity-100",
-  )
+  );
 
   return (
     <>
@@ -89,7 +108,12 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
           <span className={likesCountClassName}>{likes?.count}</span> Likes
         </p>
         <SignedIn>
-          <IconButton sx={{ p: 0, mb: "3px", ml: .5 }} disabled={postLikeMutation.isPending || isFetching} onClick={() => onClick()} disableRipple>
+          <IconButton
+            sx={{ p: 0, mb: "3px", ml: 0.5 }}
+            disabled={postLikeMutation.isPending || isFetching}
+            onClick={() => onClick()}
+            disableRipple
+          >
             <HandThumbUpIcon className={iconClassName} />
           </IconButton>
         </SignedIn>
@@ -97,4 +121,3 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
     </>
   );
 }
-

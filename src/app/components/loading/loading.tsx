@@ -6,7 +6,7 @@ import classNames from "classnames";
 export default function Loading() {
   const powerIconClassName = classNames(
     styles.bounce,
-    "w-24 h-24 m-auto mb-8 block text-sky-300"
+    "w-24 h-24 m-auto mb-8 block text-sky-300",
   );
 
   const bouncingLetterClassName = classNames(styles.bounce, "inline-block");

@@ -14,7 +14,10 @@ export async function getLikes(catId: number) {
 
     const currentUserPromise = currentUser();
 
-    const [likes, resolvedCurrentUser] = await Promise.all([likesPromise, currentUserPromise]);
+    const [likes, resolvedCurrentUser] = await Promise.all([
+      likesPromise,
+      currentUserPromise,
+    ]);
 
     return {
       count: likes.length,
@@ -23,7 +26,7 @@ export async function getLikes(catId: number) {
   } catch (err) {
     console.error(err);
   }
-};
+}
 
 export async function postLike(catId: number, userId: string) {
   try {
@@ -45,7 +48,7 @@ export async function postLike(catId: number, userId: string) {
       ])
       .returning();
 
-    createUserNotification("Someone liked your cat!", userId)
+    createUserNotification("Someone liked your cat!", userId);
   } catch (err) {
     console.error(err);
   }
@@ -55,10 +58,7 @@ export async function deleteLike(catId: number, userId: string): Promise<void> {
   try {
     const result = await getCatsFastDb
       .delete(likesTable)
-      .where(and(
-        eq(likesTable.catId, catId),
-        eq(likesTable.userId, userId)
-      ));
+      .where(and(eq(likesTable.catId, catId), eq(likesTable.userId, userId)));
 
     console.log("Deleted like", result);
   } catch (e) {

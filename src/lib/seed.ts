@@ -32,10 +32,10 @@ export async function createCatsTable() {
 }
 
 export async function seedCatsTable() {
-  const insertedCats: Cat[] = await
-    getCatsFastDb.insert(CatsTable)
-      .values(newCats)
-      .returning();
+  const insertedCats: Cat[] = await getCatsFastDb
+    .insert(CatsTable)
+    .values(newCats)
+    .returning();
 
   return {
     insertedCats,

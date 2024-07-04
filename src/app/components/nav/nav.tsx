@@ -1,5 +1,9 @@
 "use client";
-import { EllipsisHorizontalIcon, HomeIcon, PlusIcon } from "@heroicons/react/24/outline";
+import {
+  EllipsisHorizontalIcon,
+  HomeIcon,
+  PlusIcon,
+} from "@heroicons/react/24/outline";
 import { Button, IconButton } from "@mui/material";
 import classNames from "classnames";
 import Link from "next/link";
@@ -10,18 +14,19 @@ import UserMessagesNavButton from "./user-messages-nav-button";
 function useHighlightNavItemIfPathMatches() {
   const pathname = usePathname();
 
-  return (path: string) => classNames(
-    pathname === path ? "text-white" : "text-slate-600",
-  );
+  return (path: string) =>
+    classNames(pathname === path ? "text-white" : "text-slate-600");
 }
 
 export function useHighlightNavIconButtonIfActive() {
-  const highlightNavIconButtonIfPathMatches = useHighlightNavItemIfPathMatches();
+  const highlightNavIconButtonIfPathMatches =
+    useHighlightNavItemIfPathMatches();
 
-  return (path: string) => classNames(
-    highlightNavIconButtonIfPathMatches(path),
-    baseNavIconButtonClassnames,
-  );
+  return (path: string) =>
+    classNames(
+      highlightNavIconButtonIfPathMatches(path),
+      baseNavIconButtonClassnames,
+    );
 }
 
 function NavItem({ path, children }: NavItemProps) {
@@ -37,7 +42,12 @@ function NavIconButton({ path, Icon }: NavIconButtonProps) {
   const highlightNavIconButtonIfActive = useHighlightNavIconButtonIfActive();
 
   return (
-    <NavItem path={path}><IconButton className={highlightNavIconButtonIfActive(path)}>{Icon(highlightNavIconButtonIfActive(path))}</IconButton></NavItem>)
+    <NavItem path={path}>
+      <IconButton className={highlightNavIconButtonIfActive(path)}>
+        {Icon(highlightNavIconButtonIfActive(path))}
+      </IconButton>
+    </NavItem>
+  );
 }
 
 export const baseNavIconButtonClassnames = "w-10 h-10";
@@ -53,10 +63,9 @@ type NavItemProps = {
 
 function mapClassNameToNavIconButton(Icon: any) {
   return function (className: string) {
-    return <Icon className={className} />
-  }
+    return <Icon className={className} />;
+  };
 }
-
 
 export default function Nav() {
   const highlightNavItemIfActive = useHighlightNavItemIfPathMatches();
@@ -69,16 +78,22 @@ export default function Nav() {
     <div className={navClassNames}>
       <div className="hidden md:block">
         <NavItem path="/cats">
-          <Button variant="text" size="small"><span className={highlightNavItemIfActive("/cats")}>Cats</span></Button>
+          <Button variant="text" size="small">
+            <span className={highlightNavItemIfActive("/cats")}>Cats</span>
+          </Button>
         </NavItem>
       </div>
       <NavIconButton Icon={mapClassNameToNavIconButton(HomeIcon)} path="/" />
-      <NavIconButton Icon={mapClassNameToNavIconButton(PlusIcon)} path="/cat/new" />
+      <NavIconButton
+        Icon={mapClassNameToNavIconButton(PlusIcon)}
+        path="/cat/new"
+      />
       <UserNotificationsNavButton />
       <UserMessagesNavButton />
       <NavIconButton
         Icon={mapClassNameToNavIconButton(EllipsisHorizontalIcon)}
-        path="/user/settings" />
+        path="/user/settings"
+      />
     </div>
   );
 }
