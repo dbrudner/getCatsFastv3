@@ -1,5 +1,5 @@
 "use client";
-import { getUnreadNotificationsByUserId, markAllUserNotificationsAsRead, markUserNotificationAsRead } from "@/actions/user-notification";
+import { getAllNotificationsByUserId, getCountUnreadNotificationsByUserId, getUnreadNotificationsByUserId, markAllUserNotificationsAsRead, markUserNotificationAsRead } from "@/actions/user-notification";
 import useCurrentUserQuery from "@/app/queries/useCurrentUserQuery";
 import { useUser } from "@clerk/nextjs";
 import { BellAlertIcon, BellIcon } from "@heroicons/react/24/outline";
@@ -8,6 +8,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { baseNavIconButtonClassnames } from "./nav";
 import { useRef, useState } from "react";
 import timeAgo from "@/app/utils/time-ago";
+import Link from "next/link";
 
 export default function UserNotificationsNavButton() {
   const ref = useRef(null);
@@ -18,7 +19,7 @@ export default function UserNotificationsNavButton() {
     queryFn: async () => {
       console.log("Query fn")
       try {
-        const notifications = await getUnreadNotificationsByUserId(user?.id ?? "");
+        const notifications = await getAllNotificationsByUserId(user?.id ?? "");
         console.log({ notifications })
         return notifications;
       }
@@ -28,7 +29,20 @@ export default function UserNotificationsNavButton() {
     },
   });
 
-  const hasNotifications = Number(userNotificationsQuery.data?.length) > 0;
+  const unreadUserNotificationsCountQuery = useQuery({
+    queryKey: ["unreadUserNotificationsCount", user?.id],
+    queryFn: async () => {
+      try {
+        const notifications = await getCountUnreadNotificationsByUserId(user?.id ?? "");
+        return notifications;
+      }
+      catch (e) {
+        return 0;
+      }
+    },
+  });
+
+  const hasUnreadNotifications = Number(userNotificationsQuery.data?.length) > 0;
 
   const notifications = userNotificationsQuery.data ?? [];
 
@@ -45,16 +59,17 @@ export default function UserNotificationsNavButton() {
 
   return (
     <div className="relative" ref={ref}>
-      {hasNotifications && <div className="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white text-xs rounded-full px-1">
+      {hasUnreadNotifications && <div className="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white text-xs rounded-full px-1">
         {userNotificationsQuery.data?.length}
       </div>}
       <IconButton onClick={() => setOpen(!open)}>
-        {hasNotifications ? <BellAlertIcon className="h-6 w-6 text-white" /> : <BellIcon className="h-6 w-6 text-slate-600" />}
+        {hasUnreadNotifications ? <BellAlertIcon className="h-6 w-6 text-white" /> : <BellIcon className="h-6 w-6 text-slate-600" />}
       </IconButton>
 
       <Popover
+        disableScrollLock
         anchorEl={ref.current}
-        open={open}
+        open={open && hasUnreadNotifications}
         onClose={() => {
           setOpen(!open);
           markUserNotificationsAsReadMutation.mutate();
@@ -65,9 +80,12 @@ export default function UserNotificationsNavButton() {
         }}
       >
         <div className="w-60">
-          <div className="p-3 text-xl">
-            Notifications
-          </div>
+          <Link href="/notifications">
+            <div className="p-3 text-xl">
+              Notifications
+            </div>
+
+          </Link>
           <Divider />
           {notifications.map((notification) => (
             <div key={notification.id} className="p-3">
