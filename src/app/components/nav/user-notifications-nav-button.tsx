@@ -83,12 +83,12 @@ export default function UserNotificationsNavButton() {
       )}
       <IconButton onClick={() => setOpen(!open)}>
         {hasUnreadNotifications ? (
-          <BellAlertIcon className="h-8 w-8 text-white" />
+          <BellAlertIcon className="h-6 w-6 text-white" />
         ) : (
           <Link href="/notifications">
             <BellIcon
               className={
-                highlightNavItemIfPathMatches("/notifications") + " w-8 h-8"
+                highlightNavItemIfPathMatches("/notifications") + " w-6 h-6"
               }
             />
           </Link>
