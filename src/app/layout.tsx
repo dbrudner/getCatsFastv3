@@ -8,7 +8,6 @@ import "./globals.css";
 import GetCatsFastThemeProvider from "./theme";
 import AppProvider from "@/components/app-provider";
 import Nav from "@/components/nav/nav";
-import { StyledEngineProvider } from "@mui/material";
 
 const workSans = Work_Sans({ subsets: ["latin"] });
 
@@ -33,26 +32,24 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1.0"
         ></meta>
       </Head>
-      <StyledEngineProvider injectFirst>
-        <GetCatsFastThemeProvider>
-          <html lang="en">
-            <body
-              className={containerClassName}
-            >
-              <AppProvider>
+      <GetCatsFastThemeProvider>
+        <html lang="en">
+          <body
+            className={containerClassName}
+          >
+            <AppProvider>
 
-                <div className="m-auto max-w-screen-sm">
-                  {children}
+              <div className="m-auto max-w-screen-sm">
+                {children}
 
-                </div>
-                <Analytics />
-                <Nav />
-              </AppProvider>
+              </div>
+              <Analytics />
+              <Nav />
+            </AppProvider>
 
-            </body>
-          </html>
-        </GetCatsFastThemeProvider>
-      </StyledEngineProvider>
+          </body>
+        </html>
+      </GetCatsFastThemeProvider>
     </ClerkProvider>
   );
 }

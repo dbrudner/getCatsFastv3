@@ -4,7 +4,7 @@ import { getLikes } from "@/actions/likes";
 import { LikeButton } from "@/components/cat/like-button";
 import DeleteCatButton from "@/components/delete-cat-button";
 import { Cat, CatsTable, } from "@/lib/core";
-import { createCatTagVoteTable, createCatTagsTable, createLikesTable } from "@/lib/seed";
+import { createCatTagVoteTable, createCatTagsTable, createLikesTable, createUserNotificationsTable } from "@/lib/seed";
 import { currentUser } from "@clerk/nextjs/server";
 import { HandThumbUpIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Button, IconButton } from "@mui/material";
@@ -81,7 +81,6 @@ const CatCard = async ({ cat, userId }: { cat: Cat, userId: string }) => {
         <div className="flex flex-col items-end min-w-24">
           <LikeButton catId={cat.id} userId={userId} />
         </div>
-
       </div>
 
       {isCatOwner && (
@@ -92,8 +91,6 @@ const CatCard = async ({ cat, userId }: { cat: Cat, userId: string }) => {
 }
 
 export default async function Cats() {
-  await createCatTagsTable();
-  await createCatTagVoteTable();
   const cats = await getCats();
   const resolvedCurrentUser = await currentUser();
 

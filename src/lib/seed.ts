@@ -76,4 +76,18 @@ export async function createCatTagVoteTable() {
         "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
   `);
-} 
+}
+
+export async function createUserNotificationsTable() {
+  console.log("Creating user notification");
+  return await sql.query(`
+      DROP TABLE IF EXISTS user_notifications;
+      CREATE TABLE user_notifications (
+        id SERIAL PRIMARY KEY,
+        "userId" VARCHAR(255) NOT NULL,
+        "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        "message" VARCHAR(255) NOT NULL,
+        "hasBeenRead" BOOLEAN DEFAULT FALSE
+      );
+  `);
+}

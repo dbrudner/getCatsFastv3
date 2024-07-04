@@ -63,11 +63,13 @@ function SendCatButton() {
 
   const loadingButtonText = pending ? "Life is butter dream" : "Send Cat";
 
+  const className = classNames(pending ? "" : "bg-fuchsia-500 hover:bg-fuchsia-500 text-white")
+
   return (
     <LoadingButton
       type="submit"
       variant="contained"
-      className="bg-fuchsia-500 hover:bg-fuchsia-500 text-white"
+      className={className}
       loading={pending}
       loadingPosition="end"
     >

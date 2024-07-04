@@ -1,4 +1,5 @@
 import {
+  boolean,
   foreignKey,
   integer,
   pgTable,
@@ -89,13 +90,21 @@ export const catTagVoteTable = pgTable(
     userId: text("userId").notNull(),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
   },
-  (catTags) => {
-    return {
-      uniqueIdx: uniqueIndex("unique_idx").on(catTags.id),
-    };
-  },
 );
 
 export type CatTagVote = InferSelectModel<typeof catTagVoteTable>;
+
+export const userNotificationTable = pgTable(
+  "user_notifications",
+  {
+    id: serial("id").primaryKey(),
+    userId: text("userId").notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    message: text("message").notNull(),
+    hasBeenRead: boolean("hasBeenRead").default(false).notNull(),
+  },
+);
+
+export type UserNotification = InferSelectModel<typeof userNotificationTable>;
 
 export const getCatsFastDb = drizzle(sql);

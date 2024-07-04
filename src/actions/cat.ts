@@ -5,6 +5,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { put } from "@vercel/blob";
 import { randomUUID } from "crypto";
 import { and, eq, like } from "drizzle-orm";
+import { createUserNotification } from "./user-notification";
 import { redirect } from "next/navigation";
 
 export async function getCatById(catId: Cat["id"]) {
@@ -46,6 +47,7 @@ export async function getCats() {
     throw e;
   }
 }
+
 export async function createCat(catImage: File, catName: string) {
   if (!(catImage instanceof File)) {
     throw new Error("Invalid cat image");
@@ -79,6 +81,8 @@ export async function createCat(catImage: File, catName: string) {
         ])
         .returning();
 
+      createUserNotification(`Created cat ${catName}`, resolvedCurrentUser.id)
+
       return insertedCat[0]
     } catch (e) {
       console.error("Failed to insert cat");
@@ -86,6 +90,7 @@ export async function createCat(catImage: File, catName: string) {
     }
   }
 }
+
 export async function createCatWithFormData(formData: FormData) {
   const catName = formData.get("catName") ?? `untitled-cat-${randomUUID()}`;
   const catImage = formData.get("catImage");
@@ -98,9 +103,10 @@ export async function createCatWithFormData(formData: FormData) {
     throw new Error("Invalid cat name");
   }
 
-  return createCat(catImage, catName)
-}
+  const newCat = await createCat(catImage, catName)
 
+  redirect(`/cat/${newCat?.id}`)
+}
 
 export async function deleteCat(catId: number): Promise<void> {
   console.log("Deleting cat with id", catId);
