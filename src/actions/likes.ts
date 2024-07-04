@@ -3,6 +3,7 @@
 import { getCatsFastDb, likesTable } from "@/lib/core";
 import { currentUser } from "@clerk/nextjs/server";
 import { and, eq } from "drizzle-orm";
+import { createUserNotification } from "./user-notification";
 
 export async function getLikes(catId: number) {
   try {
@@ -43,6 +44,8 @@ export async function postLike(catId: number, userId: string) {
         },
       ])
       .returning();
+
+    createUserNotification("Someone liked your cat!", userId)
   } catch (err) {
     console.error(err);
   }
