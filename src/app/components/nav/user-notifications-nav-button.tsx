@@ -14,12 +14,12 @@ export default function UserNotificationsNavButton() {
   const ref = useRef(null);
   const [open, setOpen] = useState(false);
   const { user } = useUser();
-  const userNotificationsQuery = useQuery({
+  const unreadUserNotificationsQuery = useQuery({
     queryKey: ["userNotifications", user?.id],
     queryFn: async () => {
       console.log("Query fn")
       try {
-        const notifications = await getAllNotificationsByUserId(user?.id ?? "");
+        const notifications = await getUnreadNotificationsByUserId(user?.id ?? "");
         console.log({ notifications })
         return notifications;
       }
@@ -34,17 +34,18 @@ export default function UserNotificationsNavButton() {
     queryFn: async () => {
       try {
         const notifications = await getCountUnreadNotificationsByUserId(user?.id ?? "");
-        return notifications;
+        return notifications?.[0]?.count ?? 0;
       }
       catch (e) {
         return 0;
       }
     },
   });
+  console.log(unreadUserNotificationsCountQuery.data, "blah");
 
-  const hasUnreadNotifications = Number(userNotificationsQuery.data?.length) > 0;
+  const hasUnreadNotifications = Number(unreadUserNotificationsCountQuery.data) > 0;
 
-  const notifications = userNotificationsQuery.data ?? [];
+  const notifications = unreadUserNotificationsQuery.data ?? [];
 
   const markUserNotificationsAsReadMutation = useMutation({
     mutationFn: async () => {
@@ -54,13 +55,13 @@ export default function UserNotificationsNavButton() {
         console.error(e);
       }
     },
-    onSuccess: () => { userNotificationsQuery.refetch() },
+    onSuccess: () => { unreadUserNotificationsQuery.refetch() },
   });
 
   return (
     <div className="relative" ref={ref}>
-      {hasUnreadNotifications && <div className="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white text-xs rounded-full px-1">
-        {userNotificationsQuery.data?.length}
+      {hasUnreadNotifications && <div className="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white text-xs rounded-full px-1 w-4 h-4 justify-center items-center">
+        {unreadUserNotificationsCountQuery.data}
       </div>}
       <IconButton onClick={() => setOpen(!open)}>
         {hasUnreadNotifications ? <BellAlertIcon className="h-6 w-6 text-white" /> : <BellIcon className="h-6 w-6 text-slate-600" />}

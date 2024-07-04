@@ -24,7 +24,7 @@ export default async function Notifications() {
   markAllUserNotificationsAsRead(user?.id || "");
 
   return <div>
-    <h1 className="text-4xl text-white my-10">Notifications</h1>
+    <h1 className="text-6xl font-bold tracking-wider text-white my-10">Notifications</h1>
     {userNotifications?.reverse().map((notification) => <NotificationItem key={notification.id} {...notification} />)}
   </div>
 }
