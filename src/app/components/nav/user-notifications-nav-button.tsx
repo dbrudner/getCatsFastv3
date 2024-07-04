@@ -15,6 +15,8 @@ import { useHighlightNavIconButtonIfActive } from "./nav";
 
 export default function UserNotificationsNavButton() {
   const ref = useRef(null);
+  const [hasDismissedNotifications, setHasDismissedNotifications] =
+    useState(false);
   const [open, setOpen] = useState(false);
   const { user } = useUser();
   const unreadUserNotificationsQuery = useQuery({
@@ -48,7 +50,8 @@ export default function UserNotificationsNavButton() {
   });
 
   const hasUnreadNotifications =
-    Number(unreadUserNotificationsCountQuery.data) > 0;
+    Number(unreadUserNotificationsCountQuery.data) > 0 &&
+    !hasDismissedNotifications;
 
   const notifications = unreadUserNotificationsQuery.data ?? [];
 
@@ -61,6 +64,7 @@ export default function UserNotificationsNavButton() {
       }
     },
     onSuccess: () => {
+      setHasDismissedNotifications(true);
       unreadUserNotificationsQuery.refetch();
     },
   });
@@ -79,7 +83,7 @@ export default function UserNotificationsNavButton() {
       )}
       <IconButton onClick={() => setOpen(!open)}>
         {hasUnreadNotifications ? (
-          <BellAlertIcon className="h-6 w-6 text-white" />
+          <BellAlertIcon className="h-8 w-8 text-white" />
         ) : (
           <Link href="/notifications">
             <BellIcon

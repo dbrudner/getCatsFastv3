@@ -50,7 +50,7 @@ export default async function Notifications() {
   const sortedUserNotifications = userNotifications?.toSorted((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
-  console.log({ sortedUserNotifications });
+
   return (
     <div>
       <h1 className="text-2xl font-bold tracking-wider text-white my-10">
