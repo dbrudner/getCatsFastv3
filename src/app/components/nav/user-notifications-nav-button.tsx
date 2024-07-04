@@ -1,14 +1,13 @@
 "use client";
-import { getAllNotificationsByUserId, getCountUnreadNotificationsByUserId, getUnreadNotificationsByUserId, markAllUserNotificationsAsRead, markUserNotificationAsRead } from "@/actions/user-notification";
-import useCurrentUserQuery from "@/app/queries/useCurrentUserQuery";
+import { getCountUnreadNotificationsByUserId, getUnreadNotificationsByUserId, markAllUserNotificationsAsRead } from "@/actions/user-notification";
+import timeAgo from "@/app/utils/time-ago";
 import { useUser } from "@clerk/nextjs";
 import { BellAlertIcon, BellIcon } from "@heroicons/react/24/outline";
 import { Divider, IconButton, Popover } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { baseNavIconButtonClassnames, useHighlightNavIconButtonIfActive, useHighlightNavItemIfPathMatches } from "./nav";
-import { useRef, useState } from "react";
-import timeAgo from "@/app/utils/time-ago";
 import Link from "next/link";
+import { useRef, useState } from "react";
+import { useHighlightNavIconButtonIfActive } from "./nav";
 
 export default function UserNotificationsNavButton() {
   const ref = useRef(null);
