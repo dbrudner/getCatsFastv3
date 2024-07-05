@@ -98,7 +98,9 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
       invisible: isLoading,
       "text-lime-400": likes?.liked,
     },
-    isFetching || postLikeMutation.isPending ? "opacity-0" : "opacity-100",
+    isFetching || postLikeMutation.isPending || deleteLikeMutation.isPending
+      ? "opacity-0"
+      : "opacity-100",
   );
 
   return (

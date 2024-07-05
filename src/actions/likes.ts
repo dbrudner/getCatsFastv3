@@ -4,6 +4,7 @@ import { getCatsFastDb, likesTable } from "@/lib/core";
 import { currentUser } from "@clerk/nextjs/server";
 import { and, eq } from "drizzle-orm";
 import { createUserNotification } from "./user-notification";
+import { getCatById } from "./cat";
 
 export async function getLikes(catId: number) {
   try {
@@ -38,7 +39,13 @@ export async function postLike(catId: number, userId: string) {
       throw new Error("No cat ID provided");
     }
 
-    const insertedCats = await getCatsFastDb
+    const likedCat = await getCatById(catId);
+
+    if (!likedCat) {
+      throw new Error("Cat not found");
+    }
+
+    const insertedLikes = await getCatsFastDb
       .insert(likesTable)
       .values([
         {
@@ -48,15 +55,13 @@ export async function postLike(catId: number, userId: string) {
       ])
       .returning();
 
-    const insertedCat = insertedCats[0];
-
-    console.log("Inserted like", insertedCat);
+    console.log("Inserted like");
     console.log("Creating user notification from cat like");
 
     await createUserNotification({
       message: "Someone liked your cat!",
       createdByUserId: userId,
-      createdForUserId: insertedCat.userId,
+      createdForUserId: likedCat.userId,
       title: "Cat liked",
       redirectAction: `/cat/${catId}`,
     });
