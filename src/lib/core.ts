@@ -95,12 +95,13 @@ export type CatTagVote = InferSelectModel<typeof catTagVoteTable>;
 
 export const userNotificationTable = pgTable("user_notifications", {
   id: serial("id").primaryKey(),
-  userId: text("userId").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   message: text("message").notNull(),
   hasBeenRead: boolean("hasBeenRead").default(false).notNull(),
   title: text("title").notNull(),
   redirectAction: text("redirectAction"),
+  createdByUserId: text("createdByUserId").notNull(),
+  createdForUserId: text("createdForUserId").notNull(),
   // lastModified: timestamp("lastModified").defaultNow().notNull(),
 });
 

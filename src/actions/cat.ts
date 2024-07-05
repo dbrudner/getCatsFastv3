@@ -79,7 +79,13 @@ export async function createCat(catImage: File, catName: string) {
         ])
         .returning();
 
-      createUserNotification(`Created cat ${catName}`, resolvedCurrentUser.id, "Cat created", `/cat/${insertedCat[0].id}`);
+      createUserNotification({
+        message: `Created cat ${catName}`,
+        createdByUserId: resolvedCurrentUser.id,
+        createdForUserId: resolvedCurrentUser.id,
+        title: "Cat created",
+        redirectAction: `/cat/${insertedCat[0].id}`,
+      });
 
       return insertedCat[0];
     } catch (e) {

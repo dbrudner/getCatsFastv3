@@ -25,16 +25,14 @@ function NotificationItem({
   return (
     <Link href={redirectAction ?? ""}>
       <div className="rounded-lg mb-4">
-        <div>
-          <p className="text-slate-600 text-sm inline">{timeAgo(createdAt)}</p>
-          {hasBeenRead ? (
-            <div />
-          ) : (
-            <div className="inline ml-2 text-xs border px-2 bg-green-500 text-black rounded-lg border-green-500">
-              New
-            </div>
-          )}
-        </div>
+        <p className="text-slate-600 text-sm inline">{timeAgo(createdAt)}</p>
+        {hasBeenRead ? (
+          <div />
+        ) : (
+          <div className="inline ml-2 text-xs border px-2 bg-green-500 text-black rounded-lg border-green-500">
+            New
+          </div>
+        )}
         <div className="text-xl text-white font-bold">{title}</div>
         <p className={messageClassName}>{message}</p>
       </div>
@@ -53,9 +51,12 @@ export default async function Notifications() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-wider text-white my-10">
+      <h1 className="text-2xl font-bold tracking-wider text-white mt-10">
         Notifications
       </h1>
+      <p className="text-sm text-slate-400 mb-4">
+        You can check all of your read and unread notifications here.
+      </p>
       {sortedUserNotifications?.map((notification) => (
         <NotificationItem key={notification.id} {...notification} />
       ))}

@@ -84,7 +84,8 @@ export async function createUserNotificationsTable() {
       DROP TABLE IF EXISTS user_notifications;
       CREATE TABLE user_notifications (
         id SERIAL PRIMARY KEY,
-        "userId" VARCHAR(255) NOT NULL,
+        "createdByUserId" VARCHAR(255) NOT NULL,
+        "createdForUserId" VARCHAR(255) NOT NULL,
         "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         "message" VARCHAR(255) NOT NULL,
         "hasBeenRead" BOOLEAN DEFAULT FALSE,

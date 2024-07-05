@@ -1,28 +1,27 @@
 "use server";
-import { getCatsFastDb, userNotificationTable } from "@/lib/core";
-import { currentUser } from "@clerk/nextjs/server";
+import {
+  UserNotification,
+  getCatsFastDb,
+  userNotificationTable,
+} from "@/lib/core";
 import { and, count, eq } from "drizzle-orm";
 
-export async function createUserNotification(
-  message: string,
-  userId: string,
-  title: string,
-  redirectAction: string,
-) {
-  console.log("Creating user notification");
-  console.log({ message, userId, title, redirectAction });
+type UserNotificationInput = Pick<
+  UserNotification,
+  | "message"
+  | "createdByUserId"
+  | "createdForUserId"
+  | "title"
+  | "redirectAction"
+>;
 
+export async function createUserNotification(
+  userNotificationInput: UserNotificationInput,
+) {
   try {
     const insertedNotification = await getCatsFastDb
       .insert(userNotificationTable)
-      .values([
-        {
-          message,
-          userId,
-          title,
-          redirectAction,
-        },
-      ])
+      .values([userNotificationInput])
       .returning();
 
     console.log(insertedNotification[0]);
@@ -40,7 +39,7 @@ export async function getUnreadNotificationsByUserId(userId: string) {
       .from(userNotificationTable)
       .where(
         and(
-          eq(userNotificationTable.userId, userId),
+          eq(userNotificationTable.createdForUserId, userId),
           eq(userNotificationTable.hasBeenRead, false),
         ),
       );
@@ -57,7 +56,7 @@ export async function markAllUserNotificationsAsRead(userId: string) {
     const updatedNotifications = await getCatsFastDb
       .update(userNotificationTable)
       .set({ hasBeenRead: true })
-      .where(eq(userNotificationTable.userId, userId));
+      .where(eq(userNotificationTable.createdForUserId, userId));
 
     return "done";
   } catch (e) {
@@ -72,7 +71,7 @@ export async function getCountUnreadNotificationsByUserId(userId: string) {
       .from(userNotificationTable)
       .where(
         and(
-          eq(userNotificationTable.userId, userId),
+          eq(userNotificationTable.createdForUserId, userId),
           eq(userNotificationTable.hasBeenRead, false),
         ),
       );
@@ -89,7 +88,7 @@ export async function getAllNotificationsByUserId(userId: string) {
     const notifications = await getCatsFastDb
       .select()
       .from(userNotificationTable)
-      .where(eq(userNotificationTable.userId, userId));
+      .where(eq(userNotificationTable.createdForUserId, userId));
     return notifications;
   } catch (e) {
     console.error("Failed to get notifications");

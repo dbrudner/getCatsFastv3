@@ -10,7 +10,7 @@ import { BellAlertIcon, BellIcon } from "@heroicons/react/24/outline";
 import { Divider, IconButton, Popover } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useHighlightNavIconButtonIfActive } from "./nav";
 
 export default function UserNotificationsNavButton() {
@@ -48,6 +48,12 @@ export default function UserNotificationsNavButton() {
       }
     },
   });
+
+  useEffect(() => {
+    if (unreadUserNotificationsCountQuery.data) {
+      document.title = `Get Cats Fast (${unreadUserNotificationsCountQuery.data})`;
+    }
+  }, [unreadUserNotificationsCountQuery.data]);
 
   const hasUnreadNotifications =
     Number(unreadUserNotificationsCountQuery.data) > 0 &&

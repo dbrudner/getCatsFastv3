@@ -1,6 +1,5 @@
 "use server";
 import { getCats } from "@/actions/cat";
-import { getLikes } from "@/actions/likes";
 import { LikeButton } from "@/app/components/cat/like-button";
 import DeleteCatButton from "@/app/components/delete-cat-button";
 import { Cat } from "@/lib/core";
@@ -65,7 +64,7 @@ const CatCard = async ({ cat, userId }: { cat: Cat; userId: string }) => {
 };
 
 export default async function Cats() {
-  //  await createUserNotificationsTable();
+  // await createUserNotificationsTable();
   const cats = await getCats();
   const resolvedCurrentUser = await currentUser();
 
