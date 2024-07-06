@@ -67,6 +67,7 @@ export default async function Cats() {
   // await createUserNotificationsTable();
   const cats = await getCats();
   const resolvedCurrentUser = await currentUser();
+  console.log(resolvedCurrentUser);
 
   return (
     <div className="m-auto">

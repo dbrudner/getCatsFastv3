@@ -17,6 +17,7 @@ const useGetLikesQuery = (catId: number) => {
   return useQuery({
     queryKey: ["likes", { catId }],
     queryFn: async () => {
+      console.log("Get cat likles query fn");
       const likes = await getLikes(catId);
 
       return likes;
@@ -57,7 +58,7 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
     isLoading,
     isFetching,
   } = useGetLikesQuery(catId);
-
+  console.log({ likes });
   const postLikeMutation = usePostLikeMutation(catId, userId, () => {
     refetch();
   });
@@ -112,7 +113,6 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
         <SignedIn>
           <IconButton
             sx={{ p: 0, mb: "3px", ml: 0.5 }}
-            disabled={postLikeMutation.isPending || isFetching}
             onClick={() => onClick()}
             disableRipple
           >

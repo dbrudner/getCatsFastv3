@@ -7,7 +7,7 @@ import {
 import timeAgo from "@/app/utils/time-ago";
 import { useUser } from "@clerk/nextjs";
 import { BellAlertIcon, BellIcon } from "@heroicons/react/24/outline";
-import { Divider, IconButton, Popover } from "@mui/material";
+import { Avatar, Divider, IconButton, Popover } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -115,9 +115,14 @@ export default function UserNotificationsNavButton() {
           horizontal: "right",
         }}
       >
-        <div className="w-60">
+        <div className="min-w-80">
           <Link href="/notifications">
-            <div className="p-3 text-xl">Notifications</div>
+            <div className="flex items-baseline w-full justify-between">
+              <div className="p-3 text-xl">Notifications</div>
+              <div className="p-3 text-xs text-slate-200 font-bold tracking-wider">
+                {unreadUserNotificationsCountQuery.data} new!
+              </div>
+            </div>
           </Link>
           <Divider />
           {notifications.map((notification) => (
@@ -126,19 +131,17 @@ export default function UserNotificationsNavButton() {
               href={notification.redirectAction ?? ""}
             >
               <div className="p-3">
-                <div className="flex">
+                <div className="flex gap-x-2">
                   <div>
                     {notification.imageUrl && (
-                      <Image
-                        className="rounded-4"
+                      <Avatar
+                        className="mt-2"
                         src={notification.imageUrl}
-                        width={300}
-                        height={300}
                         alt={notification.title}
                       />
                     )}
                   </div>
-                  <div>
+                  <div className="w-full">
                     <div className="flex justify-between items-baseline">
                       <div className="font-bold">{notification.title}</div>
                       <div className="text-sm text-slate-500">

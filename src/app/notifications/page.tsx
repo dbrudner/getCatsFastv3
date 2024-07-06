@@ -32,7 +32,7 @@ function NotificationItem({
         <div>
           <div className="flex items-center">
             <div className="text-xl text-white font-bold inline">{title}</div>
-            {hasBeenRead && (
+            {!hasBeenRead && (
               <div className="inline ml-2 text-xs border px-2 bg-green-500 text-black rounded-lg border-green-500">
                 New
               </div>
