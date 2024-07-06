@@ -1,12 +1,17 @@
 "use server";
 
-import { getCatsFastDb, likesTable } from "@/lib/core";
+import { Cat, getCatsFastDb, likesTable } from "@/lib/core";
 import { currentUser } from "@clerk/nextjs/server";
 import { and, eq } from "drizzle-orm";
 import { createUserNotification } from "./user-notification";
 import { getCatById } from "./cat";
 
-export async function getLikes(catId: number) {
+export type Likes = {
+  count: number;
+  liked: boolean;
+};
+
+export async function getLikes(catId: Cat["id"]): Promise<Likes> {
   try {
     const likesPromise = await getCatsFastDb
       .select()
@@ -26,6 +31,11 @@ export async function getLikes(catId: number) {
     };
   } catch (err) {
     console.error(err);
+
+    return {
+      count: 0,
+      liked: false,
+    };
   }
 }
 

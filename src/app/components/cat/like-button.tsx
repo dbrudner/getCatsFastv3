@@ -17,10 +17,16 @@ const useGetLikesQuery = (catId: number) => {
   return useQuery({
     queryKey: ["likes", { catId }],
     queryFn: async () => {
-      console.log("Get cat likles query fn");
-      const likes = await getLikes(catId);
+      try {
+        const likes = await fetch(`/api/cat/likes/${catId}`).then((res) =>
+          res.json(),
+        );
 
-      return likes;
+        return likes;
+      } catch (e) {
+        console.error(e);
+        throw e;
+      }
     },
   });
 };
