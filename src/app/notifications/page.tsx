@@ -9,6 +9,8 @@ import React from "react";
 import timeAgo from "../utils/time-ago";
 import classNames from "classnames";
 import Link from "next/link";
+import Image from "next/image";
+import { Avatar } from "@mui/material";
 
 function NotificationItem({
   message,
@@ -16,6 +18,7 @@ function NotificationItem({
   hasBeenRead,
   title,
   redirectAction,
+  imageUrl,
 }: UserNotification) {
   const messageClassName = classNames(
     "text-lg",
@@ -24,17 +27,20 @@ function NotificationItem({
 
   return (
     <Link href={redirectAction ?? ""}>
-      <div className="rounded-lg mb-4">
-        <p className="text-slate-600 text-sm inline">{timeAgo(createdAt)}</p>
-        {hasBeenRead ? (
-          <div />
-        ) : (
-          <div className="inline ml-2 text-xs border px-2 bg-green-500 text-black rounded-lg border-green-500">
-            New
+      <div className="flex items-start gap-x-4">
+        {imageUrl && <Avatar src={imageUrl} className="mt-2" />}
+        <div>
+          <div className="flex items-center">
+            <div className="text-xl text-white font-bold inline">{title}</div>
+            {hasBeenRead && (
+              <div className="inline ml-2 text-xs border px-2 bg-green-500 text-black rounded-lg border-green-500">
+                New
+              </div>
+            )}
           </div>
-        )}
-        <div className="text-xl text-white font-bold">{title}</div>
-        <p className={messageClassName}>{message}</p>
+          <p className="text-slate-600 text-sm inline">{timeAgo(createdAt)}</p>
+          <p className={messageClassName}>{message}</p>
+        </div>
       </div>
     </Link>
   );
@@ -57,9 +63,11 @@ export default async function Notifications() {
       <p className="text-sm text-slate-400 mb-4">
         You can check all of your read and unread notifications here.
       </p>
-      {sortedUserNotifications?.map((notification) => (
-        <NotificationItem key={notification.id} {...notification} />
-      ))}
+      <div className="flex flex-col gap-y-6">
+        {sortedUserNotifications?.map((notification) => (
+          <NotificationItem key={notification.id} {...notification} />
+        ))}
+      </div>
     </div>
   );
 }

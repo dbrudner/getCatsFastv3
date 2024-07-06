@@ -85,6 +85,7 @@ export async function createCat(catImage: File, catName: string) {
         createdForUserId: resolvedCurrentUser.id,
         title: "Cat created",
         redirectAction: `/cat/${insertedCat[0].id}`,
+        imageUrl: insertedCat[0].image,
       });
 
       return insertedCat[0];

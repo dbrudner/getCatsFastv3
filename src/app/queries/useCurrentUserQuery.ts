@@ -6,7 +6,6 @@ export default function useCurrentUserQuery() {
   return useQuery({
     queryKey: ["currentUser"],
     queryFn: async () => {
-      console.log("HI");
       try {
         const user = await currentUser();
         console.log(user);

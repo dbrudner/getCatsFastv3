@@ -58,13 +58,16 @@ export async function postLike(catId: number, userId: string) {
     console.log("Inserted like");
     console.log("Creating user notification from cat like");
 
-    await createUserNotification({
+    createUserNotification({
       message: "Someone liked your cat!",
       createdByUserId: userId,
       createdForUserId: likedCat.userId,
       title: "Cat liked",
       redirectAction: `/cat/${catId}`,
+      imageUrl: likedCat.image,
     });
+
+    return insertedLikes[0];
   } catch (err) {
     console.error(err);
   }

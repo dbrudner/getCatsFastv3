@@ -103,6 +103,7 @@ export const userNotificationTable = pgTable("user_notifications", {
   createdByUserId: text("createdByUserId").notNull(),
   createdForUserId: text("createdForUserId").notNull(),
   // lastModified: timestamp("lastModified").defaultNow().notNull(),
+  imageUrl: text("imageUrl"),
 });
 
 export type UserNotification = InferSelectModel<typeof userNotificationTable>;

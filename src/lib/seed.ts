@@ -79,7 +79,6 @@ export async function createCatTagVoteTable() {
 }
 
 export async function createUserNotificationsTable() {
-  console.log("Creating user notification");
   return await sql.query(`
       DROP TABLE IF EXISTS user_notifications;
       CREATE TABLE user_notifications (
@@ -90,7 +89,8 @@ export async function createUserNotificationsTable() {
         "message" VARCHAR(255) NOT NULL,
         "hasBeenRead" BOOLEAN DEFAULT FALSE,
         "redirectAction" VARCHAR(255),
-        "title" VARCHAR(255) NOT NULL
+        "title" VARCHAR(255) NOT NULL,
+        "imageUrl" VARCHAR(255)
       );
   `);
 }

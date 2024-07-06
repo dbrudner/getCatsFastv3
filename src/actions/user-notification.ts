@@ -13,12 +13,14 @@ type UserNotificationInput = Pick<
   | "createdForUserId"
   | "title"
   | "redirectAction"
+  | "imageUrl"
 >;
 
 export async function createUserNotification(
   userNotificationInput: UserNotificationInput,
 ) {
   try {
+    console.log("Inserting User Notification", userNotificationInput);
     const insertedNotification = await getCatsFastDb
       .insert(userNotificationTable)
       .values([userNotificationInput])
@@ -58,7 +60,7 @@ export async function markAllUserNotificationsAsRead(userId: string) {
       .set({ hasBeenRead: true })
       .where(eq(userNotificationTable.createdForUserId, userId));
 
-    return "done";
+    return updatedNotifications;
   } catch (e) {
     throw e;
   }

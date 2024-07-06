@@ -12,6 +12,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useHighlightNavIconButtonIfActive } from "./nav";
+import Image from "next/image";
 
 export default function UserNotificationsNavButton() {
   const ref = useRef(null);
@@ -125,14 +126,29 @@ export default function UserNotificationsNavButton() {
               href={notification.redirectAction ?? ""}
             >
               <div className="p-3">
-                <div className="flex justify-between items-baseline">
-                  <div className="font-bold">{notification.title}</div>
-                  <div className="text-sm text-slate-500">
-                    {timeAgo(notification.createdAt)}
+                <div className="flex">
+                  <div>
+                    {notification.imageUrl && (
+                      <Image
+                        className="rounded-4"
+                        src={notification.imageUrl}
+                        width={300}
+                        height={300}
+                        alt={notification.title}
+                      />
+                    )}
                   </div>
-                </div>
-                <div className="mt-1 text-slate-300">
-                  {notification.message}
+                  <div>
+                    <div className="flex justify-between items-baseline">
+                      <div className="font-bold">{notification.title}</div>
+                      <div className="text-sm text-slate-500">
+                        {timeAgo(notification.createdAt)}
+                      </div>
+                    </div>
+                    <div className="mt-1 text-slate-300">
+                      {notification.message}
+                    </div>
+                  </div>
                 </div>
               </div>
             </Link>
