@@ -1,12 +1,13 @@
 "use server";
 
-import { Cat, CatsTable, getCatsFastDb } from "@/lib/core";
+import { Cat, CatsTable, Like, getCatsFastDb } from "@/lib/core";
 import { currentUser } from "@clerk/nextjs/server";
 import { put } from "@vercel/blob";
 import { randomUUID } from "crypto";
 import { and, eq, like } from "drizzle-orm";
 import { createUserNotification } from "./user-notification";
 import { redirect } from "next/navigation";
+import { Likes, getLikes, getUserLikesByCatId } from "./likes";
 
 export async function getCatById(catId: Cat["id"]) {
   try {
@@ -40,6 +41,59 @@ export async function getCats() {
   try {
     const cats = await getCatsFastDb.select().from(CatsTable);
     return cats;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
+
+export async function getCatWithLikes(
+  catId: Cat["id"],
+  userId: string,
+): Promise<{ cat: Cat; likes: Likes }> {
+  if (typeof catId !== "number") {
+    throw new Error("Invalid cat ID");
+  }
+
+  const [likes, cat] = await Promise.all([
+    getLikes(catId, userId),
+    getCatById(catId),
+  ]);
+
+  if (!cat) {
+    throw new Error("Cat not found");
+  }
+
+  return {
+    cat,
+    likes,
+  };
+}
+
+export async function getCatsWithLikes() {
+  try {
+    const cats = await getCatsFastDb.select().from(CatsTable);
+    const userId = (await currentUser())?.id ?? "";
+    const catsWithLikes = await Promise.all(
+      cats.map(async (cat) => {
+        const likes = getLikes(cat.id, userId);
+        return {
+          cat,
+          likes,
+        };
+      }),
+    );
+
+    const catLikesPromises = catsWithLikes.map((cat) => cat.likes);
+
+    const resolvedCatPromises = await Promise.all(catLikesPromises);
+
+    return catsWithLikes.map((cat, index) => {
+      return {
+        cat: cat.cat,
+        likes: resolvedCatPromises[index],
+      };
+    });
   } catch (e) {
     console.error(e);
     throw e;

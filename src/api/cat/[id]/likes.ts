@@ -6,6 +6,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Cat | { message: string }>,
 ) {
+  console.log("API getting cat likes");
+
   try {
     const catTitle = req.body.title;
 

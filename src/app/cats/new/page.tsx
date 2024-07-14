@@ -98,7 +98,6 @@ function SendCatsForm({ createCatWithFormData = (formData: FormData) => {} }) {
   };
 
   const onDrop = (event: any) => {
-    console.log(event);
     event.preventDefault();
     const catImageFile = event.dataTransfer.files[0];
     const fileInputEl = fileInputRef.current;

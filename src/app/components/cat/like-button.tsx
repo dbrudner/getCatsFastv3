@@ -13,20 +13,14 @@ type LikeButtonProps = {
   userId: string;
 };
 
-const useGetLikesQuery = (catId: number) => {
+const useGetLikesQuery = (catId: number, userId: string) => {
   return useQuery({
     queryKey: ["likes", { catId }],
     queryFn: async () => {
-      try {
-        const likes = await fetch(`/api/cat/likes/${catId}`).then((res) =>
-          res.json(),
-        );
+      console.log("Get cat likles query fn");
+      const likes = await getLikes(catId, userId ?? "");
 
-        return likes;
-      } catch (e) {
-        console.error(e);
-        throw e;
-      }
+      return likes;
     },
   });
 };
@@ -63,8 +57,7 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
     refetch,
     isLoading,
     isFetching,
-  } = useGetLikesQuery(catId);
-  console.log({ likes });
+  } = useGetLikesQuery(catId, userId);
   const postLikeMutation = usePostLikeMutation(catId, userId, () => {
     refetch();
   });

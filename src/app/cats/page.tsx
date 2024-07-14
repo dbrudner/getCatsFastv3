@@ -1,15 +1,14 @@
 "use server";
-import { getCats } from "@/actions/cat";
+import { getCatsWithLikes } from "@/actions/cat";
 import { LikeButton } from "@/app/components/cat/like-button";
 import DeleteCatButton from "@/app/components/delete-cat-button";
 import { Cat } from "@/lib/core";
-import { currentUser } from "@clerk/nextjs/server";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import timeAgo from "../utils/time-ago";
-import { createUserNotificationsTable } from "@/lib/seed";
+import { currentUser } from "@clerk/nextjs/server";
 
 const mapCatTitle = (string: string) => {
   if (string[0] === "#" && string.length > 1) {
@@ -64,10 +63,8 @@ const CatCard = async ({ cat, userId }: { cat: Cat; userId: string }) => {
 };
 
 export default async function Cats() {
-  // await createUserNotificationsTable();
-  const cats = await getCats();
+  const catsWithLikes = await getCatsWithLikes();
   const resolvedCurrentUser = await currentUser();
-  console.log(resolvedCurrentUser);
 
   return (
     <div className="m-auto">
@@ -87,10 +84,10 @@ export default async function Cats() {
       </div>
       <div className="flex flex-col gap-y-24 items-center mb-48">
         <div className="flex flex-col max-w-full gap-y-10">
-          {cats.map((cat) => (
+          {catsWithLikes.map((catWithLike) => (
             <CatCard
-              key={cat.id}
-              cat={cat}
+              key={catWithLike.cat.id}
+              cat={catWithLike.cat}
               userId={resolvedCurrentUser?.id ?? ""}
             />
           ))}

@@ -2,7 +2,7 @@
 
 import { Cat, getCatsFastDb, likesTable } from "@/lib/core";
 import { currentUser } from "@clerk/nextjs/server";
-import { and, eq } from "drizzle-orm";
+import { and, count, eq } from "drizzle-orm";
 import { createUserNotification } from "./user-notification";
 import { getCatById } from "./cat";
 
@@ -11,23 +11,20 @@ export type Likes = {
   liked: boolean;
 };
 
-export async function getLikes(catId: Cat["id"]): Promise<Likes> {
+export async function getLikes(
+  catId: Cat["id"],
+  userId: string,
+): Promise<Likes> {
   try {
-    const likesPromise = await getCatsFastDb
+    const likes = await getCatsFastDb
       .select()
       .from(likesTable)
       .where(eq(likesTable.catId, catId));
 
-    const currentUserPromise = currentUser();
-
-    const [likes, resolvedCurrentUser] = await Promise.all([
-      likesPromise,
-      currentUserPromise,
-    ]);
-
+    console.log({ liked: likes.some((like) => like.userId === userId) });
     return {
       count: likes.length,
-      liked: likes.some((like) => like.userId === resolvedCurrentUser?.id),
+      liked: likes.some((like) => like.userId === userId),
     };
   } catch (err) {
     console.error(err);
@@ -54,6 +51,7 @@ export async function postLike(catId: number, userId: string) {
     if (!likedCat) {
       throw new Error("Cat not found");
     }
+    console.log(catId, userId);
 
     const insertedLikes = await getCatsFastDb
       .insert(likesTable)
