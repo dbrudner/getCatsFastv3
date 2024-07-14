@@ -1,13 +1,13 @@
 "use server";
 
-import { Cat, CatsTable, Like, getCatsFastDb } from "@/lib/core";
+import { Cat, CatsTable, getCatsFastDb } from "@/lib/core";
 import { currentUser } from "@clerk/nextjs/server";
 import { put } from "@vercel/blob";
 import { randomUUID } from "crypto";
 import { and, eq, like } from "drizzle-orm";
-import { createUserNotification } from "./user-notification";
 import { redirect } from "next/navigation";
-import { Likes, getLikes, getUserLikesByCatId } from "./likes";
+import { Likes, getLikes } from "./likes";
+import { createUserNotification } from "./user-notification";
 
 export async function getCatById(catId: Cat["id"]) {
   try {
