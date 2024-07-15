@@ -56,7 +56,7 @@ export default async function Notifications() {
   });
 
   return (
-    <div>
+    <div className="mb-6">
       <h1 className="text-2xl font-bold tracking-wider text-white mt-10">
         Notifications
       </h1>
