@@ -81,7 +81,7 @@ export default function CatCard({ cat, activeHashTag }: CatCardProps) {
           {timeAgo(cat?.createdAt)}
         </p>
         <div>
-          <Link href={`/cat/${cat.id}`}>
+          <Link href={cat?.id ? `/cat/${cat.id}` : "/cats"}>
             <Image src={cat.image} width={1200} height={1200} alt={cat.title} />
           </Link>
         </div>
