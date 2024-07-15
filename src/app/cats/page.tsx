@@ -26,6 +26,7 @@ const mapCatTitle = (string: string) => {
 };
 
 const CatDescriptionWithHashTags = ({ cat }: { cat: Cat }) => {
+  console.log({ cat });
   return (
     <div className="flex flex-col gap-y-2">
       <div className="flex flex-wrap gap-x-2">
@@ -52,7 +53,7 @@ const CatCard = async ({ cat, userId }: { cat: Cat; userId: string }) => {
         <div className="flex justify-between items-start mt-1">
           <CatDescriptionWithHashTags cat={cat} />
           <div className="flex flex-col items-end min-w-24">
-            <LikeButton catId={cat.id} userId={userId} />
+            <LikeButton catId={cat.id} userId={userId} className="flex" />
           </div>
         </div>
 

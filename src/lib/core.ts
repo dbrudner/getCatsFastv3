@@ -1,6 +1,7 @@
+import { sql } from "@vercel/postgres";
+import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import {
   boolean,
-  foreignKey,
   integer,
   pgTable,
   serial,
@@ -8,10 +9,7 @@ import {
   timestamp,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
-import { InferSelectModel, InferInsertModel } from "drizzle-orm";
-import { sql } from "@vercel/postgres";
 import { drizzle } from "drizzle-orm/vercel-postgres";
-import { queryObjects } from "v8";
 
 export const CatsTable = pgTable(
   "cats",
@@ -102,7 +100,6 @@ export const userNotificationTable = pgTable("user_notifications", {
   redirectAction: text("redirectAction"),
   createdByUserId: text("createdByUserId").notNull(),
   createdForUserId: text("createdForUserId").notNull(),
-  // lastModified: timestamp("lastModified").defaultNow().notNull(),
   imageUrl: text("imageUrl"),
 });
 

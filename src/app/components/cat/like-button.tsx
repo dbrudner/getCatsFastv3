@@ -11,6 +11,7 @@ import { SignedIn } from "@clerk/nextjs";
 type LikeButtonProps = {
   catId: number;
   userId: string;
+  className: string;
 };
 
 const useGetLikesQuery = (catId: number, userId: string) => {
@@ -51,7 +52,7 @@ const useDeleteLikeMutation = (
   });
 };
 
-export function LikeButton({ catId, userId }: LikeButtonProps) {
+export function LikeButton({ catId, userId, className }: LikeButtonProps) {
   const {
     data: likes,
     refetch,
@@ -104,21 +105,19 @@ export function LikeButton({ catId, userId }: LikeButtonProps) {
   );
 
   return (
-    <>
-      <div className="flex justify-end items-center">
-        <p className={likesClassName}>
-          <span className={likesCountClassName}>{likes?.count}</span> Likes
-        </p>
-        <SignedIn>
-          <IconButton
-            sx={{ p: 0, mb: "3px", ml: 0.5 }}
-            onClick={() => onClick()}
-            disableRipple
-          >
-            <HandThumbUpIcon className={iconClassName} />
-          </IconButton>
-        </SignedIn>
-      </div>
-    </>
+    <div className={className}>
+      <p className={likesClassName}>
+        <span className={likesCountClassName}>{likes?.count}</span> Likes
+      </p>
+      <SignedIn>
+        <IconButton
+          sx={{ p: 0, mb: "3px", ml: 0.5 }}
+          onClick={() => onClick()}
+          disableRipple
+        >
+          <HandThumbUpIcon className={iconClassName} />
+        </IconButton>
+      </SignedIn>
+    </div>
   );
 }

@@ -5,12 +5,10 @@ import {
 } from "@/actions/user-notification";
 import { UserNotification } from "@/lib/core";
 import { currentUser } from "@clerk/nextjs/server";
-import React from "react";
-import timeAgo from "../utils/time-ago";
+import { Avatar } from "@mui/material";
 import classNames from "classnames";
 import Link from "next/link";
-import Image from "next/image";
-import { Avatar } from "@mui/material";
+import timeAgo from "../utils/time-ago";
 
 function NotificationItem({
   message,

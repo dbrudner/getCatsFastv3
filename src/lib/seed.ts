@@ -1,23 +1,7 @@
 import { sql } from "@vercel/postgres";
 import { CatsTable, Cat, NewCat, getCatsFastDb } from "./core";
 
-const newCats: NewCat[] = [
-  {
-    title: "Cat boy",
-    image: "/cat.webp",
-    userId: "1",
-  },
-  {
-    title: "Cat girl",
-    image: "/cat.webp",
-    userId: "1",
-  },
-  {
-    title: "Cat them",
-    image: "/cat.webp",
-    userId: "1",
-  },
-];
+const newCats: NewCat[] = [];
 
 export async function createCatsTable() {
   return await sql.query(`
@@ -44,7 +28,6 @@ export async function seedCatsTable() {
 
 export async function createLikesTable() {
   return await sql.query(`
-      DROP TABLE IF EXISTS likes;
       CREATE TABLE likes (
         id SERIAL PRIMARY KEY,
         "userId" VARCHAR(255) NOT NULL,
@@ -55,7 +38,6 @@ export async function createLikesTable() {
 
 export async function createCatTagsTable() {
   return await sql.query(`
-      DROP TABLE IF EXISTS cat_tags;
       CREATE TABLE cat_tags (
         id SERIAL PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
@@ -67,7 +49,6 @@ export async function createCatTagsTable() {
 
 export async function createCatTagVoteTable() {
   return await sql.query(`
-      DROP TABLE IF EXISTS cat_tag_votes;
       CREATE TABLE cat_tag_votes (
         id SERIAL PRIMARY KEY,
         "userId" VARCHAR(255) NOT NULL,
@@ -80,7 +61,6 @@ export async function createCatTagVoteTable() {
 
 export async function createUserNotificationsTable() {
   return await sql.query(`
-      DROP TABLE IF EXISTS user_notifications;
       CREATE TABLE user_notifications (
         id SERIAL PRIMARY KEY,
         "createdByUserId" VARCHAR(255) NOT NULL,
