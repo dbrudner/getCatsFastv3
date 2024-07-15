@@ -1,4 +1,3 @@
-import notFoundCatImage from "";
 import CatCard from "@/app/components/cat/catcard";
 import { Cat } from "@/lib/core";
 import Link from "next/link";
