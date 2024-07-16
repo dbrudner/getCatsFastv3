@@ -3,12 +3,17 @@ import { getCatsWithLikes } from "@/actions/cat";
 import { LikeButton } from "@/app/components/cat/like-button";
 import DeleteCatButton from "@/app/components/delete-cat-button";
 import { Cat } from "@/lib/core";
-import { PlusIcon } from "@heroicons/react/24/outline";
-import { Button } from "@mui/material";
+import {
+  ListBulletIcon,
+  PlusIcon,
+  TableCellsIcon,
+} from "@heroicons/react/24/outline";
+import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import timeAgo from "../utils/time-ago";
 import { currentUser } from "@clerk/nextjs/server";
+import CatsView from "../components/cat/cats-view";
 
 const mapCatTitle = (string: string) => {
   if (string[0] === "#" && string.length > 1) {
@@ -68,32 +73,11 @@ export default async function Cats() {
   const resolvedCurrentUser = await currentUser();
 
   return (
-    <div className="m-auto">
-      <div className="flex justify-between items-center mt-12 mb-4">
-        <h1 className="text-4xl font-bold text-white">
-          The <span className="text-sky-300 text-6xl">Cats</span>
-        </h1>
-        <Link href="/cat/new">
-          <Button
-            variant="outlined"
-            size="large"
-            startIcon={<PlusIcon className="w-8 h-8" />}
-          >
-            Add Cat
-          </Button>
-        </Link>
-      </div>
-      <div className="flex flex-col gap-y-24 items-center mb-48">
-        <div className="flex flex-col max-w-full gap-y-10">
-          {catsWithLikes.map((catWithLike) => (
-            <CatCard
-              key={catWithLike.cat.id}
-              cat={catWithLike.cat}
-              userId={resolvedCurrentUser?.id ?? ""}
-            />
-          ))}
-        </div>
-      </div>
+    <div className="m-auto mt-6">
+      <CatsView
+        catsWithLikes={catsWithLikes}
+        userId={resolvedCurrentUser?.id ?? ""}
+      />
     </div>
   );
 }
