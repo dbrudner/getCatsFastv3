@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Loading from "./components/loading/loading";
 
 function OpacityOnHover({
   children,
@@ -43,7 +44,7 @@ function Card({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="p-4 bg-white shadow-md rounded-lg text-slate-500 flex flex-col items-center md:items-start">
+    <div className="p-4 border-2 rounded-lg text-slate-500 flex flex-col items-center md:items-start hover:text-green-300 hover:bg-slate-800">
       {children}
     </div>
   );
@@ -82,7 +83,7 @@ function GetCatsLinkCard() {
     <LinkCard
       title="Get Cats"
       description="Get cats from the internet."
-      imageSrc="/receive-cats.webp"
+      imageSrc="/getcats.png"
       href="/cats"
     />
   );
@@ -93,7 +94,7 @@ function SendCatsLinkCard() {
     <LinkCard
       title="New Cat"
       description="Send cat to the internet."
-      imageSrc="/send-cats.webp"
+      imageSrc="/sendcats.png"
       href="/cat/new"
     />
   );
