@@ -8,6 +8,7 @@ import {
   ChevronUpIcon,
   CurrencyDollarIcon,
   ListBulletIcon,
+  PlusIcon,
   StarIcon,
   TableCellsIcon,
   TrophyIcon,
@@ -131,7 +132,7 @@ type Props = { catsWithLikes: any[]; userId: string };
 
 export default function CatsView({ catsWithLikes, userId }: Props) {
   const [view, setView] = useState<"list" | "grid">("list");
-  const [query, setQuery] = useState<"top" | "best" | "rando">("top");
+  const [query, setQuery] = useState<"new" | "top" | "best" | "all">("top");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const open = !!anchorEl;
@@ -205,6 +206,13 @@ export default function CatsView({ catsWithLikes, userId }: Props) {
               }}
             >
               <CatsMenuItem
+                Icon={PlusIcon}
+                onClick={() => setQuery("new")}
+                active={query === "top"}
+              >
+                New
+              </CatsMenuItem>
+              <CatsMenuItem
                 Icon={TrophyIcon}
                 onClick={() => setQuery("top")}
                 active={query === "top"}
@@ -220,10 +228,10 @@ export default function CatsView({ catsWithLikes, userId }: Props) {
               </CatsMenuItem>
               <CatsMenuItem
                 Icon={StarIcon}
-                onClick={() => setQuery("rando")}
-                active={query === "rando"}
+                onClick={() => setQuery("all")}
+                active={query === "all"}
               >
-                Rando
+                All
               </CatsMenuItem>
             </Menu>
           </div>

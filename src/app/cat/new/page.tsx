@@ -286,9 +286,9 @@ function SendCatsForm({ createCatWithFormData = (formData: FormData) => {} }) {
 function SignIn() {
   return (
     <div className="flex flex-col">
-      <h1 className="text-4xl text-white font-bold mb-4">
+      <h1 className="text-4xl text-white font-semibold mb-4 leading-normal tracking-wider">
         You&apos;re just moments away from becoming a{" "}
-        <span className="text-sky-300">GetCatsFast</span> Contributor!
+        <span className="text-sky-300 font-bold">GetCatsFast</span> Contributor!
       </h1>
       <div className="flex items-center">
         <span className="flex items-center justify-center w-10 h-10 border-4 border-lime-600 rounded-full shrink-0">
