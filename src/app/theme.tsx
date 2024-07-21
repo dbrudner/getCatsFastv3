@@ -23,11 +23,16 @@ const theme = createTheme({
   components: {
     MuiButton: {
       styleOverrides: {
-        root: {
+        root: ({ ownerState }) => ({
           fontWeight: resolvedTailwingConfig.theme.fontWeight.semibold,
           fontSize: resolvedTailwingConfig.theme.fontSize.xl[0],
           textTransform: "none",
-        },
+          ...(ownerState.variant === "text" && {
+            "&.MuiButton-root:hover": {
+              backgroundColor: "transparent",
+            },
+          }),
+        }),
       },
     },
     MuiFormHelperText: {

@@ -53,7 +53,7 @@ export const baseNavIconButtonClassnames = "w-10 h-10";
 const bottomMobileNavClassNames =
   "fixed bottom-0 left-0 w-screen flex flex-row items-center justify-around p-4 bg-black border-slate-700 border-t lg:bg-transparent bg-slate-900";
 const sideNavClassNames =
-  "lg:start-auto lg:flex-col lg:gap-y-4 lg:h-screen lg:top-0 lg:left-0 lg:w-24 lg:items-center lg:border-t-0 lg:justify-start fixed";
+  "lg:start-auto lg:flex-col lg:gap-y-4 lg:h-screen lg:top-0 lg:left-0 lg:w-40 lg:items-center lg:border-t-0 lg:justify-start fixed";
 
 type NavItemProps = {
   path: string;
@@ -75,31 +75,43 @@ export default function Nav() {
 
   return (
     <div className={navClassNames}>
-      <div className="hidden md:block">
-        <NavItem path="/cats">
-          <Button variant="text" size="small">
-            <span className={highlightNavItemIfActive("/cats")}>Cats</span>
-          </Button>
-        </NavItem>
-      </div>
+      <NavItem path="/cats">
+        <Button variant="text" size="small">
+          <span
+            className={`${highlightNavItemIfActive("/cats")} hover:text-white`}
+          >
+            Cats
+          </span>
+        </Button>
+      </NavItem>
       <NavIconButton Icon={mapClassNameToNavIconButton(HomeIcon)} path="/" />
       <NavIconButton
         Icon={mapClassNameToNavIconButton(PlusIcon)}
         path="/cat/new"
       />
       <UserNotificationsNavButton />
-      <SignedIn>
-        <SignOutButton>
-          <span className="hover:text-white text-slate-600 cursor-pointer">
-            Log Out
-          </span>
-        </SignOutButton>
-      </SignedIn>
+      <div className="hidden sm:block">
+        <SignedIn>
+          <SignOutButton>
+            <Button
+              sx={{ "&.MuiButton-root:hover": { bgcolor: "transparent" } }}
+              variant="text"
+              size="small"
+            >
+              <span className="text-slate-600 hover:text-white">Log Out</span>
+            </Button>
+          </SignOutButton>
+        </SignedIn>
+      </div>
       <SignedOut>
         <Link href="/signin">
-          <span className="hover:text-white text-slate-600 cursor-pointer">
-            Sign In
-          </span>
+          <Button
+            sx={{ "&.MuiButton-root:hover": { bgcolor: "transparent" } }}
+            variant="text"
+            size="small"
+          >
+            <span className="text-slate-600 hover:text-white">Sign In</span>
+          </Button>
         </Link>
       </SignedOut>
     </div>

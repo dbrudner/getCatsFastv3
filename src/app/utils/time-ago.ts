@@ -2,9 +2,6 @@ export default function timeAgo(date: string | Date) {
   // Convert the input to a Date object if it's a string
   const inputDate = typeof date === "string" ? new Date(date) : date;
 
-  // Log the date for debugging purposes
-  console.log({ inputDate });
-
   const now = new Date();
   const seconds = Math.floor((now.getTime() - inputDate.getTime()) / 1000);
 

@@ -38,9 +38,15 @@ const mapCatTitle = (string: string) => {
   );
 };
 
-type Props = { catsWithLikes: any[]; userId: string };
+type CatCardProps = { cat: Cat; userId: string };
 
-const CatCard = ({ cat, userId }: { cat: Cat; userId: string }) => {
+const CatCard: React.FC<CatCardProps> = ({
+  cat,
+  userId,
+}: {
+  cat: Cat;
+  userId: string;
+}) => {
   const isCatOwner = cat.userId === userId;
 
   return (
@@ -66,6 +72,8 @@ const CatCard = ({ cat, userId }: { cat: Cat; userId: string }) => {
     </div>
   );
 };
+
+type Props = { catsWithLikes: any[]; userId: string };
 
 export default function CatsView({ catsWithLikes, userId }: Props) {
   const [view, setView] = useState<"list" | "grid">("list");

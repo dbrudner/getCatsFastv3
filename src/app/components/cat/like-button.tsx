@@ -4,7 +4,7 @@ import { deleteLike, getLikes, postLike } from "@/actions/likes";
 import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { IconButton } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import classNames from "classnames";
 import { SignedIn } from "@clerk/nextjs";
 
@@ -12,10 +12,15 @@ type LikeButtonProps = {
   catId: number;
   userId: string;
   className: string;
+  initialLikes?: {
+    liked?: boolean;
+    count?: number;
+  };
 };
 
-const useGetLikesQuery = (catId: number, userId: string) => {
+const useGetLikesQuery = (catId: number, userId: string, enabled: boolean) => {
   return useQuery({
+    enabled,
     queryKey: ["likes", { catId }],
     queryFn: async () => {
       console.log("Get cat likles query fn");
@@ -52,14 +57,25 @@ const useDeleteLikeMutation = (
   });
 };
 
-export function LikeButton({ catId, userId, className }: LikeButtonProps) {
+export function LikeButton({
+  catId,
+  userId,
+  className,
+  initialLikes,
+}: LikeButtonProps) {
+  const [isLikesQueryEnabled, setIsLikesQueryEnabled] = useState(
+    initialLikes == null,
+  );
+
   const {
     data: likes,
     refetch,
     isLoading,
     isFetching,
-  } = useGetLikesQuery(catId, userId);
+  } = useGetLikesQuery(catId, userId, isLikesQueryEnabled);
+
   const postLikeMutation = usePostLikeMutation(catId, userId, () => {
+    setIsLikesQueryEnabled(true);
     refetch();
   });
 
