@@ -31,7 +31,8 @@ export async function createLikesTable() {
       CREATE TABLE likes (
         id SERIAL PRIMARY KEY,
         "userId" VARCHAR(255) NOT NULL,
-        "catId" VARCHAR(255) NOT NULL
+        "catId" INTEGER NOT NULL REFERENCES cats(id),
+        UNIQUE("userId", "catId")
       );
   `);
 }

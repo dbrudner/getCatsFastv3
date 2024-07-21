@@ -1,21 +1,11 @@
 "use client";
-import {
-  EllipsisHorizontalIcon,
-  HomeIcon,
-  PlusIcon,
-} from "@heroicons/react/24/outline";
+import { SignOutButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { HomeIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Button, IconButton } from "@mui/material";
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import UserNotificationsNavButton from "./user-notifications-nav-button";
-import UserMessagesNavButton from "./user-messages-nav-button";
-import {
-  SignInButton,
-  SignOutButton,
-  SignedIn,
-  SignedOut,
-} from "@clerk/nextjs";
 
 const highlighItem = (shouldHighlight: boolean) => {
   return classNames(shouldHighlight ? "text-white" : "text-slate-600");

@@ -1,10 +1,9 @@
 "use server";
 
 import { Cat, getCatsFastDb, likesTable } from "@/lib/core";
-import { currentUser } from "@clerk/nextjs/server";
-import { and, count, eq } from "drizzle-orm";
-import { createUserNotification } from "./user-notification";
+import { and, eq } from "drizzle-orm";
 import { getCatById } from "./cat";
+import { createUserNotification } from "./user-notification";
 
 export type Likes = {
   count: number;

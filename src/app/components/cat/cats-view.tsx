@@ -74,11 +74,7 @@ export default function CatsView({ catsWithLikes, userId }: Props) {
     <div className="flex flex-col gap-y-24 items-center mb-48">
       <div className="flex flex-col max-w-full gap-y-10">
         {catsWithLikes.map((catWithLike) => (
-          <CatCard
-            key={catWithLike.cat.id}
-            cat={catWithLike.cat}
-            userId={userId}
-          />
+          <CatCard key={catWithLike.id} cat={catWithLike} userId={userId} />
         ))}
       </div>
     </div>
@@ -88,13 +84,13 @@ export default function CatsView({ catsWithLikes, userId }: Props) {
     <div className="mt-5">
       <Masonry columns={3}>
         {catsWithLikes.map((catWithLike) => (
-          <Link href={`/cat/${catWithLike.cat.id}`} key={catWithLike.cat.id}>
+          <Link href={`/cat/${catWithLike.id}`} key={catWithLike.id}>
             <Image
               height={600}
               width={600}
-              alt={catWithLike.cat.title}
-              src={catWithLike.cat.image}
-              key={catWithLike.cat.id}
+              alt={catWithLike.title}
+              src={catWithLike.image}
+              key={catWithLike.id}
             />
           </Link>
         ))}
