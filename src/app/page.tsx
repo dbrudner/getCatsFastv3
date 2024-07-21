@@ -1,104 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
-import Loading from "./components/loading/loading";
-
-function OpacityOnHover({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <div className="transition-opacity opacity-85 hover:opacity-100">
-      {children}
-    </div>
-  );
-}
-
-function GrowOnHover({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <div className="transform transition-transform hover:scale-105 active:scale-100">
-      {children}
-    </div>
-  );
-}
-
-function ActionsContainer({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <div className="flex flex-col sm:flex-row flex-between w-full justify-center md:justify-between gap-10">
-      {children}
-    </div>
-  );
-}
-
-function Card({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <div className="p-4 border-2 rounded-lg text-slate-500 flex flex-col items-center md:items-start hover:text-green-300 hover:bg-slate-800">
-      {children}
-    </div>
-  );
-}
-
-function LinkCard({
-  title,
-  description,
-  imageSrc,
-  href,
-}: Readonly<{
-  title: string;
-  description: string;
-  imageSrc: string;
-  href: string;
-}>) {
-  return (
-    <div className="">
-      <OpacityOnHover>
-        <GrowOnHover>
-          <Link href={href}>
-            <Card>
-              <h2 className="text-5xl font-bold">{title}</h2>
-              <p>{description}</p>
-              <Image src={imageSrc} alt={title} width="400" height="400" />
-            </Card>
-          </Link>
-        </GrowOnHover>
-      </OpacityOnHover>
-    </div>
-  );
-}
-
-function GetCatsLinkCard() {
-  return (
-    <LinkCard
-      title="Get Cats"
-      description="Get cats from the internet."
-      imageSrc="/getcats.png"
-      href="/cats"
-    />
-  );
-}
-
-function SendCatsLinkCard() {
-  return (
-    <LinkCard
-      title="New Cat"
-      description="Send cat to the internet."
-      imageSrc="/sendcats.png"
-      href="/cat/new"
-    />
-  );
-}
+import { GetCatsLinkCard, SendCatsLinkCard } from "./components/card";
 
 function TermsAndConditions() {
   return (
@@ -115,6 +16,18 @@ function FooterLinks() {
       <Link href="/contact">Contact</Link>
       <Link href="/blog">Blog</Link>
       <Link href="/partners">Partners</Link>
+    </div>
+  );
+}
+
+function ActionsContainer({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <div className="flex flex-col sm:flex-row flex-between w-full justify-center md:justify-between gap-10">
+      {children}
     </div>
   );
 }
