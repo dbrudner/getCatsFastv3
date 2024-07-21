@@ -10,12 +10,21 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import UserNotificationsNavButton from "./user-notifications-nav-button";
 import UserMessagesNavButton from "./user-messages-nav-button";
+import {
+  SignInButton,
+  SignOutButton,
+  SignedIn,
+  SignedOut,
+} from "@clerk/nextjs";
+
+const highlighItem = (shouldHighlight: boolean) => {
+  return classNames(shouldHighlight ? "text-white" : "text-slate-600");
+};
 
 function useHighlightNavItemIfPathMatches() {
   const pathname = usePathname();
 
-  return (path: string) =>
-    classNames(pathname === path ? "text-white" : "text-slate-600");
+  return (path: string) => highlighItem(path === pathname);
 }
 
 export function useHighlightNavIconButtonIfActive() {
@@ -89,10 +98,20 @@ export default function Nav() {
         path="/cat/new"
       />
       <UserNotificationsNavButton />
-      <NavIconButton
-        Icon={mapClassNameToNavIconButton(EllipsisHorizontalIcon)}
-        path="/user/settings"
-      />
+      <SignedIn>
+        <SignOutButton>
+          <span className="hover:text-white text-slate-600 cursor-pointer">
+            Log Out
+          </span>
+        </SignOutButton>
+      </SignedIn>
+      <SignedOut>
+        <Link href="/signin">
+          <span className="hover:text-white text-slate-600 cursor-pointer">
+            Sign In
+          </span>
+        </Link>
+      </SignedOut>
     </div>
   );
 }
