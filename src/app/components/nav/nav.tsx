@@ -108,7 +108,14 @@ export default function Nav() {
             variant="text"
             size="small"
           >
-            <span className="text-slate-600 hover:text-white">Sign In</span>
+            <span
+              className={
+                (classNames("text-slate-600 hover:text-white"),
+                highlightNavItemIfActive("/signin"))
+              }
+            >
+              Sign In
+            </span>
           </Button>
         </Link>
       </SignedOut>
