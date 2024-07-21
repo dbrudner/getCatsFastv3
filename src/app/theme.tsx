@@ -25,12 +25,13 @@ const theme = createTheme({
       styleOverrides: {
         root: ({ ownerState }) => ({
           fontWeight: resolvedTailwingConfig.theme.fontWeight.semibold,
-          fontSize: resolvedTailwingConfig.theme.fontSize.xl[0],
+          fontSize: resolvedTailwingConfig.theme.fontSize.sm[0],
           textTransform: "none",
           ...(ownerState.variant === "text" && {
             "&.MuiButton-root:hover": {
               backgroundColor: "transparent",
             },
+            color: "white",
           }),
         }),
       },
