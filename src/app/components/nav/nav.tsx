@@ -53,7 +53,7 @@ export const baseNavIconButtonClassnames = "w-10 h-10";
 const bottomMobileNavClassNames =
   "fixed bottom-0 left-0 w-screen flex flex-row items-center justify-around p-4 bg-black border-slate-700 border-t lg:bg-transparent bg-slate-900";
 const sideNavClassNames =
-  "lg:start-auto lg:flex-col lg:gap-y-4 lg:h-screen lg:top-0 lg:left-0 lg:w-28 lg:py-4 lg:border-r lg:items-center lg:border-t-0 lg:border-r-1 lg:border-r-slate-900 lg:justify-start fixed";
+  "lg:start-auto lg:flex-col lg:gap-y-4 lg:h-screen lg:top-0 lg:left-0 lg:w-20 lg:py-4 lg:border-r lg:items-center lg:border-t-0 lg:border-r-1 lg:border-r-slate-900 lg:justify-start fixed";
 
 type NavItemProps = {
   path: string;

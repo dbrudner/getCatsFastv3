@@ -2,12 +2,66 @@
 import Masonry from "@mui/lab/Masonry";
 import timeAgo from "@/app/utils/time-ago";
 import { Cat } from "@/lib/core";
-import { ListBulletIcon, TableCellsIcon } from "@heroicons/react/24/outline";
-import { ToggleButtonGroup, ToggleButton, Link } from "@mui/material";
+import {
+  CakeIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  CurrencyDollarIcon,
+  ListBulletIcon,
+  StarIcon,
+  TableCellsIcon,
+  TrophyIcon,
+} from "@heroicons/react/24/outline";
+import {
+  ToggleButtonGroup,
+  ToggleButton,
+  Link,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import DeleteCatButton from "../delete-cat-button";
 import { LikeButton } from "./like-button";
 import Image from "next/image";
 import { useState } from "react";
+import classNames from "classnames";
+
+type CatsMenuItemProps = {
+  active: boolean;
+  onClick: () => void;
+  Icon: any;
+  children: React.ReactNode;
+};
+
+const CatsMenuItem: React.FC<CatsMenuItemProps> = ({
+  active,
+  onClick,
+  Icon,
+  children,
+}) => {
+  const colorClassName = classNames(
+    active ? "text-sky-300" : "text-slate-400",
+    "hover:text-sky-300",
+  );
+
+  const menuItemClassName = classNames(
+    active ? "bg-slate-700" : "bg-slate-900",
+    "hover:text-sky-300",
+    colorClassName,
+  );
+
+  const iconClassName = classNames("w-5 h-5 mr-4");
+
+  const textClassName = classNames("text-sm tracking-widest");
+
+  return (
+    <MenuItem onClick={onClick} className={menuItemClassName}>
+      <Icon className={iconClassName} />
+      <span className={textClassName}>{children}</span>
+    </MenuItem>
+  );
+};
 
 const CatDescriptionWithHashTags = ({ cat }: { cat: Cat }) => {
   return (
@@ -77,6 +131,17 @@ type Props = { catsWithLikes: any[]; userId: string };
 
 export default function CatsView({ catsWithLikes, userId }: Props) {
   const [view, setView] = useState<"list" | "grid">("list");
+  const [query, setQuery] = useState<"top" | "best" | "rando">("top");
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const open = !!anchorEl;
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const catsListView = (
     <div className="flex flex-col gap-y-24 items-center mb-48">
@@ -108,15 +173,64 @@ export default function CatsView({ catsWithLikes, userId }: Props) {
 
   return (
     <div>
-      <ToggleButtonGroup size="large" value={view}>
-        <ToggleButton value="list" onChange={() => setView("list")}>
-          <ListBulletIcon className="h-4 w-4" />
-        </ToggleButton>
-        <ToggleButton value="grid" onChange={() => setView("grid")}>
-          <TableCellsIcon className="h-4 w-4" />
-        </ToggleButton>
-      </ToggleButtonGroup>
-      {view === "list" ? catsListView : catsGridView}
+      <div>
+        <div className="flex justify-between">
+          <div>
+            <ToggleButtonGroup size="large" value={view}>
+              <ToggleButton value="list" onChange={() => setView("list")}>
+                <ListBulletIcon className="h-4 w-4" />
+              </ToggleButton>
+              <ToggleButton value="grid" onChange={() => setView("grid")}>
+                <TableCellsIcon className="h-4 w-4" />
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </div>
+          <div>
+            <IconButton onClick={handleClick}>
+              {open ? (
+                <ChevronUpIcon className="w-4 h-4" />
+              ) : (
+                <ChevronDownIcon className="w-4 h-4" />
+              )}
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              disableScrollLock
+              sx={{
+                ".MuiList-root": {
+                  py: 0,
+                },
+              }}
+            >
+              <CatsMenuItem
+                Icon={TrophyIcon}
+                onClick={() => setQuery("top")}
+                active={query === "top"}
+              >
+                Top
+              </CatsMenuItem>
+              <CatsMenuItem
+                Icon={CakeIcon}
+                onClick={() => setQuery("best")}
+                active={query === "best"}
+              >
+                Best
+              </CatsMenuItem>
+              <CatsMenuItem
+                Icon={StarIcon}
+                onClick={() => setQuery("rando")}
+                active={query === "rando"}
+              >
+                Rando
+              </CatsMenuItem>
+            </Menu>
+          </div>
+        </div>
+
+        <div>{view === "list" ? catsListView : catsGridView}</div>
+      </div>
     </div>
   );
 }
