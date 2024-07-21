@@ -90,19 +90,17 @@ export default function Nav() {
         path="/cat/new"
       />
       <UserNotificationsNavButton />
-      <div className="hidden sm:block">
-        <SignedIn>
-          <SignOutButton>
-            <Button
-              sx={{ "&.MuiButton-root:hover": { bgcolor: "transparent" } }}
-              variant="text"
-              size="small"
-            >
-              <span className="text-slate-600 hover:text-white">Log Out</span>
-            </Button>
-          </SignOutButton>
-        </SignedIn>
-      </div>
+      <SignedIn>
+        <SignOutButton>
+          <Button
+            sx={{ "&.MuiButton-root:hover": { bgcolor: "transparent" } }}
+            variant="text"
+            size="small"
+          >
+            <span className="text-slate-600 hover:text-white">Log Out</span>
+          </Button>
+        </SignOutButton>
+      </SignedIn>
       <SignedOut>
         <Link href="/signin">
           <Button
