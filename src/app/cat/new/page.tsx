@@ -314,11 +314,11 @@ function SignIn() {
             With <span className="text-slate-400">Google</span> or an email
             address
           </p>
-          <SignInButton>
+          <Link href="/signin">
             <Button variant="contained" fullWidth type="button">
               Sign In
             </Button>
-          </SignInButton>
+          </Link>
         </div>
       </div>
 
