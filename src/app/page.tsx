@@ -34,7 +34,7 @@ function ActionsContainer({
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen -w-screen-md m-auto flex-col items-center justify-center p-4 md:p-0">
+    <main className="flex min-h-screen min-w-screen-md m-auto flex-col items-center justify-center p-4 md:p-0">
       <div className="w-full mb-10">
         <h1 className="text-6xl font-bold text-white">
           Welcome to{" "}
