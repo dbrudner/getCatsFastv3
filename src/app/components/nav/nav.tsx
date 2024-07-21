@@ -89,7 +89,6 @@ export default function Nav() {
         path="/cat/new"
       />
       <UserNotificationsNavButton />
-      <UserMessagesNavButton />
       <NavIconButton
         Icon={mapClassNameToNavIconButton(EllipsisHorizontalIcon)}
         path="/user/settings"

@@ -1,13 +1,12 @@
+import AppProvider from "@/app/components/app-provider";
+import Nav from "@/app/components/nav/nav";
 import { ClerkProvider } from "@clerk/nextjs";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
 import Head from "next/head";
 import "./globals.css";
 import GetCatsFastThemeProvider from "./theme";
-import AppProvider from "@/app/components/app-provider";
-import Nav from "@/app/components/nav/nav";
 
 const workSans = Work_Sans({ subsets: ["latin"] });
 

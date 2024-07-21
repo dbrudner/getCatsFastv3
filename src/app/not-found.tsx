@@ -1,5 +1,6 @@
 import CatCard from "@/app/components/cat/catcard";
 import { Cat } from "@/lib/core";
+import { Button } from "@mui/material";
 import Link from "next/link";
 
 export default async function CatPage() {
@@ -17,9 +18,9 @@ export default async function CatPage() {
         <h1 className="text-4xl font-bold text-orange-300 mb-4">#NotFound</h1>
         <CatCard cat={notFoundCat} activeHashTag="" />
         <Link href="/cats">
-          <button className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-md">
+          <Button variant="outlined" fullWidth sx={{ mt: 4, mb: 8 }}>
             Go back
-          </button>
+          </Button>
         </Link>
       </div>
     </div>

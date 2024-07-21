@@ -12,7 +12,7 @@ import { useState } from "react";
 const CatDescriptionWithHashTags = ({ cat }: { cat: Cat }) => {
   return (
     <div className="flex flex-col gap-y-2">
-      <div className="flex flex-wrap gap-x-2">
+      <div className="flex flex-wrap gap-x-1 font-bold text-xl">
         {cat.title.split(" ").map(mapCatTitle)}
       </div>
     </div>
@@ -22,14 +22,18 @@ const CatDescriptionWithHashTags = ({ cat }: { cat: Cat }) => {
 const mapCatTitle = (string: string) => {
   if (string[0] === "#" && string.length > 1) {
     return (
-      <Link key={string} href={`/cats/tag/${string.slice(1)}`}>
-        <span className="text-sky-300 font-bold">{string} </span>
+      <Link
+        style={{ textDecoration: "none" }}
+        key={string}
+        href={`/cats/tag/${string.slice(1)}`}
+      >
+        <span className="text-sky-300 font-bold text-xl">{string} </span>
       </Link>
     );
   }
   return (
     <span key={string} className="">
-      {string + " "}
+      {string}
     </span>
   );
 };

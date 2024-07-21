@@ -1,5 +1,4 @@
 import { SignIn } from "@clerk/nextjs";
-import { Box } from "@mui/material";
 import { dark } from "@clerk/themes";
 
 export default function Signin() {
