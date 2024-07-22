@@ -208,7 +208,7 @@ export default function CatsView({ catsWithLikes, userId }: Props) {
               <CatsMenuItem
                 Icon={PlusIcon}
                 onClick={() => setQuery("new")}
-                active={query === "top"}
+                active={query === "new"}
               >
                 New
               </CatsMenuItem>
